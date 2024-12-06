@@ -1,0 +1,96 @@
+using BulletPro;
+using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
+using static UnityEditor.PlayerSettings;
+
+public class MagicCircleControl : MonoBehaviour
+{
+    public float vignetteFadingTransition;      // 비네트 페이드인 시 효과 최대치 1f까지 걸리는 시간
+    public float vignetteFadeOutTransition;     // 비네트 페이드아웃 시 효과 최소치 0f까지 걸리는 시간
+    public float maxVignette;                   // 최대 비네트 값
+    public float radius;
+    public Transform bulletPool;                // 총알 오브젝트 풀. 5000개
+
+    private PostProcessVolume darknessVolume;   // 객체의 피사체심도 볼륨 컴포넌트
+    private Vignette vignette;                  // 볼륨 컴포넌트의 비네트 인스턴스
+    
+    void Start()
+    {
+        darknessVolume = GetComponent<PostProcessVolume>();
+        darknessVolume.profile.TryGetSettings(out vignette);
+    }
+
+    void FixedUpdate()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
+        CursorControl(GameManager.instance.worldMousePos);
+        Cursor.visible = false;
+        Parry();
+    }
+
+    // 해당 좌표로 마우스커서 오브젝트 이동, FixedUpdate
+    private void CursorControl(Vector3 pos)
+    {
+        VignetteControl();
+        Vector3 nextPos = Vector3.MoveTowards(transform.position, new Vector3(pos.x, pos.y, 0f), Mathf.Infinity);
+        transform.position = nextPos;
+    }
+
+    private void VignetteControl()
+    {
+        // isParryMode가 true일 때 Intensity 값을 서서히 1로 증가
+        // 조건 추가, 쿨타임 동안 이하 로직이 발동하지 않음.
+        if (Player.instance.isParryAiming && Player.instance.parryCoroutine == null)
+        {
+            vignette.intensity.value = Mathf.Lerp(vignette.intensity.value, maxVignette, vignetteFadingTransition * Time.fixedDeltaTime);
+        }
+        // isParryMode가 false일 때 Intensity 값을 서서히 0으로 감소
+        else
+        {
+            vignette.intensity.value = Mathf.Lerp(vignette.intensity.value, 0f, vignetteFadeOutTransition * Time.fixedDeltaTime);
+        }
+
+        Vector3 screenPos = Camera.main.WorldToViewportPoint(transform.position);
+        vignette.center.value = screenPos;
+    }
+
+    private void Parry()
+    {
+        if (Player.instance.isReadyToParry)
+        {
+            InspectAllBullets(bulletPool);
+            Player.instance.isReadyToParry = false;
+        }
+    }
+
+    
+    private void InspectAllBullets(Transform parent)
+    {
+        // 부모 객체에 적용할 검사
+        DestroyBulletsInZone(parent);
+
+        // 부모 객체의 모든 자식 객체를 재귀적으로 탐색
+        foreach (Transform child in parent)
+        {
+            InspectAllBullets(child);
+        }
+    }
+
+    private void DestroyBulletsInZone(Transform bullet)
+    {
+        Vector2 center = transform.position;
+        if (bullet.gameObject.activeSelf && bullet.GetComponent<SpriteRenderer>() != null && bullet.GetComponent<SpriteRenderer>().enabled)
+        {
+            // 총알이 마법진 안에 들어가 있을 때
+            if (Vector2.Distance(center, bullet.transform.position) <= radius)
+            {
+                Debug.Log("패리 성공");
+                bullet.gameObject.SetActive(false);
+                Player.instance.zamielCountInt++;
+            }
+        }
+    }
+}
