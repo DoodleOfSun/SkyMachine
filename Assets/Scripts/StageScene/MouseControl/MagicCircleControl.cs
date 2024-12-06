@@ -21,11 +21,11 @@ public class MagicCircleControl : MonoBehaviour
     {
         darknessVolume = GetComponent<PostProcessVolume>();
         darknessVolume.profile.TryGetSettings(out vignette);
+        Cursor.lockState = CursorLockMode.Confined;
     }
 
     void FixedUpdate()
     {
-        Cursor.lockState = CursorLockMode.Confined;
         CursorControl(GameManager.instance.worldMousePos);
         Cursor.visible = false;
         Parry();
