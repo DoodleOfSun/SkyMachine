@@ -14,6 +14,7 @@ namespace UnityStandardAssets._2D
         //public int zoomingEachFrame;  // 1프레임마다 카메라 사이즈를 조절하는 정도
         public float camMinX = -1f;
         public float camMaxX = 94.5f;
+        public Transform target;
 
         private float offsetZ;
         private Vector3 lastTargetPosition;
@@ -24,14 +25,14 @@ namespace UnityStandardAssets._2D
         // 처음에는 플레이어를 카메라가 따라가야 하므로 다음과 같이 초기화한다.
         private void Start()
         {
-            InitCam(Player.instance.playerAttackBox.transform.position);
+            InitCam(target.transform.position);
         }
 
 
         // Update is called once per frame
         private void Update()
         {
-            ChasingByTransform(Player.instance.playerAttackBox.transform.position);
+            ChasingByTransform(target.transform.position);
         }
 
         private void InitCam(Vector3 targetPos)

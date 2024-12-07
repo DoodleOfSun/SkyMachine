@@ -52,24 +52,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 15
   attack: 1
-  health: 10
-  critical: 5
+  health: 3
   attackDuration: 0.5
   invincibleTime: 1
-  zamielCountInt: 0
-  zamielReloadInt: 5
-  zamielAttack: 5
-  isReadyToZamiel: 0
+  ether: 10
+  etherAttackCost: 0.5
+  etherSkill1Cost: 6.5
+  etherParryCost: 6.5
+  isReadyToSkill1: 0
   blinkCount: 3
-  evadeTime: 0.07
-  evadeDistance: 1.1
-  evadeSpeed: 0
+  attackDashingTime: 0.07
+  attackDashingSpeed: 1
   attackDashingDistance: 10
   focusSpeed: 2
   blinkDuration: 0.1
   knockBackSpeed: 20
   damagedKnockBackTime: 0.07
   bindingPosTime: 0.7
+  etherIncreaseTime: 3
   playerHitCircle: {fileID: 2201969730844309069}
   playerAttackBox: {fileID: 3691370317675051510}
   playerSpriteAndAnimation: {fileID: 2061117835511673167}

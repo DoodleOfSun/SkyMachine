@@ -47,5 +47,4 @@ MonoBehaviour:
   worldMousePos: {x: 0, y: 0, z: 0}
   screenMousePos: {x: 0, y: 0, z: 0}
   lockedTarget: {fileID: 0}
-  zamielText: {fileID: 0}
   gameOverText: {fileID: 0}

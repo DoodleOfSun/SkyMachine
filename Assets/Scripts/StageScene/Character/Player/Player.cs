@@ -21,28 +21,33 @@ public class Player : MovingObject
 
     [HideInInspector] public static Player instance;
 
+    // 기초 능력치 관련 변수
     public float attack;
     public float health;
-    public float critical;
     public float attackDuration;        // 공격판정 지속시간
     public float invincibleTime;        // 무적시간
+    public float ether;                 // 에테르
+    public float etherAttackCost;       // 공격 시 사용하는 에테르 코스트
+    public float etherSkill1Cost;        // 스킬 사용 시 사용하는 에테르 코스트
+    public float etherParryCost;        // 패리 사용 시 사용하는 에테르 코스트
 
-    [HideInInspector] public int zamielCountInt;        // 자미엘 카운트. 일정 수치가 되면 발사한다
-    public int zamielReloadInt;         // 이 수치에 zamielCountInt가 도달하면 자미엘을 쏠 준비를 마친다.
-    public float zamielAttack;          // 자미엘의 공격력
-    [HideInInspector] public bool isReadyToZamiel;           // 자미엘 카운트가 zamielReloadInt만큼 쌓였는지를 확인한다. 다음 좌클릭은 반드시 자미엘을 사격하고 zamielCountInt를 0으로 되돌린다.
+    // 스킬 사용 관련 변수
+
+    //[HideInInspector] public int zamielCountInt;        // 자미엘 카운트. 일정 수치가 되면 발사한다
+    //public float zamielAttack;          // 자미엘의 공격력
+
+    [HideInInspector] public bool isReadyToSkill1;           // 자미엘 카운트가 zamielReloadInt만큼 쌓였는지를 확인한다. 다음 좌클릭은 반드시 자미엘을 사격하고 zamielCountInt를 0으로 되돌린다.
     public int blinkCount;              // 피격판정 시 스프라이트 깜빡거림 횟수
 
-    public float evadeTime;                     // 회피 시간
-    public float evadeDistance;          // 회피할 때 전진할 거리
-    public float evadeSpeed;             // 회피 시 전진 속도
-    //public float dashSpeed;             // 대쉬 시 전진속도
+    public float attackDashingTime;                     // 공격 시 전진하는 시간
+    public float attackDashingSpeed;             // 공격 시 전진 속도
     public float attackDashingDistance; // 공격할 때 전진할 거리
     public float focusSpeed;            // 공격 패리 조준 모드일 때 이동속도 (통상보다 저하됨)
     public float blinkDuration;             // 피격 시 스프라이트가 깜빡거리는 시간
     public float knockBackSpeed;            // 플레이어가 데미지를 받았을 때 밀쳐지는 속도
     public float damagedKnockBackTime;      // 플레이어가 데미지를 받았을 때 밀쳐지는 시간
     public float bindingPosTime;            // 집중 액션 시 플레이어가 움직이지 못하는 시간
+    public float etherIncreaseTime;         // 에테르가 한 사이클 차는데 걸리는 시간
 
     public GameObject playerHitCircle;      // 플레이어 피탄점. 각도 계산에 사용하는 자식 객체임.
     public GameObject playerAttackBox;      // 피탄점의 자식 객체로, 피탄점의 각도에 따라 원을 그리며 움직임.
@@ -57,7 +62,6 @@ public class Player : MovingObject
     private Coroutine bindingPosCoroutine;      // 집중 액션 시 플레이어가 움직이지 못하게 하는 코루틴 변수
 
     private bool isMoving;                  // WASD 입력을 검사한다.
-    private bool isEvade;                   // 스페이스바 입력을 검사한다.
     private bool isAttack;                  // 좌클릭을 검사한다. 단 isParryAiming이 false일때만 true를 대입시킨다.
     private bool isContinueCombo;          // 공격 콤보가 이미 진행중인지를 검사한다.
     private bool isRotateBinding;             // 플레이어가 좌클릭으로 공격 중일 때, 혹은 그러지 않을 때 좌표를 원점으로 고정시킬지, 그러지 않을지를 코루틴 함수에서 검사하고 이 여부를 저장한다.
@@ -92,7 +96,7 @@ public class Player : MovingObject
     private void FixedUpdate()
     {
         PlayerHitCircleRotate(GameManager.instance.worldMousePos);
-        CheckingZamielCount();
+        CheckingSkill1Count();
         PlayerMovingOrIdleRotate();
         CheckingPlayerFocus();
         AllPlayerMoving();
@@ -115,15 +119,13 @@ public class Player : MovingObject
 
         horizontal = 0;
         vertical = 0;
-        zamielCountInt = 0;
+        //zamielCountInt = 0;
 
         currentSpeed = moveSpeed;
-
-        isEvade = false;
         isAttack = false;
         isParryAiming = false;
         isReadyToParry = false;
-        isReadyToZamiel = false;
+        isReadyToSkill1 = false;
         isContinueCombo = true;
         isRotateBinding = true;
         isKnockBack = false;
@@ -133,15 +135,6 @@ public class Player : MovingObject
         isPositionBinding = false;
 
         //isDash = false;
-        /*
-        if (playerSlashInstance == null)
-        {
-            GameObject slashObj = Instantiate(playerSlashPrefab, playerAttackBox.transform.position, Quaternion.identity) as GameObject;
-            playerSlashInstance = slashObj.GetComponent<PlayerSlash>();
-            playerSlashInstance.Init(attack);
-            playerSlashInstance.gameObject.SetActive(false);
-        }
-        */
         
         animator = playerSpriteAndAnimation.GetComponent<Animator>();
         attackState = AttackState.UpSlash;
@@ -193,14 +186,14 @@ public class Player : MovingObject
 
 
         // 스킬 사용 부분
-        if (Input.GetButtonDown("Jump") && isReadyToZamiel && !isParryAiming)
+        if (Input.GetButtonDown("Jump") && isReadyToSkill1 && !isParryAiming)
         {
             animator.SetTrigger("Magic");
             if (bindingPosCoroutine == null)
             {
                 bindingPosCoroutine = StartCoroutine(BindingPositionFocusing());
             }
-            ShootingSkill();
+            ActivatingSkill1();
         }
 
 
@@ -208,9 +201,9 @@ public class Player : MovingObject
         // 자미엘 발사 검사
         // 패링모드중이지 않을 때는 그냥 좌클릭으로 쏘면된다.
         // !isParryAiming 추가
-        if (Input.GetMouseButtonDown(0) && isReadyToZamiel && !isParryAiming)
+        if (Input.GetMouseButtonDown(0) && isReadyToSkill1 && !isParryAiming)
         {
-            ShootingSkill();
+            ActivatingSkill1();
         }
         */
 
@@ -242,13 +235,7 @@ public class Player : MovingObject
             // 또한 쿨타임 돌아서 parryCoroutine이 null 일때만 실행함.
             else if (isParryAiming && parryCoroutine == null)
             {
-                isReadyToParry = true;
-                parryCoroutine = StartCoroutine(DisableParryTemporarily());
-                animator.SetTrigger("Magic");
-                if (bindingPosCoroutine == null)
-                {
-                    bindingPosCoroutine = StartCoroutine(BindingPositionFocusing());
-                }
+                Parry();
             }
         }
 
@@ -298,16 +285,18 @@ public class Player : MovingObject
     {
 
         // 회피
+        /*
         if (isEvade)
         {
             //StartCoroutine(Evade(horizontal, vertical));
         }
+        */
 
         // 기본 이동
         // canContinueCombo가 True인 동안 이동시키지 않는다. 
         // 넉백 상태일 때에도 이동시키지 않는다.
         // 위치 고정상태일 때에도 이동시키지 않는다.
-        else if (!isEvade && isContinueCombo && !isKnockBack && !isPositionBinding)
+        if (isContinueCombo && !isKnockBack && !isPositionBinding)
         {
             AttemptMove(horizontal, vertical);
         }
@@ -330,22 +319,6 @@ public class Player : MovingObject
     // 플레이어 피탄점 객체 회전
     private void PlayerHitCircleRotate(Vector2 dir)
     {
-        /*
-        // 커서 위치에 따라서 다른 애니메이션을 재생시킨다.
-        if (transform.position.x < dir.x)
-        {
-            //transform.eulerAngles = Vector3.zero;
-        }
-
-        if (transform.position.x > dir.x)
-        {
-            //transform.eulerAngles = new Vector3(0, 180, 0);
-        }
-        
-        */
-
-        // 이게 마우스 따라서 돌아가는 공식임. 일단 각도 따라 나중에 해결하는 것으로 하자. eularAngles로 로그출력 해보면 z축이 0~ 360도로 돌아감. 그걸 조건문으로 8방향 나눠서 애니메이션 재생도 가능할듯.
-        // 근데 이건 좀 더 기획부분에서 생각을 해봐야 함. 일단 여기에 확인용으로 남기기만 하겠음. 지금 당장은 HitCircle의 각도값이 빙글빙글 돌아가는 방식이라고만 기술해두겠음.
         float angle = Mathf.Atan2(dir.y - transform.position.y, dir.x - transform.position.x) * Mathf.Rad2Deg;
         playerHitCircle.transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
     }
@@ -405,7 +378,7 @@ public class Player : MovingObject
         }
     }
 
-    // 무적 시간동안 damageColliderLaser을 비활성화하고 회피하는 방향으로 evadeSpeed*Time.detaTime만큼이동시킨다.
+    // 무적 시간동안 damageColliderLaser을 비활성화하고 회피하는 방향으로 attackDashingSpeed*Time.detaTime만큼이동시킨다.
     // 방향은 키보드로 입력받는다.
     /*
     private IEnumerator Evade(float xDir, float yDir)
@@ -415,14 +388,14 @@ public class Player : MovingObject
         isEvade = true;
         float elapsedTime = 0f;
 
-        moveSpeed = evadeSpeed;
+        moveSpeed = attackDashingSpeed;
 
 
         xDir = xDir * evadeDistance;
         yDir = yDir * evadeDistance;            // 다른 rigidbody나 델타타임은 다 계산해주고 있으므로 회피방향x회피거리 만 AttemptMove에 넘겨주면 됨
 
 
-        while (elapsedTime < evadeTime)
+        while (elapsedTime < attackDashingTime)
         {
             AttemptMove(xDir, yDir);
             elapsedTime += Time.fixedDeltaTime;
@@ -436,31 +409,6 @@ public class Player : MovingObject
     }
     */
 
-    // 공격 함수
-
-    private void Attack()
-    {
-
-        if (isContinueCombo == true)
-        {
-            switch (attackState)
-            {
-                case AttackState.UpSlash:
-                    animator.SetTrigger("Attack1");
-                    attackState++;
-                    break;
-                case AttackState.Downslash:
-                    animator.SetTrigger("Attack2");
-                    attackState = AttackState.UpSlash;
-                    break;
-            }
-            isAttack = false;
-            isContinueCombo = false;
-            StartCoroutine(DashingWhileAttack());
-            StartCoroutine(WaitForNextComboInput());
-            StartCoroutine(WaitingForBindingRotation());
-        }
-    }
 
     // 공격에 딜레이를 줘서 연타 시 애니메이션이 똑바로 재생되지 않는 문제를 해결하는 함수
     // 간단하게 시간이 지나면 canContinueCombo를 true로 만들어서 조건문에서 활용하게 한다.
@@ -501,7 +449,7 @@ public class Player : MovingObject
     {
         float elapsedTime = 0f;
 
-        moveSpeed = evadeSpeed;
+        moveSpeed = attackDashingSpeed;
 
         float xDir = 0;
         float yDir = 0;
@@ -512,7 +460,7 @@ public class Player : MovingObject
 
         RotateByAction(playerAttackBox.transform.position - transform.position);
 
-        while (elapsedTime < evadeTime)
+        while (elapsedTime < attackDashingTime)
         {
             AttemptMove(xDir, yDir);
             elapsedTime += Time.fixedDeltaTime;
@@ -560,20 +508,31 @@ public class Player : MovingObject
         
     }
 
+    /*
     private void CheckingZamielCount()
     {
         // 자미엘이 준비되면, bool 변수를 true로 한다.
         // 자미엘은 zamielReloadInt를 넘어서 장전될수없다.
-        if (zamielCountInt >= zamielReloadInt)
+        if (zamielCountInt >= etherSkill1Cost)
         {
-            zamielCountInt = zamielReloadInt;
-            isReadyToZamiel = true;
+            zamielCountInt = etherSkill1Cost;
+            isReadyToSkill1 = true;
+        }
+    }*/
+
+    // 스킬 1이 사용준비 되었는지 확인한다. 에테르가 skill1Cost보다 크거나 같으면 준비되었다.
+    private void CheckingSkill1Count()
+    {
+        if (ether >= etherSkill1Cost)
+        {
+            ether = etherSkill1Cost;
+            isReadyToSkill1 = true;
         }
     }
 
-    // 자미엘 발사부분
-    // 나중에 이걸 코루틴으로 바꿔서 쏘는동안 안움직이게 한다거나 할 수 있음 일단 이대로만
-    private void ShootingSkill()
+
+    // 스킬1 사용 함수
+    private void ActivatingSkill1()
     {
         Debug.Log("스킬 발사");
         Vector2 direction = (playerAttackBox.transform.position - transform.position).normalized;
@@ -594,8 +553,8 @@ public class Player : MovingObject
             }
         }
 
-        zamielCountInt = 0;
-        isReadyToZamiel = false;
+        ether -= etherSkill1Cost; 
+        isReadyToSkill1 = false;
     }
 
     // 플레이어가 집중 상태일 때 이동속도를 저하시키고, 특정 애니메이션을 재생시킨다.
@@ -614,6 +573,17 @@ public class Player : MovingObject
             {
                 animator.SetTrigger("IdleToMagicMove");
                 animator.SetTrigger("MoveToMagicMove");
+
+                playerSpriteAndAnimation.transform.eulerAngles = new Vector3(0f, 180f, 0f);
+                if (playerHitCircle.transform.eulerAngles.z >= 0f && playerHitCircle.transform.eulerAngles.z < 180f)
+                {
+                    playerSpriteAndAnimation.transform.eulerAngles = new Vector3(0f, 180f, 0f);
+                }
+                else
+                {
+                    playerSpriteAndAnimation.transform.eulerAngles = Vector3.zero;
+                }
+
             }
             playerHitCircle.GetComponent<SpriteRenderer>().enabled = true;
         }
@@ -640,8 +610,17 @@ public class Player : MovingObject
         {
             // 이곳에 피격 애니메이션 로직
             health -= damage;
+
+            if (ether > 0)
+            {
+                ether -= damage;
+            }
+            else
+            {
+                health -= damage;
+            }
             StartCoroutine(DamagedBlinkBlack());
-            StartCoroutine(KnockBack(attackDashingDistance, damagedKnockBackTime));
+            //StartCoroutine(KnockBack(attackDashingDistance, damagedKnockBackTime));
             StartCoroutine(DamagedInvincibility());
             CheckingIfGameOver();
         }
@@ -710,5 +689,69 @@ public class Player : MovingObject
         }
 
         isInvincible = false;
+    }
+
+    // 이 밑으로 에테르 관련 함수를 정의한다.
+    // 에테르는 공격, 스킬, 피격 시에 소모되는 전투 자원이다. 플레이어는 에테르를 이용해 게임을 전략적으로 풀어나갈 수 있다.
+
+    // 에테르가 시간에 따라 조금씩 차오른다.
+    private IEnumerator EtherIncreaseByTime()
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < etherIncreaseTime)
+        {
+            elapsedTime += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+
+        ether++;
+
+    }
+
+    // 적을 격파하면 적이 가지고 있는 에테르를 흡수한다.
+    public void EtherIncreseByKillEnemy(float reward)
+    {
+        ether += reward;
+    }
+
+
+    // 공격 함수
+    private void Attack()
+    {
+
+        if (isContinueCombo == true)
+        {
+            switch (attackState)
+            {
+                case AttackState.UpSlash:
+                    animator.SetTrigger("Attack1");
+                    attackState++;
+                    break;
+                case AttackState.Downslash:
+                    animator.SetTrigger("Attack2");
+                    attackState = AttackState.UpSlash;
+                    break;
+            }
+            ether -= etherAttackCost;
+            isAttack = false;
+            isContinueCombo = false;
+            StartCoroutine(DashingWhileAttack());
+            StartCoroutine(WaitForNextComboInput());
+            StartCoroutine(WaitingForBindingRotation());
+        }
+    }
+
+    // 패리 함수
+    private void Parry()
+    {
+        ether -= etherParryCost;
+        isReadyToParry = true;
+        parryCoroutine = StartCoroutine(DisableParryTemporarily());
+        animator.SetTrigger("Magic");
+        if (bindingPosCoroutine == null)
+        {
+            bindingPosCoroutine = StartCoroutine(BindingPositionFocusing());
+        }
     }
 }

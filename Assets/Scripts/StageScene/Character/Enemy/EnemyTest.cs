@@ -121,7 +121,7 @@ public class EnemyTest : MovingObject
         if(currentGuardCount >= guardCountLimit)
         {
             // 이곳에 플레이어 넉백시키기 함수 실행
-            StartCoroutine(Player.instance.KnockBack(counterKnockBackValue, counterKnockBackTime));
+            //StartCoroutine(Player.instance.KnockBack(counterKnockBackValue, counterKnockBackTime));
             Debug.Log("강력한 카운터 공격 실행");
             ChangeStateGuardToCounter();
             currentGuardCount = 0;

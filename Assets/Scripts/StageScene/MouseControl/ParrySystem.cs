@@ -4,19 +4,18 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
-using static UnityEditor.PlayerSettings;
 
-public class MagicCircleControl : MonoBehaviour
+public class ParrySystem : MonoBehaviour
 {
-    public float vignetteFadingTransition;      // 비네트 페이드인 시 효과 최대치 1f까지 걸리는 시간
-    public float vignetteFadeOutTransition;     // 비네트 페이드아웃 시 효과 최소치 0f까지 걸리는 시간
-    public float maxVignette;                   // 최대 비네트 값
-    public float radius;
+    private float vignetteFadingTransition = 3;      // 비네트 페이드인 시 효과 최대치 1f까지 걸리는 시간
+    private float vignetteFadeOutTransition = 6;     // 비네트 페이드아웃 시 효과 최소치 0f까지 걸리는 시간
+    private float maxVignette = 0.35f;                   // 최대 비네트 값
+    private float radius = 1.3f;
     public Transform bulletPool;                // 총알 오브젝트 풀. 5000개
 
     private PostProcessVolume darknessVolume;   // 객체의 피사체심도 볼륨 컴포넌트
-    private Vignette vignette;                  // 볼륨 컴포넌트의 비네트 인스턴스
-    
+    private Vignette vignette;
+
     void Start()
     {
         darknessVolume = GetComponent<PostProcessVolume>();
@@ -66,7 +65,7 @@ public class MagicCircleControl : MonoBehaviour
         }
     }
 
-    
+
     private void InspectAllBullets(Transform parent)
     {
         // 부모 객체에 적용할 검사
@@ -89,7 +88,7 @@ public class MagicCircleControl : MonoBehaviour
             {
                 Debug.Log("패리 성공");
                 bullet.gameObject.SetActive(false);
-                Player.instance.zamielCountInt++;
+                Player.instance.ether++;
             }
         }
     }

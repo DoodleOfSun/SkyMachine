@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6325503967436509620}
-  - component: {fileID: 3211985040197070100}
   - component: {fileID: 4767263765193129442}
+  - component: {fileID: 2650870132572048417}
   m_Layer: 6
   m_Name: ParrySystemControl
   m_TagString: Cursor
@@ -34,23 +34,6 @@ Transform:
   - {fileID: 1033660377710932711}
   m_Father: {fileID: 1917538346703299705}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3211985040197070100
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2473677945229169826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e418ca4bd3a9c743ad14453722c1b54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  vignetteFadingTransition: 3
-  vignetteFadeOutTransition: 6
-  maxVignette: 0.35
-  radius: 1.5
-  bulletPool: {fileID: 0}
 --- !u!114 &4767263765193129442
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,6 +51,19 @@ MonoBehaviour:
   blendDistance: 0
   weight: 1
   priority: 0
+--- !u!114 &2650870132572048417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2473677945229169826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d848f6f871ef62241a10cd93e5c2ff86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPool: {fileID: 0}
 --- !u!1 &6652849761214661903
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,7 +162,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8054256772764943938}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

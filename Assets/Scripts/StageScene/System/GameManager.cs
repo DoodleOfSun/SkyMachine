@@ -14,8 +14,6 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public Vector3 worldMousePos;
     [HideInInspector] public Vector3 screenMousePos;
     [HideInInspector] public Transform lockedTarget;
-
-    public Text zamielText;
     public Text gameOverText;
 
     void Awake()
@@ -34,8 +32,6 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         lockedTarget = RaycastingCameraToWorld();
-
-        zamielText.text = "Zamiel : " + Player.instance.isReadyToZamiel;
     }
 
     private Transform RaycastingCameraToWorld()
