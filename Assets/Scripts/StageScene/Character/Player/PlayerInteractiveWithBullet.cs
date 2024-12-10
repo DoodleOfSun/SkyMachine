@@ -6,6 +6,6 @@ public class PlayerInteractiveWithBullet : MonoBehaviour
 {
     public void Damaged()
     {
-        Player.instance.PlayerDamaged(1);
+        Player.instance.PlayerDamaged(0.1f);
     }
 }

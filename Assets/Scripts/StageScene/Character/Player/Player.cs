@@ -23,7 +23,7 @@ public class Player : MovingObject
 
     // 기초 능력치 관련 변수
     public float attack;
-    public float health;
+    public int health;
     public float attackDuration;        // 공격판정 지속시간
     public float invincibleTime;        // 무적시간
     public float ether;                 // 에테르
@@ -60,6 +60,7 @@ public class Player : MovingObject
 
     public Coroutine parryCoroutine;           // 패리 재사용 대기시간 코루틴 중복 방지를 위한 코루틴 변수
     private Coroutine bindingPosCoroutine;      // 집중 액션 시 플레이어가 움직이지 못하게 하는 코루틴 변수
+    private Coroutine etherIncreaseByTimeCoroutine;
 
     private bool isMoving;                  // WASD 입력을 검사한다.
     private bool isAttack;                  // 좌클릭을 검사한다. 단 isParryAiming이 false일때만 true를 대입시킨다.
@@ -80,6 +81,7 @@ public class Player : MovingObject
     private AttackState attackState;            // 공격 상태 전환 열거
     private SpriteRenderer spriteRenderer;      // 스프라이트 렌더러
     private Color currentColor;                 // 기본 컬러셋 저장
+    private float etherLimit;
 
     // 변수 초기화
     protected override void Start()
@@ -100,6 +102,7 @@ public class Player : MovingObject
         PlayerMovingOrIdleRotate();
         CheckingPlayerFocus();
         AllPlayerMoving();
+        EtherIncreaseByTime();
         horizontal = 0;
         vertical = 0;
     }
@@ -133,6 +136,8 @@ public class Player : MovingObject
         parryCoroutine = null;
         bindingPosCoroutine = null;
         isPositionBinding = false;
+        etherLimit = ether;
+        etherIncreaseByTimeCoroutine = null;
 
         //isDash = false;
         
@@ -525,7 +530,7 @@ public class Player : MovingObject
     {
         if (ether >= etherSkill1Cost)
         {
-            ether = etherSkill1Cost;
+            //ether = etherSkill1Cost;
             isReadyToSkill1 = true;
         }
     }
@@ -534,27 +539,31 @@ public class Player : MovingObject
     // 스킬1 사용 함수
     private void ActivatingSkill1()
     {
-        Debug.Log("스킬 발사");
-        Vector2 direction = (playerAttackBox.transform.position - transform.position).normalized;
-        RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, direction, 1000);
-
-
-        // hit로 하고싶은거 로직
-        foreach (RaycastHit2D takeZamiel in hit)
+        if (ether >= etherSkill1Cost)
         {
-            if (takeZamiel.transform != null && takeZamiel.transform.tag == "Enemy")
+            Debug.Log("스킬 발사");
+            Vector2 direction = (playerAttackBox.transform.position - transform.position).normalized;
+            RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, direction, 1000);
+
+
+            // hit로 하고싶은거 로직
+            foreach (RaycastHit2D takeZamiel in hit)
             {
-                Debug.Log(takeZamiel.transform.name);
-                EnemyTest.instance.TakeSkill();
+                if (takeZamiel.transform != null && takeZamiel.transform.tag == "Enemy")
+                {
+                    Debug.Log(takeZamiel.transform.name);
+                    EnemyTest.instance.TakeSkill();
+                }
+                else if (takeZamiel.transform == null)
+                {
+                    Debug.Log("아무것도 안맞음");
+                }
             }
-            else if(takeZamiel.transform == null)
-            {
-                Debug.Log("아무것도 안맞음");
-            }
+
+            ether -= etherSkill1Cost;
+            isReadyToSkill1 = false;
         }
 
-        ether -= etherSkill1Cost; 
-        isReadyToSkill1 = false;
     }
 
     // 플레이어가 집중 상태일 때 이동속도를 저하시키고, 특정 애니메이션을 재생시킨다.
@@ -609,7 +618,7 @@ public class Player : MovingObject
         else
         {
             // 이곳에 피격 애니메이션 로직
-            health -= damage;
+            //health -= damage;
 
             if (ether > 0)
             {
@@ -617,7 +626,7 @@ public class Player : MovingObject
             }
             else
             {
-                health -= damage;
+                health -= 1;
             }
             StartCoroutine(DamagedBlinkBlack());
             //StartCoroutine(KnockBack(attackDashingDistance, damagedKnockBackTime));
@@ -640,7 +649,7 @@ public class Player : MovingObject
     // 이 함수는 체력이 줄 때 마다 플레이어의 체력이 다 소진되었는지를 검사하고 애니메이션을 재생한 뒤 오브젝트를 비활성화시킨다.
     private void CheckingIfGameOver()
     {
-        if (health <= 0)
+        if (health == 0)
         {
             GameManager.instance.GameOver();
             gameObject.SetActive(false);
@@ -695,23 +704,26 @@ public class Player : MovingObject
     // 에테르는 공격, 스킬, 피격 시에 소모되는 전투 자원이다. 플레이어는 에테르를 이용해 게임을 전략적으로 풀어나갈 수 있다.
 
     // 에테르가 시간에 따라 조금씩 차오른다.
-    private IEnumerator EtherIncreaseByTime()
+    private void EtherIncreaseByTime()
     {
-        float elapsedTime = 0f;
-
-        while (elapsedTime < etherIncreaseTime)
+        if (etherIncreaseByTimeCoroutine == null)
         {
-            elapsedTime += Time.fixedDeltaTime;
-            yield return new WaitForFixedUpdate();
+            etherIncreaseByTimeCoroutine = StartCoroutine(EtherIncrease());
         }
+    }
 
-        ether++;
-
+    private IEnumerator EtherIncrease()
+    {
+        yield return new WaitForSeconds(etherIncreaseTime);
+        Debug.Log("시간에 따른 에테르 증가");
+        ether += 0.1f;
+        etherIncreaseByTimeCoroutine = null;
     }
 
     // 적을 격파하면 적이 가지고 있는 에테르를 흡수한다.
     public void EtherIncreseByKillEnemy(float reward)
     {
+        Debug.Log("적의 에테르 흡수");
         ether += reward;
     }
 
@@ -719,39 +731,45 @@ public class Player : MovingObject
     // 공격 함수
     private void Attack()
     {
-
-        if (isContinueCombo == true)
+        if (ether >= etherAttackCost)
         {
-            switch (attackState)
+            if (isContinueCombo == true)
             {
-                case AttackState.UpSlash:
-                    animator.SetTrigger("Attack1");
-                    attackState++;
-                    break;
-                case AttackState.Downslash:
-                    animator.SetTrigger("Attack2");
-                    attackState = AttackState.UpSlash;
-                    break;
+                switch (attackState)
+                {
+                    case AttackState.UpSlash:
+                        animator.SetTrigger("Attack1");
+                        attackState++;
+                        break;
+                    case AttackState.Downslash:
+                        animator.SetTrigger("Attack2");
+                        attackState = AttackState.UpSlash;
+                        break;
+                }
+                ether -= etherAttackCost;
+                isAttack = false;
+                isContinueCombo = false;
+                StartCoroutine(DashingWhileAttack());
+                StartCoroutine(WaitForNextComboInput());
+                StartCoroutine(WaitingForBindingRotation());
             }
-            ether -= etherAttackCost;
-            isAttack = false;
-            isContinueCombo = false;
-            StartCoroutine(DashingWhileAttack());
-            StartCoroutine(WaitForNextComboInput());
-            StartCoroutine(WaitingForBindingRotation());
         }
     }
 
     // 패리 함수
     private void Parry()
     {
-        ether -= etherParryCost;
-        isReadyToParry = true;
-        parryCoroutine = StartCoroutine(DisableParryTemporarily());
-        animator.SetTrigger("Magic");
-        if (bindingPosCoroutine == null)
+        if (ether >= etherParryCost)
         {
-            bindingPosCoroutine = StartCoroutine(BindingPositionFocusing());
+            ether -= etherParryCost;
+            isReadyToParry = true;
+            parryCoroutine = StartCoroutine(DisableParryTemporarily());
+            animator.SetTrigger("Magic");
+            if (bindingPosCoroutine == null)
+            {
+                bindingPosCoroutine = StartCoroutine(BindingPositionFocusing());
+            }
         }
+
     }
 }
