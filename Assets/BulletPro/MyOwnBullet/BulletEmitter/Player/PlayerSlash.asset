@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: Pattern
   m_EditorClassIdentifier: 
   parameterType: 2
-  uniqueIndex: 2999779
+  uniqueIndex: 1554679
   profile: {fileID: 11400000}
   parent: {fileID: 114746627269426962}
   children:
@@ -24427,7 +24427,7 @@ MonoBehaviour:
   m_Name: Shot
   m_EditorClassIdentifier: 
   parameterType: 1
-  uniqueIndex: 13762620
+  uniqueIndex: 15060440
   profile: {fileID: 11400000}
   parent: {fileID: 114235044058580522}
   children:
@@ -24715,7 +24715,7 @@ MonoBehaviour:
   m_Name: Root Emitter
   m_EditorClassIdentifier: 
   parameterType: 0
-  uniqueIndex: 8644664
+  uniqueIndex: 13961407
   profile: {fileID: 11400000}
   parent: {fileID: 0}
   children:
@@ -31831,7 +31831,7 @@ MonoBehaviour:
   m_Name: Bullet
   m_EditorClassIdentifier: 
   parameterType: 0
-  uniqueIndex: 5250227
+  uniqueIndex: 4999628
   profile: {fileID: 11400000}
   parent: {fileID: 114527426404384722}
   children: []
@@ -34154,7 +34154,7 @@ MonoBehaviour:
   foldoutVFX: 1
   hideSpriteList: 0
   vfxOpened: 0
-  currentlyDisplayedModule: 2
+  currentlyDisplayedModule: 4
   canMove: 1
   canCollide: 1
   isVisible: 1
@@ -35197,7 +35197,7 @@ MonoBehaviour:
         parameterType: 0
         relativeTo: 0
         parameterName: 
-      defaultValue: 1
+      defaultValue: 0
     enumTypeName: BulletPro.PreferredTarget, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
     enumOptions:

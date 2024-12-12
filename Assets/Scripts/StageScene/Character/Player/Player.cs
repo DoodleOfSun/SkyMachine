@@ -23,6 +23,7 @@ public class Player : MovingObject
 
     // 기초 능력치 관련 변수
     public float attack;
+    public float skill1Damage;
     public int health;
     public float attackDuration;        // 공격판정 지속시간
     public float invincibleTime;        // 무적시간
@@ -123,6 +124,7 @@ public class Player : MovingObject
         horizontal = 0;
         vertical = 0;
         //zamielCountInt = 0;
+        etherLimit = 1;
 
         currentSpeed = moveSpeed;
         isAttack = false;
@@ -136,7 +138,6 @@ public class Player : MovingObject
         parryCoroutine = null;
         bindingPosCoroutine = null;
         isPositionBinding = false;
-        etherLimit = ether;
         etherIncreaseByTimeCoroutine = null;
 
         //isDash = false;
@@ -193,7 +194,7 @@ public class Player : MovingObject
         // 스킬 사용 부분
         if (Input.GetButtonDown("Jump") && isReadyToSkill1 && !isParryAiming)
         {
-            animator.SetTrigger("Magic");
+            animator.SetTrigger("Skill1");
             if (bindingPosCoroutine == null)
             {
                 bindingPosCoroutine = StartCoroutine(BindingPositionFocusing());
@@ -535,7 +536,6 @@ public class Player : MovingObject
         }
     }
 
-
     // 스킬1 사용 함수
     private void ActivatingSkill1()
     {
@@ -545,23 +545,29 @@ public class Player : MovingObject
             Vector2 direction = (playerAttackBox.transform.position - transform.position).normalized;
             RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, direction, 1000);
 
+            RotateByAction(playerAttackBox.transform.position - transform.position);
+            EtherFluctuation(etherSkill1Cost * -1f);
+            StartCoroutine(Dashing(attackDashingDistance, attackDashingTime, false));
+            Debug.Log(ether);
+            isReadyToSkill1 = false;
 
             // hit로 하고싶은거 로직
-            foreach (RaycastHit2D takeZamiel in hit)
+            foreach (RaycastHit2D hitRaycast2D in hit)
             {
-                if (takeZamiel.transform != null && takeZamiel.transform.tag == "Enemy")
+                if (hitRaycast2D.transform != null && hitRaycast2D.transform.tag == "Enemy")
                 {
-                    Debug.Log(takeZamiel.transform.name);
-                    EnemyTest.instance.TakeSkill();
+                    Debug.Log(hitRaycast2D.transform.name);
+                    if (hitRaycast2D.transform.name == "EtherDrone" && hitRaycast2D.collider.GetComponent<EtherDrone>() != null)
+                    {
+                        EtherDrone enemy = hitRaycast2D.collider.GetComponent<EtherDrone>();
+                        enemy.TakeDamage(skill1Damage);
+                    }
                 }
-                else if (takeZamiel.transform == null)
+                else if (hitRaycast2D.transform == null)
                 {
                     Debug.Log("아무것도 안맞음");
                 }
             }
-
-            ether -= etherSkill1Cost;
-            isReadyToSkill1 = false;
         }
 
     }
@@ -619,10 +625,10 @@ public class Player : MovingObject
         {
             // 이곳에 피격 애니메이션 로직
             //health -= damage;
-
+            
             if (ether > 0)
             {
-                ether -= damage;
+                EtherFluctuation(damage * -1f);
             }
             else
             {
@@ -656,8 +662,9 @@ public class Player : MovingObject
         }
     }
 
-    // 원하는 좌표와 넉백 거리, 좌표를 받아, 그 방향과 반대인 방향으로 받은 힘만큼 객체를 이동시키고, 각도를 잠시 변화시킨다.
-    public IEnumerator KnockBack(float distance, float knockBackTime)
+    // 원하는 좌표와 넉백 거리, 좌표를 받아, 그 방향으로 받은 힘만큼 객체를 이동시키고, 각도를 잠시 변화시킨다.
+    // 반대 방향으로 보낼 지 아닐지를 결정한다. -1f를 곱하느냐 아니냐의 차이로 넉백과 대쉬를 구분한다.
+    public IEnumerator Dashing(float distance, float knockBackTime, bool data)
     {
 
         float elapsedTime = 0f;
@@ -668,8 +675,17 @@ public class Player : MovingObject
         float xDir = 0;
         float yDir = 0;
 
-        xDir = (horizontal + distance * (playerAttackBox.transform.position - transform.position).normalized.x) * -1f;
-        yDir = (vertical + distance * (playerAttackBox.transform.position - transform.position).normalized.y) * -1f;
+        if (data)
+        {
+            xDir = (horizontal + distance * (playerAttackBox.transform.position - transform.position).normalized.x) * -1f;
+            yDir = (vertical + distance * (playerAttackBox.transform.position - transform.position).normalized.y) * -1f;
+        }
+        else
+        {
+
+            xDir = (horizontal + distance * (playerAttackBox.transform.position - transform.position).normalized.x);
+            yDir = (vertical + distance * (playerAttackBox.transform.position - transform.position).normalized.y);
+        }
 
         RotateByAction(playerAttackBox.transform.position - transform.position);
 
@@ -702,11 +718,12 @@ public class Player : MovingObject
 
     // 이 밑으로 에테르 관련 함수를 정의한다.
     // 에테르는 공격, 스킬, 피격 시에 소모되는 전투 자원이다. 플레이어는 에테르를 이용해 게임을 전략적으로 풀어나갈 수 있다.
+    // 에테르 최대치는 1
 
-    // 에테르가 시간에 따라 조금씩 차오른다.
+    // 최대치보다 작은 에테르가 시간에 따라 최대치까지 조금씩 차오른다.
     private void EtherIncreaseByTime()
     {
-        if (etherIncreaseByTimeCoroutine == null)
+        if (etherIncreaseByTimeCoroutine == null && ether < etherLimit)
         {
             etherIncreaseByTimeCoroutine = StartCoroutine(EtherIncrease());
         }
@@ -716,7 +733,7 @@ public class Player : MovingObject
     {
         yield return new WaitForSeconds(etherIncreaseTime);
         Debug.Log("시간에 따른 에테르 증가");
-        ether += 0.1f;
+        EtherFluctuation(0.1f);
         etherIncreaseByTimeCoroutine = null;
     }
 
@@ -724,9 +741,58 @@ public class Player : MovingObject
     public void EtherIncreseByKillEnemy(float reward)
     {
         Debug.Log("적의 에테르 흡수");
-        ether += reward;
+        EtherFluctuation(reward);
     }
 
+    // 에테르를 들어온 파라메터만큼 증감시킨다. 최대치보다 늘어날 수 없다.
+    // 부동 소수점 계산을 회피하기 위해 이곳에서의 계산은 int로 형변환후 계산한 뒤 다시 float형으로 돌려준다.
+    public void EtherFluctuation(float data)
+    {
+        if (ether + data <= 1e-07)
+        {
+            ether = 0;
+        }
+        else
+        {
+            // 현재 에테르 + 들어온 양이 최대치를 넘어서는 경우
+            if ((ether + data) >= etherLimit)
+            {
+                ether = 1;
+            }
+
+            // 둘이 더한 양이 0 미만인 경우
+            else if (ether + data < 0)
+            {
+                ether = 0;
+            }
+
+            // 0 초과 최대치 미만인 경우 정상적으로 더해준다.
+            else if (ether + data > 1.490116e-08 && ether + data <= etherLimit)
+            {
+                ether += data;
+            }
+        }
+        /*
+        // 현재 에테르 + 들어온 양이 최대치를 넘어서는 경우
+        if ((ether + data) >= etherLimit)
+        {
+            ether = 1;
+        }
+
+        // 둘이 더한 양이 0 미만인 경우
+        else if (ether + data <= 0)
+        {
+            ether = 0;
+        }
+
+        // 0 초과 최대치 미만인 경우 정상적으로 더해준다.
+        else if (ether + data > 1.490116e-08 && ether + data <= etherLimit)
+        {
+            ether += data;
+        }
+        */
+
+    }
 
     // 공격 함수
     private void Attack()
@@ -746,7 +812,7 @@ public class Player : MovingObject
                         attackState = AttackState.UpSlash;
                         break;
                 }
-                ether -= etherAttackCost;
+                EtherFluctuation(etherAttackCost * -1f);
                 isAttack = false;
                 isContinueCombo = false;
                 StartCoroutine(DashingWhileAttack());
@@ -761,7 +827,7 @@ public class Player : MovingObject
     {
         if (ether >= etherParryCost)
         {
-            ether -= etherParryCost;
+            EtherFluctuation(etherParryCost * -1);
             isReadyToParry = true;
             parryCoroutine = StartCoroutine(DisableParryTemporarily());
             animator.SetTrigger("Magic");

@@ -28,7 +28,7 @@ public class EtherDrone : MovingObject
     private EnemyState enemyState;
     private Coroutine dieCoroutine;
 
-    private float currentStunValue;
+    //private float currentStunValue;
     private float currentSpeed;
     private bool isShooting;
 
@@ -55,7 +55,7 @@ public class EtherDrone : MovingObject
         isShooting = true;
         dieCoroutine = null;
 
-        currentStunValue = 0;
+        //currentStunValue = 0;
         currentSpeed = moveSpeed;
         idleBulletEmitter.Pause();
         base.Start();
@@ -110,7 +110,7 @@ public class EtherDrone : MovingObject
         animator.SetTrigger("Die");
         Debug.Log("Á×À½");
         bulletEmitterTransform.gameObject.SetActive(false);
-        idleBulletEmitter.Kill();
+        idleBulletEmitter.Pause();
         Player.instance.EtherIncreseByKillEnemy(ether);
         yield return new WaitForSeconds(1f);
         Destroy(gameObject);

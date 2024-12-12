@@ -14,11 +14,12 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public Vector3 worldMousePos;
     [HideInInspector] public Vector3 screenMousePos;
     public Text gameOverText;
-    public Image Ether;
+    public Image ether;
+    public GameObject playerReadyToSkillAnimation;
 
-    public Image Health1;
-    public Image Health2;
-    public Image Health3;
+    public Image health1;
+    public Image health2;
+    public Image health3;
     
 
     void Awake()
@@ -32,6 +33,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        playerReadyToSkillAnimation.SetActive(false);
     }
 
     void Update()
@@ -42,15 +44,14 @@ public class GameManager : MonoBehaviour
 
     private void UpdateHealthAndEtherUI()
     {
-        Ether.fillAmount = Player.instance.ether;
-        Debug.Log(Player.instance.health);
+        ether.fillAmount = Player.instance.ether;
         if (Player.instance.health == 2)
         {
-            Health3.enabled = false;
+            health3.enabled = false;
         }
         else if (Player.instance.health == 1)
         {
-            Health2.enabled = false;
+            health2.enabled = false;
         }
         /*
         else if (Player.instance.health == 0)
@@ -58,6 +59,15 @@ public class GameManager : MonoBehaviour
             Health1.enabled = false;
         }
         */
+
+        if (Player.instance.isReadyToSkill1)
+        {
+            playerReadyToSkillAnimation.SetActive(true);
+        }
+        else
+        {
+            playerReadyToSkillAnimation.SetActive(false);
+        }
     }
 
     private void UpdateMousePos()
@@ -68,7 +78,7 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
-        Health1.enabled = false;
+        health1.enabled = false;
         gameOverText.text = "Game Over !";
         enabled = false;
     }

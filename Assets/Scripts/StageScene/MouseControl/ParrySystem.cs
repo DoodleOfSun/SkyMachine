@@ -88,7 +88,7 @@ public class ParrySystem : MonoBehaviour
             {
                 Debug.Log("패리 성공");
                 bullet.gameObject.SetActive(false);
-                Player.instance.ether++;
+                Player.instance.EtherFluctuation(0.01f);
             }
         }
     }
