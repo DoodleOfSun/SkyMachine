@@ -68,7 +68,7 @@ public class ParrySystem : MonoBehaviour
 
     private void InspectAllBullets(Transform parent)
     {
-        // 부모 객체에 적용할 검사
+        // 부모 객체에 적용할 검사 및 실질적인 탄막 처리 로직
         DestroyBulletsInZone(parent);
 
         // 부모 객체의 모든 자식 객체를 재귀적으로 탐색

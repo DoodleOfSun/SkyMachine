@@ -1399,42 +1399,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 6069884812404099248, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
-      propertyPath: ether
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6069884812404099248, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
-      propertyPath: attack
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6069884812404099248, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
-      propertyPath: health
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6069884812404099248, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
-      propertyPath: skill1Damage
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 6069884812404099248, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
-      propertyPath: etherParryCost
-      value: 0.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 6069884812404099248, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
-      propertyPath: invincibleTime
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 6069884812404099248, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
-      propertyPath: etherAttackCost
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 6069884812404099248, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
-      propertyPath: etherSkill1Cost
-      value: 0.65
-      objectReference: {fileID: 0}
-    - target: {fileID: 6069884812404099248, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
-      propertyPath: etherIncreaseTime
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 7893218233497132778, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2

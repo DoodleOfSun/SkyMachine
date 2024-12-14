@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
+using UnityEngine.EventSystems;
+using Unity.VisualScripting;
 
 public class TitleManager : MonoBehaviour
 {
@@ -10,7 +13,7 @@ public class TitleManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -33,6 +36,8 @@ public class TitleManager : MonoBehaviour
 
     private void ExitGame()
     {
+        // 유니티 에디터인 경우
+        UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
     }
 }

@@ -835,6 +835,9 @@ public class Player : MovingObject
             {
                 bindingPosCoroutine = StartCoroutine(BindingPositionFocusing());
             }
+
+            // 20241213 추가부분
+            isParryAiming = false;
         }
 
     }
