@@ -1,6 +1,7 @@
 using BulletPro;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 // 이 클래스는 에테르 드론을 어떻게 제어할것인지에 대한 스크립트이다.
@@ -28,9 +29,14 @@ public class EtherDrone : MovingObject
     private EnemyState enemyState;
     private Coroutine dieCoroutine;
 
+    private Coroutine movingCoroutine;
+    private Vector2 targetPosition;
+
     //private float currentStunValue;
     private float currentSpeed;
     private bool isShooting;
+    private bool isRandomMoved;
+    private bool isWallStuck;
 
     protected override void Start()
     {
@@ -51,9 +57,13 @@ public class EtherDrone : MovingObject
         }
 
         enemyState = EnemyState.Idle;
+        isRandomMoved = false;
+        targetPosition = Vector2.zero;
 
+        movingCoroutine = null;
         isShooting = true;
         dieCoroutine = null;
+        isWallStuck = false;
 
         //currentStunValue = 0;
         currentSpeed = moveSpeed;
@@ -75,6 +85,17 @@ public class EtherDrone : MovingObject
                 if (isShooting)
                 {
                     idleBulletEmitter.Play();
+                    if (movingCoroutine == null)
+                    {
+                        if (isWallStuck)
+                        {
+                            movingCoroutine = StartCoroutine(WallStuckingEscape());
+                        }
+                        else if(!isWallStuck)
+                        {
+                            movingCoroutine = StartCoroutine(RandomMoving());
+                        }
+                    }
                 }
                 break;
         }
@@ -92,16 +113,21 @@ public class EtherDrone : MovingObject
         hp -= damage;
         if (hp <= 0)
         {
-            isShooting = false;
-            if (dieCoroutine == null)
-            {
-                dieCoroutine = StartCoroutine(Kill());
-            }
+            Die();
         }
         else
         {
             animator.SetTrigger("Damaged");
             StartCoroutine(KnockBack(knockBackSpeed, knockBackTime));
+        }
+    }
+
+    private void Die()
+    {
+        isShooting = false;
+        if (dieCoroutine == null)
+        {
+            dieCoroutine = StartCoroutine(Kill());
         }
     }
 
@@ -150,5 +176,77 @@ public class EtherDrone : MovingObject
                 TakeDamage(Player.instance.attack);
                 break;
         }
+    }
+
+    // 드론의 무작위 이동
+    private IEnumerator RandomMoving()
+    {
+        float randomX = Random.Range(-2f, 2f);
+        float randomY = Random.Range(-2f, 2f);
+        // isRandomMoved가 false일 때 새로운 위치 지정
+        if (!isRandomMoved)
+        {
+            // 새로운 랜덤 위치 지정
+            targetPosition = new Vector2(
+                transform.position.x + randomX,
+                transform.position.y + randomY);
+            isRandomMoved = true; // 이동 시작 상태로 변경
+        }
+
+        // 현재 위치에서 목표 위치로 이동
+        while (Vector3.Distance(transform.position, targetPosition) > 0.1f) // 목표에 도달할 때까지
+        {
+            if (isWallStuck)
+            {
+                break;
+            }
+            else
+            {
+                AttemptMove(randomX, randomY);
+                //transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+                yield return null; // 다음 프레임까지 대기
+            }
+        }
+
+        // 목표 위치에 도달한 경우
+        Debug.Log("목표 위치에 도달!");
+        isRandomMoved = false; // 다시 새로운 위치 지정 가능
+        yield return new WaitForSeconds(1f); // 다음 이동 전 대기 (선택적)
+        movingCoroutine = null;
+    }
+
+    private IEnumerator WallStuckingEscape()
+    {
+        float xDir = (Player.instance.transform.position - transform.position).normalized.x;
+        float yDir = (Player.instance.transform.position - transform.position).normalized.y;
+        targetPosition = new Vector2(
+            transform.position.x + xDir,
+            transform.position.y + yDir);
+
+        while (Vector3.Distance(transform.position, targetPosition) > 0.1f)
+        {
+            AttemptMove(xDir, yDir);
+            yield return null; // 다음 프레임까지 대기
+        }
+
+        isRandomMoved = false; // 다시 새로운 위치 지정 가능
+        isWallStuck = false;
+        yield return new WaitForSeconds(1f); // 다음 이동 전 대기 (선택적)
+        movingCoroutine = null;
+
+    }
+
+    // 드론의 이동 중 벽에 막혀서 움직임이 끼이는 경우 isWallStuck을 true로 전환한다.
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("Oncolision");
+        isWallStuck = true;
+    }
+
+    // 추가적인 버그를 방지하기 위해 OnCollisionStay의 경우도 추가해주었다.
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        Debug.Log("Oncolision");
+        isWallStuck = true;
     }
 }

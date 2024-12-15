@@ -29,7 +29,6 @@ public class MovingObject : MonoBehaviour
     // 오브젝트 움직임 함수
     protected virtual void AttemptMove(float xDir, float yDir)
     {
-        //Move(xDir, yDir);
         StartCoroutine(Move(xDir, yDir));
     }
 
@@ -45,4 +44,5 @@ public class MovingObject : MonoBehaviour
 
         yield return null;
     }
+    
 }

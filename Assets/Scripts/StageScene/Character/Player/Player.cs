@@ -281,7 +281,7 @@ public class Player : MovingObject
     private IEnumerator DisableParryTemporarily()
     {
         yield return new WaitForSeconds(5f);
-        Debug.Log("패리 쿨타임 끝 5초");
+        //Debug.Log("패리 쿨타임 끝 5초");
         isParryAiming = false;
         parryCoroutine = null;
     }
@@ -541,14 +541,12 @@ public class Player : MovingObject
     {
         if (ether >= etherSkill1Cost)
         {
-            Debug.Log("스킬 발사");
             Vector2 direction = (playerAttackBox.transform.position - transform.position).normalized;
             RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, direction, 1000);
 
             RotateByAction(playerAttackBox.transform.position - transform.position);
             EtherFluctuation(etherSkill1Cost * -1f);
             StartCoroutine(Dashing(attackDashingDistance, attackDashingTime, false));
-            Debug.Log(ether);
             isReadyToSkill1 = false;
 
             // hit로 하고싶은거 로직
@@ -556,7 +554,7 @@ public class Player : MovingObject
             {
                 if (hitRaycast2D.transform != null && hitRaycast2D.transform.tag == "Enemy")
                 {
-                    Debug.Log(hitRaycast2D.transform.name);
+                    //Debug.Log(hitRaycast2D.transform.name);
                     if (hitRaycast2D.transform.name == "EtherDrone" && hitRaycast2D.collider.GetComponent<EtherDrone>() != null)
                     {
                         EtherDrone enemy = hitRaycast2D.collider.GetComponent<EtherDrone>();
@@ -565,7 +563,7 @@ public class Player : MovingObject
                 }
                 else if (hitRaycast2D.transform == null)
                 {
-                    Debug.Log("아무것도 안맞음");
+                    // 아무것도 맞지 않음
                 }
             }
         }
@@ -732,7 +730,7 @@ public class Player : MovingObject
     private IEnumerator EtherIncrease()
     {
         yield return new WaitForSeconds(etherIncreaseTime);
-        Debug.Log("시간에 따른 에테르 증가");
+        //Debug.Log("시간에 따른 에테르 증가");
         EtherFluctuation(0.1f);
         etherIncreaseByTimeCoroutine = null;
     }
@@ -740,7 +738,7 @@ public class Player : MovingObject
     // 적을 격파하면 적이 가지고 있는 에테르를 흡수한다.
     public void EtherIncreseByKillEnemy(float reward)
     {
-        Debug.Log("적의 에테르 흡수");
+        //Debug.Log("적의 에테르 흡수");
         EtherFluctuation(reward);
     }
 
