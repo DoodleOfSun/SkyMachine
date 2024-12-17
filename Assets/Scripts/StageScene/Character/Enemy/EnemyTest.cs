@@ -259,7 +259,7 @@ public class EnemyTest : MovingObject
                         Guard();
                         break;
                     case EnemyState.Stun:
-                        TakeDamage(Player.instance.attack);
+                        TakeDamage(Player.instance.Attack);
                         break;
                 }
             }

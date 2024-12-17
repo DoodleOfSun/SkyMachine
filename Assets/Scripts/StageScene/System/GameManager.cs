@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,6 +35,8 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         playerReadyToSkillAnimation.SetActive(false);
+        SceneView.lastActiveSceneView.Focus();
+        EditorWindow.focusedWindow.SendEvent(EditorGUIUtility.CommandEvent("Duplicate"));
     }
 
     void Update()

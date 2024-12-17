@@ -11,9 +11,6 @@ namespace UnityStandardAssets._2D
         public float lookAheadFactor = 3;
         public float lookAheadReturnSpeed = 0.5f;
         public float lookAheadMoveThreshold = 0.1f;
-        //public int zoomingEachFrame;  // 1프레임마다 카메라 사이즈를 조절하는 정도
-        public float camMinX = -1f;
-        public float camMaxX = 94.5f;
         public Transform target;
 
         private float offsetZ;
@@ -63,8 +60,8 @@ namespace UnityStandardAssets._2D
             aheadTargetPos.y = 0f;
             //Vector3 newPos = Vector3.SmoothDamp(transform.position, aheadTargetPos, ref currentVelocity, damping);
             Vector3 newPos = Vector3.SmoothDamp(
-                new Vector3(Math.Clamp(transform.position.x, camMinX, camMaxX), 0f, -10f),
-                new Vector3(Math.Clamp(aheadTargetPos.x, camMinX, camMaxX), 0f, -10f),
+                new Vector3(transform.position.x, 0f, -10f),
+                new Vector3(aheadTargetPos.x, 0f, -10f),
                 ref currentVelocity, damping);
 
             transform.position = newPos;

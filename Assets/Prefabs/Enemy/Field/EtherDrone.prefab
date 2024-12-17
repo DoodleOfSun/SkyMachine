@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8455932956209487475}
   - component: {fileID: 7834162188225826092}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bullet Receiver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 7257181294305073393}
   - component: {fileID: 9161452283290347834}
   - component: {fileID: 4408578203343606656}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EtherDrone
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -353,7 +353,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2008385846654797811}
   - component: {fileID: 8341473024034876798}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Idle Bullet Emitter
   m_TagString: Untagged
   m_Icon: {fileID: 0}

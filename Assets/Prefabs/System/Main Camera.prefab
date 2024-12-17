@@ -202,13 +202,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb24adc66fd184b4b9fa7b999db210b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   damping: 0.5
-  lookAheadFactor: 3
-  lookAheadReturnSpeed: 0.5
+  lookAheadFactor: 0.25
+  lookAheadReturnSpeed: 0.7
   lookAheadMoveThreshold: 0.1
-  camMinX: 0
-  camMaxX: 94.5
+  target: {fileID: 0}
 --- !u!114 &7846850133634471765
 MonoBehaviour:
   m_ObjectHideFlags: 0

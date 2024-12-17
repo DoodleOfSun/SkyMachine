@@ -5,37 +5,47 @@ using UnityEngine;
 
 public class PlayerSlash : MonoBehaviour
 {
+    //[HideInInspector] public static PlayerSlash instance;
     //private float attackValue;
-    private PolygonCollider2D slashCollider;
-    private Rigidbody2D rb2D;
+    //private PolygonCollider2D slashCollider;
+    //private Rigidbody2D rb2D;
 
     //private Animator animation;
     // Start is called before the first frame update
 
-    /*
+    
     void Start()
     {
-
-        rb2D = GetComponent<Rigidbody2D>();
-        slashCollider = GetComponent<PolygonCollider2D>();
+        Init();
     }
-    */
+    
 
-    public void Init(float attack)
+    public void Init()
     {
-        rb2D = GetComponent<Rigidbody2D>();
-        slashCollider = GetComponent<PolygonCollider2D>();
-        //attackValue = attack;
+        //rb2D = GetComponent<Rigidbody2D>();
+        //slashCollider = GetComponent<PolygonCollider2D>(); 
+        
+        /*
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
+        */
     }
 
-    public void attack(float duration)
+    public void Attack(float duration, GameObject go)
     {
-        StartCoroutine(meleeAttack(duration));
+        StartCoroutine(VFXAttack(duration, go));
     }
 
-    private IEnumerator meleeAttack(float duration)
+    private IEnumerator VFXAttack(float duration, GameObject go)
     {
         //gameObject.SetActive(true);
+        // 필요하다면 이곳에 애니메이션 로직 입력
 
         yield return new WaitForSeconds(duration);
         /*
@@ -48,18 +58,37 @@ public class PlayerSlash : MonoBehaviour
         }
         */
         // 근접공격 종료
-        gameObject.SetActive(false);
+        go.gameObject.SetActive(false);
     }
 
+    // 근접 히트박스를 활성화하는 경우, 이곳에서 적의 체력을 관리한다.
+    // 이렇게 된 이유는 적의 Rigidbody2d는 실질적인 물리 계산에 사용되기 때문에 IsTriggered를 false로 해야만 하기 때문이다.
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
-        
         if (collision.transform != null && collision.transform.tag == "Enemy")
         {
-            Debug.Log(collision.tag);
-            //GameManager.instance.currentAttackValue = attackValue;
+            if (collision.transform.name.Contains("EtherDrone"))
+            {
+                EtherDrone ed = collision.GetComponent<EtherDrone>();
+                ed.TakeDamage(DamageToEnemyHowMuch(this.transform.name));
+            }
         }
-        
+    }
+
+    // 공격 시, 히트박스 이름에 따라 그 데미지를 다르게 한다.
+    private float DamageToEnemyHowMuch(string vfxName)
+    {
+        // 공격 히트박스
+        if (vfxName.Contains("Slash"))
+        {
+            return Player.instance.attack;
+        }
+        // 레이저 히트박스
+        else if (vfxName.Contains("Laser"))
+        {
+            return Player.instance.skill1Damage;
+        }
+        Debug.LogWarning("오류 : vfxName 찾을 수 없음. 0 반환");
+        return 0;
     }
 }

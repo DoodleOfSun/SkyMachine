@@ -12,10 +12,9 @@ public class EtherDrone : MovingObject
     private enum EnemyState
     {
         Idle,
+        Damaged
     }
 
-
-    [HideInInspector] public static EtherDrone instance;
 
     public float hp;                // 체력
     public Transform bulletEmitterTransform;    // BulletEmitter 트랜스폼 위치
@@ -45,16 +44,6 @@ public class EtherDrone : MovingObject
 
     private void AllInstantiate()
     {
-
-        if (instance == null)
-        {
-            instance = this;
-        }
-
-        else if (instance != this)
-        {
-            Destroy(gameObject);
-        }
 
         enemyState = EnemyState.Idle;
         isRandomMoved = false;
@@ -98,6 +87,9 @@ public class EtherDrone : MovingObject
                     }
                 }
                 break;
+            case EnemyState.Damaged:
+                idleBulletEmitter.Pause();
+                break;
         }
     }
 
@@ -107,9 +99,24 @@ public class EtherDrone : MovingObject
         enemyState = changeState;
     }
 
+    // Damaged - > Idle
+    private IEnumerator ChangeStateDamagedToIdleByDuration(float limitedDuration)
+    {
+        float elapsedTime = 0f;
+        enemyState = EnemyState.Damaged;
+
+        while (elapsedTime < limitedDuration)
+        {
+            elapsedTime += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+
+        enemyState = EnemyState.Idle;
+    }
+
     public void TakeDamage(float damage)
     {
-        Debug.Log("에너미 데미지 받음.");
+        Debug.Log("에너미 데미지 받음. : " + damage);
         hp -= damage;
         if (hp <= 0)
         {
@@ -118,9 +125,25 @@ public class EtherDrone : MovingObject
         else
         {
             animator.SetTrigger("Damaged");
+            StartCoroutine(ChangeStateDamagedToIdleByDuration(GetAnimationClipLength("EtherDroneDamaged")));
             StartCoroutine(KnockBack(knockBackSpeed, knockBackTime));
         }
     }
+
+    private float GetAnimationClipLength(string clipName)
+    {
+        RuntimeAnimatorController ac = animator.runtimeAnimatorController;
+        foreach (AnimationClip clip in ac.animationClips)
+        {
+            if (clip.name == clipName)
+            {
+                return clip.length + 0.25f; // Damaged 애니메이션 길이 반환
+            }
+        }
+        Debug.LogWarning("애니메이션 클립을 찾을 수 없습니다: " + clipName);
+        return 0f; // 찾지 못한 경우 0 반환
+    }
+
 
     private void Die()
     {
@@ -196,7 +219,7 @@ public class EtherDrone : MovingObject
         // 현재 위치에서 목표 위치로 이동
         while (Vector3.Distance(transform.position, targetPosition) > 0.1f) // 목표에 도달할 때까지
         {
-            if (isWallStuck)
+            if (isWallStuck || enemyState == EnemyState.Damaged)
             {
                 break;
             }
@@ -209,7 +232,6 @@ public class EtherDrone : MovingObject
         }
 
         // 목표 위치에 도달한 경우
-        Debug.Log("목표 위치에 도달!");
         isRandomMoved = false; // 다시 새로운 위치 지정 가능
         yield return new WaitForSeconds(1f); // 다음 이동 전 대기 (선택적)
         movingCoroutine = null;
@@ -225,6 +247,11 @@ public class EtherDrone : MovingObject
 
         while (Vector3.Distance(transform.position, targetPosition) > 0.1f)
         {
+            if (enemyState == EnemyState.Damaged)
+            {
+                yield return null;
+                break;
+            }
             AttemptMove(xDir, yDir);
             yield return null; // 다음 프레임까지 대기
         }
@@ -236,17 +263,24 @@ public class EtherDrone : MovingObject
 
     }
 
+    // 드론의 물리적 충돌시 시행하는 로직
     // 드론의 이동 중 벽에 막혀서 움직임이 끼이는 경우 isWallStuck을 true로 전환한다.
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Oncolision");
-        isWallStuck = true;
+        if (collision != null && collision.transform.tag == "Wall")
+        {
+            //Debug.Log("Oncolision");
+            isWallStuck = true;
+        }
     }
 
     // 추가적인 버그를 방지하기 위해 OnCollisionStay의 경우도 추가해주었다.
     private void OnCollisionStay2D(Collision2D collision)
     {
-        Debug.Log("Oncolision");
-        isWallStuck = true;
+        if (collision != null && collision.transform.tag == "Wall")
+        {
+            //Debug.Log("Oncolision");
+            isWallStuck = true;
+        }
     }
 }

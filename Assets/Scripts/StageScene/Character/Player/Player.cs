@@ -53,7 +53,15 @@ public class Player : MovingObject
     public GameObject playerHitCircle;      // 플레이어 피탄점. 각도 계산에 사용하는 자식 객체임.
     public GameObject playerAttackBox;      // 피탄점의 자식 객체로, 피탄점의 각도에 따라 원을 그리며 움직임.
     public GameObject playerSpriteAndAnimation;     // 플레이어의 스프라이트와 애니메이션 오브젝트
-    
+
+    //Vfx 변수
+    // 근접 공격
+    public PlayerSlash playerSlashPrefabs;
+    private PlayerSlash playerSlashInstance;
+
+    // 스킬1 공격
+    public GameObject playerLaserTransform;
+
     
 
     public BulletEmitter be;                // 불렛이미터. 이것은 내가 공격을 할 때만 잠깐 활성화된다.
@@ -146,9 +154,18 @@ public class Player : MovingObject
         attackState = AttackState.UpSlash;
         spriteRenderer = playerSpriteAndAnimation.GetComponent<SpriteRenderer>();
         currentColor = spriteRenderer.color;
+
+        // 근접 히트박스 사용시 활성화
+        playerSlashInstance = Instantiate(playerSlashPrefabs);
+        playerSlashInstance.gameObject.SetActive(false);
+
+        // 원거리 레이저 히트박스 사용시 활성화
+        playerLaserTransform = Instantiate(playerLaserTransform);
+        playerLaserTransform.gameObject.SetActive(false);
+
         be.Pause();
     }
-
+    
     // 이 함수는 모든 플레이어의 Input 명령을 총괄한다.
     // 이 함수에서 플레이어가 입력한 명령은 이하 로직에서 bool 변수로 감지하고 처리할 것이다.
     private void AllPlayerInput()
@@ -473,17 +490,17 @@ public class Player : MovingObject
             yield return new WaitForFixedUpdate();
         }
 
-        // 히트박스 인스턴스는 이동이 끝난 후 생성한다.
-        /*
+        // 플레이어가 몬스터를 히트박스로 공격
+        
         playerSlashInstance.gameObject.SetActive(true);
         
         playerSlashInstance.transform.position = playerAttackBox.transform.position;
         playerSlashInstance.transform.rotation = playerHitCircle.transform.rotation;
-        playerSlashInstance.attack(attackDuration);
-        */
+        playerSlashInstance.Attack(attackDuration,playerSlashInstance.gameObject);
+        
 
-        // 이제 플레이어는 히트박스로 콜라이더에 공격하지 않고 검격을 날린다.
-        StartCoroutine(PlayerSwordSlashDanmaku());
+        // 플레이어가 검격을 발사하는 로직
+        // StartCoroutine(PlayerSwordSlashDanmaku());
 
         moveSpeed = currentSpeed;
     }
@@ -542,14 +559,19 @@ public class Player : MovingObject
         if (ether >= etherSkill1Cost)
         {
             Vector2 direction = (playerAttackBox.transform.position - transform.position).normalized;
-            RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, direction, 1000);
 
             RotateByAction(playerAttackBox.transform.position - transform.position);
             EtherFluctuation(etherSkill1Cost * -1f);
+
+
             StartCoroutine(Dashing(attackDashingDistance, attackDashingTime, false));
+
             isReadyToSkill1 = false;
 
-            // hit로 하고싶은거 로직
+
+            // Raycast 발사 로직
+            /*
+            RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, direction, 1000);
             foreach (RaycastHit2D hitRaycast2D in hit)
             {
                 if (hitRaycast2D.transform != null && hitRaycast2D.transform.tag == "Enemy")
@@ -566,8 +588,15 @@ public class Player : MovingObject
                     // 아무것도 맞지 않음
                 }
             }
-        }
+            */
 
+            // 히트박스 사용 시 로직
+            playerLaserTransform.SetActive(true);
+            playerLaserTransform.transform.position = playerAttackBox.transform.position;
+            playerLaserTransform.transform.rotation = playerHitCircle.transform.rotation;
+            PlayerSlash ps = playerLaserTransform.GetComponentInChildren<PlayerSlash>();
+            ps.Attack(attackDuration, playerLaserTransform);
+        }
     }
 
     // 플레이어가 집중 상태일 때 이동속도를 저하시키고, 특정 애니메이션을 재생시킨다.
@@ -770,6 +799,7 @@ public class Player : MovingObject
                 ether += data;
             }
         }
+
         /*
         // 현재 에테르 + 들어온 양이 최대치를 넘어서는 경우
         if ((ether + data) >= etherLimit)
@@ -825,7 +855,7 @@ public class Player : MovingObject
     {
         if (ether >= etherParryCost)
         {
-            EtherFluctuation(etherParryCost * -1);
+            //EtherFluctuation(etherParryCost * -1);
             isReadyToParry = true;
             parryCoroutine = StartCoroutine(DisableParryTemporarily());
             animator.SetTrigger("Magic");
