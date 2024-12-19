@@ -20,13 +20,12 @@ public class ParrySystem : MonoBehaviour
     {
         darknessVolume = GetComponent<PostProcessVolume>();
         darknessVolume.profile.TryGetSettings(out vignette);
-        Cursor.lockState = CursorLockMode.Confined;
+        
     }
 
     void FixedUpdate()
     {
         CursorControl(GameManager.instance.worldMousePos);
-        Cursor.visible = false;
         Parry();
     }
 
@@ -78,6 +77,7 @@ public class ParrySystem : MonoBehaviour
         }
     }
 
+    // 패리 구역에 존재하는 탄막을 제거
     private void DestroyBulletsInZone(Transform bullet)
     {
         Vector2 center = transform.position;
@@ -87,8 +87,10 @@ public class ParrySystem : MonoBehaviour
             if (Vector2.Distance(center, bullet.transform.position) <= radius)
             {
                 Debug.Log("패리 성공");
-                bullet.gameObject.SetActive(false);
-                Player.instance.EtherFluctuation(0.01f);
+                //bullet.gameObject.SetActive(false);
+                Bullet bulletScript = bullet.gameObject.GetComponent<Bullet>();
+                bulletScript.Die(bullet.gameObject.transform.position);
+                Player.instance.EtherFluctuation(Player.instance.parryEtherGaineValue);
             }
         }
     }

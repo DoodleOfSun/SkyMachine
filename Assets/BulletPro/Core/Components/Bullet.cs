@@ -309,7 +309,6 @@ namespace BulletPro
 		{
 			// this double check ensures that any kill function (such as BulletInitiator.KillAllBullets()) can't kill it twice
 			if (isAvailableInPool) return;
-
 			Death_BeforeVFX();
 			moduleVFX.Die(spawnFX);
 			Death_AfterVFX();			

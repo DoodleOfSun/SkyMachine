@@ -49,6 +49,8 @@ public class Player : MovingObject
     public float damagedKnockBackTime;      // 플레이어가 데미지를 받았을 때 밀쳐지는 시간
     public float bindingPosTime;            // 집중 액션 시 플레이어가 움직이지 못하는 시간
     public float etherIncreaseTime;         // 에테르가 한 사이클 차는데 걸리는 시간
+    public float parryEtherGaineValue;      // 패리 성공시 탄막 1개당 얻는 에테르의 양
+    public float parryCoolTime;             // 패리 쿨타임
 
     public GameObject playerHitCircle;      // 플레이어 피탄점. 각도 계산에 사용하는 자식 객체임.
     public GameObject playerAttackBox;      // 피탄점의 자식 객체로, 피탄점의 각도에 따라 원을 그리며 움직임.
@@ -61,6 +63,8 @@ public class Player : MovingObject
 
     // 스킬1 공격
     public GameObject playerLaserTransform;
+    public GameObject blueBarrierVFXPrefabs;
+    private GameObject blueBarrierVFX;
 
     
 
@@ -81,6 +85,7 @@ public class Player : MovingObject
     [HideInInspector] public bool isReadyToParry;            // 우클릭이 눌러진 상태에서 좌클릭을 눌렀을 때를 검사한다. true일 경우 패링을 시행한다.
     private bool isFocusing;                // 현재 쉬프트를 누르고 있는지를 검사한다.
     private bool isPositionBinding;         // 지금 플레이어의 움직임을 막아야 하는지를 검사한다.
+    private bool isBarrierActivate;
 
 
     private float horizontal;
@@ -111,9 +116,25 @@ public class Player : MovingObject
         PlayerMovingOrIdleRotate();
         CheckingPlayerFocus();
         AllPlayerMoving();
-        EtherIncreaseByTime();
+        //EtherIncreaseByTime();
+        VFXActivate();
         horizontal = 0;
         vertical = 0;
+    }
+
+    // 이곳에 위치 초기화가 실시간으로 필요한 VFX 객체들을 정의한다.
+    private void VFXActivate()
+    {
+        // 보호막
+        blueBarrierVFX.transform.position = transform.position;
+        if (isBarrierActivate)
+        {
+            blueBarrierVFX.SetActive(true);
+        }
+        else
+        {
+            blueBarrierVFX.SetActive(false);
+        }
     }
 
     // 이 함수는 플레이어의 변수들을 초기화한다.
@@ -147,6 +168,7 @@ public class Player : MovingObject
         bindingPosCoroutine = null;
         isPositionBinding = false;
         etherIncreaseByTimeCoroutine = null;
+        isBarrierActivate = false;
 
         //isDash = false;
         
@@ -162,6 +184,11 @@ public class Player : MovingObject
         // 원거리 레이저 히트박스 사용시 활성화
         playerLaserTransform = Instantiate(playerLaserTransform);
         playerLaserTransform.gameObject.SetActive(false);
+
+        // 방어막 VFX 오브젝트
+        blueBarrierVFX = Instantiate(blueBarrierVFXPrefabs);
+        blueBarrierVFX.gameObject.SetActive(false);
+
 
         be.Pause();
     }
@@ -211,7 +238,7 @@ public class Player : MovingObject
         // 스킬 사용 부분
         if (Input.GetButtonDown("Jump") && isReadyToSkill1 && !isParryAiming)
         {
-            animator.SetTrigger("Skill1");
+            
             if (bindingPosCoroutine == null)
             {
                 bindingPosCoroutine = StartCoroutine(BindingPositionFocusing());
@@ -297,7 +324,7 @@ public class Player : MovingObject
     // 혹은 이 함수에서 다른 조건을 줘서 조건을 바꿀 수도 있다.
     private IEnumerator DisableParryTemporarily()
     {
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(parryCoolTime);
         //Debug.Log("패리 쿨타임 끝 5초");
         isParryAiming = false;
         parryCoroutine = null;
@@ -493,8 +520,10 @@ public class Player : MovingObject
         // 플레이어가 몬스터를 히트박스로 공격
         
         playerSlashInstance.gameObject.SetActive(true);
-        
-        playerSlashInstance.transform.position = playerAttackBox.transform.position;
+        Vector3 middlePoint = new Vector3((playerAttackBox.transform.position.x + transform.position.x) / 2f, 
+                                          (playerAttackBox.transform.position.y + transform.position.y) / 2f, 
+                                           playerAttackBox.transform.position.z);
+        playerSlashInstance.transform.position = middlePoint;
         playerSlashInstance.transform.rotation = playerHitCircle.transform.rotation;
         playerSlashInstance.Attack(attackDuration,playerSlashInstance.gameObject);
         
@@ -558,6 +587,7 @@ public class Player : MovingObject
     {
         if (ether >= etherSkill1Cost)
         {
+            animator.SetTrigger("Skill1");
             Vector2 direction = (playerAttackBox.transform.position - transform.position).normalized;
 
             RotateByAction(playerAttackBox.transform.position - transform.position);
@@ -595,7 +625,7 @@ public class Player : MovingObject
             playerLaserTransform.transform.position = playerAttackBox.transform.position;
             playerLaserTransform.transform.rotation = playerHitCircle.transform.rotation;
             PlayerSlash ps = playerLaserTransform.GetComponentInChildren<PlayerSlash>();
-            ps.Attack(attackDuration, playerLaserTransform);
+            ps.Attack(attackDuration + 0.2f, playerLaserTransform);
         }
     }
 
@@ -652,20 +682,31 @@ public class Player : MovingObject
         {
             // 이곳에 피격 애니메이션 로직
             //health -= damage;
-            
+            // 에테르가 있을 때 피격당하면 모든 에테르가 사라지고 보호막 애니메이션을 재생한다.
             if (ether > 0)
             {
-                EtherFluctuation(damage * -1f);
+                StartCoroutine(BarrierVFXCoroutine());
+                StartCoroutine(DamagedInvincibility(invincibleTime + 0.2f));
+
+                EtherFluctuation(ether * -1f);
             }
             else
             {
+                StartCoroutine(DamagedBlinkBlack());
+                StartCoroutine(DamagedInvincibility(invincibleTime));
                 health -= 1;
             }
-            StartCoroutine(DamagedBlinkBlack());
             //StartCoroutine(KnockBack(attackDashingDistance, damagedKnockBackTime));
-            StartCoroutine(DamagedInvincibility());
             CheckingIfGameOver();
         }
+    }
+
+    private IEnumerator BarrierVFXCoroutine()
+    {
+        isBarrierActivate = true;
+        //blueBarrierVFX.transform.position = transform.position;
+        yield return new WaitForSeconds(0.8f);
+        isBarrierActivate = false;
     }
 
     private IEnumerator DamagedBlinkBlack()
@@ -729,12 +770,12 @@ public class Player : MovingObject
 
     // 피격 시 isInvincible을 잠시 true로 전환한다. 시간은 invincibleTime으로 제어한다.
     // isInvincible은 PlayerDamaged 함수에서 검사받는다. (그것이 false일 때만 데미지를 계산한다)
-    private IEnumerator DamagedInvincibility()
+    private IEnumerator DamagedInvincibility(float time)
     {
         isInvincible = true;
         float elapsedTime = 0f;
 
-        while (elapsedTime < invincibleTime)
+        while (elapsedTime < time)
         {
             elapsedTime += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();

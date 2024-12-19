@@ -59,7 +59,7 @@ MonoBehaviour:
   ether: 0.7
   etherAttackCost: 0
   etherSkill1Cost: 0.65
-  etherParryCost: 0.25
+  etherParryCost: 0
   isReadyToSkill1: 0
   blinkCount: 3
   attackDashingTime: 0.07
@@ -71,11 +71,14 @@ MonoBehaviour:
   damagedKnockBackTime: 0.07
   bindingPosTime: 0.7
   etherIncreaseTime: 5
+  parryEtherGaineValue: 0.1
+  parryCoolTime: 0.1
   playerHitCircle: {fileID: 2201969730844309069}
   playerAttackBox: {fileID: 3691370317675051510}
   playerSpriteAndAnimation: {fileID: 2061117835511673167}
   playerSlashPrefabs: {fileID: 7730612836509467791, guid: a53eec16b4ff284489a164c85fa4eeeb, type: 3}
   playerLaserTransform: {fileID: 2893902934591844617, guid: 01ca0750297edf146bf21403e779cfd2, type: 3}
+  blueBarrierVFXPrefabs: {fileID: 6514960363881052406, guid: 762c71113e092b74ca5a0dee543e7877, type: 3}
   be: {fileID: 6482925218608104629}
   br: {fileID: 5435410146504247503}
   isParryAiming: 0
