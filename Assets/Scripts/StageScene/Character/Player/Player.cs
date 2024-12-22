@@ -106,11 +106,19 @@ public class Player : MovingObject
 
     private void Update()
     {
+        if (Time.timeScale == 0f)
+        {
+            return;
+        }
         AllPlayerInput();
     }
    
     private void FixedUpdate()
     {
+        if (Time.timeScale == 0f)
+        {
+            return;
+        }
         PlayerHitCircleRotate(GameManager.instance.worldMousePos);
         CheckingSkill1Count();
         PlayerMovingOrIdleRotate();

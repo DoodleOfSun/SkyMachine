@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -30,7 +31,8 @@ public class GameManager : MonoBehaviour
     public GameObject PausedUI;
 
     private GameManagerState gmState;
-    
+
+
 
     void Awake()
     {
@@ -65,7 +67,7 @@ public class GameManager : MonoBehaviour
 
     private void SystemKeyDetecting()
     {
-        // 게임 일시정자, UI 활성화
+        // 게임 일시정지, UI 활성화
         if (Input.GetButtonDown("Cancel") && gmState == GameManagerState.GamePlay)
         {
             UsingUIPaused();
@@ -152,4 +154,17 @@ public class GameManager : MonoBehaviour
         gameOverText.text = "Game Over !";
         //enabled = false;
     }
+
+    public void ReturnToMainScene()
+    {
+        TitleManager.targetScene = "MainScene";
+        SceneManager.LoadScene("LoadingScene");
+    }
+
+    public void RestartThisScene()
+    {
+        TitleManager.targetScene = SceneManager.GetActiveScene().name;
+        SceneManager.LoadScene("LoadingScene");
+    }
+
 }

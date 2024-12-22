@@ -19,18 +19,28 @@ public class ButtonImageChanger : MonoBehaviour, IPointerDownHandler, IPointerUp
     {
         image = GetComponent<Image>();
         text = this.GetComponentInChildren<Text>();
-        currentColor = text.color;
+
+        if (text != null)
+        {
+            currentColor = text.color;
+        }
     }
 
     public void OnPointerDown(PointerEventData data)
     {
         image.sprite = pressedButtonSprite;
-        text.color = Color.black;
+        if (text != null)
+        {
+            text.color = Color.black;
+        }
     }
 
     public void OnPointerUp(PointerEventData data)
     {
         image.sprite = normalButtonSprite;
-        text.color = currentColor;
+        if (text != null)
+        {
+            text.color = currentColor;
+        }
     }
 }
