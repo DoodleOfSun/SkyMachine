@@ -11,6 +11,7 @@ public class EtherDrone : MovingObject
 
     private enum EnemyState
     {
+        Pause,      // 일시정지 상태. EnemyManager에서 Player가 일정 Transform을 통과하면 상태를 해제한다.
         Idle,
         Damaged
     }
@@ -22,6 +23,9 @@ public class EtherDrone : MovingObject
     public float knockBackSpeed;        // 넉백 시 밀려나는 속도
     public float knockBackTime;         // 넉백 시 밀려나는 시간
     public float ether;                 // 가지고 있는 에테르, 죽으면 플레이어에게 부여된다.
+    public string waveType;             // 웨이브 유형 String
+
+    public GameObject spriteAndAnimation;
 
     public Animator animator;
 
@@ -30,6 +34,8 @@ public class EtherDrone : MovingObject
 
     private Coroutine movingCoroutine;
     private Vector2 targetPosition;
+
+    private Coroutine wave1ActivateCoroutine;
 
     //private float currentStunValue;
     private float currentSpeed;
@@ -45,7 +51,7 @@ public class EtherDrone : MovingObject
     private void AllInstantiate()
     {
 
-        enemyState = EnemyState.Idle;
+        enemyState = EnemyState.Pause;
         isRandomMoved = false;
         targetPosition = Vector2.zero;
 
@@ -57,11 +63,15 @@ public class EtherDrone : MovingObject
         //currentStunValue = 0;
         currentSpeed = moveSpeed;
         idleBulletEmitter.Pause();
+
+        wave1ActivateCoroutine = null;
         base.Start();
     }
 
     void FixedUpdate()
     {
+        CheckingGameOver();
+        EnemyRotate();
         ActivateEnemyByStateUpdate();
     }
 
@@ -70,6 +80,10 @@ public class EtherDrone : MovingObject
         idleBulletEmitter.patternOrigin = bulletEmitterTransform.transform;
         switch (enemyState)
         {
+            case EnemyState.Pause:
+                CheckingWaveType();
+                break;
+
             case EnemyState.Idle:
                 if (isShooting)
                 {
@@ -87,13 +101,69 @@ public class EtherDrone : MovingObject
                     }
                 }
                 break;
+
             case EnemyState.Damaged:
                 idleBulletEmitter.Pause();
                 break;
         }
     }
 
+    private void CheckingGameOver()
+    {
+        if (GameManager.instance.gmState == GameManager.GameManagerState.GameOver)
+        {
+            enemyState = EnemyState.Pause;
+        }
+    }
+
     // 이 밑으로, 각 상태에서 사용하는 함수를 정의한다
+
+    // 웨이브 작동상황을 감지
+    private void CheckingWaveType()
+    {
+        if (GameManager.instance.wave1Activate && waveType == "Wave1")
+        {
+            //wave1ActivateCoroutine = StartCoroutine(MovingForward(-3f));
+            enemyState = EnemyState.Idle;
+        }
+
+        else if (GameManager.instance.wave2Activate && waveType == "Wave2" ||
+                 GameManager.instance.wave3Activate && waveType == "Wave3")
+        {
+            enemyState = EnemyState.Idle;
+        }
+
+        else if (waveType == "None")
+        {
+            enemyState = EnemyState.Idle;
+        }
+    }
+
+    // 적 객체의 스프라이트가 플레이어를 향해 각도를 전환함
+    private void EnemyRotate()
+    {
+        if (Player.instance.transform.position.x >= this.transform.position.x)
+        {
+            spriteAndAnimation.transform.eulerAngles = new Vector3(0f, 0f, 0f);
+        }
+        else
+        {
+            spriteAndAnimation.transform.eulerAngles = new Vector3(0f, 180f, 0f);
+        }
+    }
+
+    private IEnumerator MovingForward(float distance)
+    {
+        Vector2 targetPos = new Vector2(this.transform.position.x + distance, this.transform.position.y);
+
+        while (Vector3.Distance(this.transform.position, targetPos) > 0.1f)
+        {
+            AttemptMove(distance, 0f);
+            yield return null;
+        }
+        enemyState = EnemyState.Idle;
+    }
+
     private void ChangeStateStunToIdle(EnemyState changeState)
     {
         enemyState = changeState;

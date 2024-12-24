@@ -142,6 +142,8 @@ MonoBehaviour:
   knockBackSpeed: 10
   knockBackTime: 0.07
   ether: 0.1
+  waveType: 
+  spriteAndAnimation: {fileID: 6297517601005446244}
   animator: {fileID: 3575695226835519327}
 --- !u!50 &9161452283290347834
 Rigidbody2D:

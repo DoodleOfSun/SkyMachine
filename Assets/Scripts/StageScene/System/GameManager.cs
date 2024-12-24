@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    private enum GameManagerState
+    public enum GameManagerState
     {
         GamePlay,
         GamePaused,
@@ -20,6 +20,11 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public Vector3 worldMousePos;
     [HideInInspector] public Vector3 screenMousePos;
+
+    [HideInInspector] public bool wave1Activate;
+    [HideInInspector] public bool wave2Activate;
+    [HideInInspector] public bool wave3Activate;
+
     public Text gameOverText;
     public Image ether;
     public GameObject playerReadyToSkillAnimation;
@@ -30,7 +35,9 @@ public class GameManager : MonoBehaviour
 
     public GameObject PausedUI;
 
-    private GameManagerState gmState;
+
+    public GameManagerState gmState;
+
 
 
 
@@ -63,6 +70,10 @@ public class GameManager : MonoBehaviour
         EditorWindow.focusedWindow.SendEvent(EditorGUIUtility.CommandEvent("Duplicate"));
         Cursor.lockState = CursorLockMode.Confined;
         gmState = GameManagerState.GamePlay;
+
+        wave1Activate = false;
+        wave2Activate = false;
+        wave3Activate = false;
     }
 
     private void SystemKeyDetecting()
@@ -147,6 +158,7 @@ public class GameManager : MonoBehaviour
         worldMousePos = Camera.main.ScreenToWorldPoint(screenMousePos);
     }
 
+    // 
     public void GameOver()
     {
         gmState = GameManagerState.GameOver;
@@ -155,16 +167,25 @@ public class GameManager : MonoBehaviour
         //enabled = false;
     }
 
+    // 메인 화면으로 돌아가기
     public void ReturnToMainScene()
     {
         TitleManager.targetScene = "MainScene";
         SceneManager.LoadScene("LoadingScene");
     }
 
+    // 해당 씬을 재시작하여 게임 재도전
     public void RestartThisScene()
     {
         TitleManager.targetScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene("LoadingScene");
     }
 
+    // 게임 종료, 유니티 에디터인 경우 게임 재생을 중지
+    public void ExitGame()
+    {
+        // 유니티 에디터인 경우
+        UnityEditor.EditorApplication.isPlaying = false;
+        Application.Quit();
+    }
 }
