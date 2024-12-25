@@ -23,7 +23,7 @@ public class EtherDrone : MovingObject
     public float knockBackSpeed;        // 넉백 시 밀려나는 속도
     public float knockBackTime;         // 넉백 시 밀려나는 시간
     public float ether;                 // 가지고 있는 에테르, 죽으면 플레이어에게 부여된다.
-    public string waveType;             // 웨이브 유형 String
+    public string waveType = "";             // 웨이브 유형 String
 
     public GameObject spriteAndAnimation;
 
@@ -116,28 +116,6 @@ public class EtherDrone : MovingObject
         }
     }
 
-    // 이 밑으로, 각 상태에서 사용하는 함수를 정의한다
-
-    // 웨이브 작동상황을 감지
-    private void CheckingWaveType()
-    {
-        if (GameManager.instance.wave1Activate && waveType == "Wave1")
-        {
-            //wave1ActivateCoroutine = StartCoroutine(MovingForward(-3f));
-            enemyState = EnemyState.Idle;
-        }
-
-        else if (GameManager.instance.wave2Activate && waveType == "Wave2" ||
-                 GameManager.instance.wave3Activate && waveType == "Wave3")
-        {
-            enemyState = EnemyState.Idle;
-        }
-
-        else if (waveType == "None")
-        {
-            enemyState = EnemyState.Idle;
-        }
-    }
 
     // 적 객체의 스프라이트가 플레이어를 향해 각도를 전환함
     private void EnemyRotate()
@@ -152,6 +130,31 @@ public class EtherDrone : MovingObject
         }
     }
 
+
+    // 이 밑으로, 각 상태에서 사용하는 함수를 정의한다
+
+    // Pause에서 플레이어의 진행도를 감지
+    private void CheckingWaveType()
+    {
+        if (GameManager.instance.wave1Activate && waveType == "Wave1")
+        {
+            wave1ActivateCoroutine = StartCoroutine(MovingForward(-3f));
+            //enemyState = EnemyState.Idle;
+        }
+
+        else if (GameManager.instance.wave2Activate && waveType == "Wave2" ||
+                 GameManager.instance.wave3Activate && waveType == "Wave3")
+        {
+            enemyState = EnemyState.Idle;
+        }
+
+        else if (waveType == "")
+        {
+            enemyState = EnemyState.Idle;
+        }
+    }
+
+    // Wave 1, 해당 타입의 드론이 앞으로 전진한 후 Idle로 전환한다.
     private IEnumerator MovingForward(float distance)
     {
         Vector2 targetPos = new Vector2(this.transform.position.x + distance, this.transform.position.y);
