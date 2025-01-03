@@ -374,7 +374,7 @@ public class Player : MovingObject
     }
     
     
-    // 플레이어 피탄점 객체 회전
+    // 플레이어 피탄점 객체 회전, 플레이어 스프라이트 회전
     private void PlayerHitCircleRotate(Vector2 dir)
     {
         float angle = Mathf.Atan2(dir.y - transform.position.y, dir.x - transform.position.x) * Mathf.Rad2Deg;
@@ -431,7 +431,14 @@ public class Player : MovingObject
             }
             else
             {
-                playerSpriteAndAnimation.transform.eulerAngles = Vector3.zero;
+                if (this.transform.position.x <= playerAttackBox.transform.position.x)
+                {
+                    playerSpriteAndAnimation.transform.eulerAngles = new Vector3(0f, 0f, 0f);
+                }
+                else
+                {
+                    playerSpriteAndAnimation.transform.eulerAngles = new Vector3(0f, 180f, 0f);
+                }
             }
         }
     }
@@ -739,19 +746,19 @@ public class Player : MovingObject
     }
 
     // 원하는 좌표와 넉백 거리, 좌표를 받아, 그 방향으로 받은 힘만큼 객체를 이동시키고, 각도를 잠시 변화시킨다.
-    // 반대 방향으로 보낼 지 아닐지를 결정한다. -1f를 곱하느냐 아니냐의 차이로 넉백과 대쉬를 구분한다.
-    public IEnumerator Dashing(float distance, float knockBackTime, bool data)
+    // 반대 방향으로 보낼 지 아닐지를 결정한다. -1f를 곱하느냐 아니냐의 차이로 넉백과 대쉬를 구분한다. 참조해서 사용할 경우에는 false와 true 둘 중 하나를 넘기면 된다.
+    public IEnumerator Dashing(float distance, float knockBackTime, bool isKnockBack)
     {
 
         float elapsedTime = 0f;
 
-        isKnockBack = true;
+        this.isKnockBack = true;
         moveSpeed = knockBackSpeed;
 
         float xDir = 0;
         float yDir = 0;
 
-        if (data)
+        if (isKnockBack)
         {
             xDir = (horizontal + distance * (playerAttackBox.transform.position - transform.position).normalized.x) * -1f;
             yDir = (vertical + distance * (playerAttackBox.transform.position - transform.position).normalized.y) * -1f;
@@ -772,7 +779,7 @@ public class Player : MovingObject
             yield return new WaitForFixedUpdate();
         }
 
-        isKnockBack = false;
+        this.isKnockBack = false;
         moveSpeed = currentSpeed;
     }
 
@@ -851,21 +858,21 @@ public class Player : MovingObject
 
         /*
         // 현재 에테르 + 들어온 양이 최대치를 넘어서는 경우
-        if ((ether + data) >= etherLimit)
+        if ((ether + isKnockBack) >= etherLimit)
         {
             ether = 1;
         }
 
         // 둘이 더한 양이 0 미만인 경우
-        else if (ether + data <= 0)
+        else if (ether + isKnockBack <= 0)
         {
             ether = 0;
         }
 
         // 0 초과 최대치 미만인 경우 정상적으로 더해준다.
-        else if (ether + data > 1.490116e-08 && ether + data <= etherLimit)
+        else if (ether + isKnockBack > 1.490116e-08 && ether + isKnockBack <= etherLimit)
         {
-            ether += data;
+            ether += isKnockBack;
         }
         */
 

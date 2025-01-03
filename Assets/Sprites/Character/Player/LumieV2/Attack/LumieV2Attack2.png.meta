@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 128
+  spritePixelsToUnits: 130
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -102,10 +102,10 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 180
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 274
+        height: 167
+      alignment: 9
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -121,12 +121,12 @@ TextureImporter:
       name: LumieV2Attack2_1
       rect:
         serializedVersion: 2
-        x: 180
+        x: 274
         y: 0
-        width: 180
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 274
+        height: 167
+      alignment: 9
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -142,12 +142,12 @@ TextureImporter:
       name: LumieV2Attack2_2
       rect:
         serializedVersion: 2
-        x: 360
+        x: 548
         y: 0
-        width: 180
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 274
+        height: 167
+      alignment: 9
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -163,12 +163,12 @@ TextureImporter:
       name: LumieV2Attack2_3
       rect:
         serializedVersion: 2
-        x: 540
+        x: 822
         y: 0
-        width: 180
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 274
+        height: 167
+      alignment: 9
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -184,12 +184,12 @@ TextureImporter:
       name: LumieV2Attack2_4
       rect:
         serializedVersion: 2
-        x: 720
+        x: 1096
         y: 0
-        width: 180
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 274
+        height: 167
+      alignment: 9
+      pivot: {x: 0.4, y: 0.3}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -197,27 +197,6 @@ TextureImporter:
       bones: []
       spriteID: a9f3662984dc6df4fbf3ba3b34c14e93
       internalID: 1259955786
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: LumieV2Attack2_5
-      rect:
-        serializedVersion: 2
-        x: 900
-        y: 0
-        width: 180
-        height: 128
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: caa89f9c841bf534796f9f1cdbc0c41c
-      internalID: 2129532266
       vertices: []
       indices: 
       edges: []
@@ -238,7 +217,6 @@ TextureImporter:
       LumieV2Attack2_2: 917957932
       LumieV2Attack2_3: -654333959
       LumieV2Attack2_4: 1259955786
-      LumieV2Attack2_5: 2129532266
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

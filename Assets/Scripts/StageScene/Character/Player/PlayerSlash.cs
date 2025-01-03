@@ -72,6 +72,19 @@ public class PlayerSlash : MonoBehaviour
                 EtherDrone ed = collision.GetComponent<EtherDrone>();
                 ed.TakeDamage(DamageToEnemyHowMuch(this.transform.name));
             }
+            if (collision.transform.name.Contains("EtherBot"))
+            {
+                EtherBot eb = collision.GetComponent<EtherBot>();
+                eb.TakeDamage(DamageToEnemyHowMuch(this.transform.name));
+            }
+            if (collision.transform.name.Contains("Hester"))
+            {
+                Hester hs = collision.GetComponent<Hester>();
+                if (hs.isStun)
+                {
+                    hs.TakeDamage(DamageToEnemyHowMuch(this.transform.name));
+                }
+            }
         }
     }
 

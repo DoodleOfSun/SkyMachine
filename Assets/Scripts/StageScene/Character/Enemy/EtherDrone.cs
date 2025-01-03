@@ -35,7 +35,12 @@ public class EtherDrone : MovingObject
     private Coroutine movingCoroutine;
     private Vector2 targetPosition;
 
+    private SpriteRenderer spriteRenderer;
+    private Color currentColor;
+
     private Coroutine wave1ActivateCoroutine;
+
+    
 
     //private float currentStunValue;
     private float currentSpeed;
@@ -63,6 +68,9 @@ public class EtherDrone : MovingObject
         //currentStunValue = 0;
         currentSpeed = moveSpeed;
         idleBulletEmitter.Pause();
+
+        spriteRenderer = spriteAndAnimation.GetComponent<SpriteRenderer>();
+        currentColor = spriteRenderer.color;
 
         wave1ActivateCoroutine = null;
         base.Start();
@@ -136,18 +144,18 @@ public class EtherDrone : MovingObject
     // Pause에서 플레이어의 진행도를 감지
     private void CheckingWaveType()
     {
+        
+
         if (GameManager.instance.wave1Activate && waveType == "Wave1")
         {
-            wave1ActivateCoroutine = StartCoroutine(MovingForward(-3f));
-            //enemyState = EnemyState.Idle;
-        }
-
-        else if (GameManager.instance.wave2Activate && waveType == "Wave2" ||
-                 GameManager.instance.wave3Activate && waveType == "Wave3")
-        {
+            
             enemyState = EnemyState.Idle;
         }
-
+        else if (GameManager.instance.wave2Activate && waveType == "Wave2")
+        {
+            StartCoroutine(MovingForward(-3f));
+            //enemyState = EnemyState.Idle;
+        }
         else if (waveType == "")
         {
             enemyState = EnemyState.Idle;
@@ -198,8 +206,19 @@ public class EtherDrone : MovingObject
         else
         {
             animator.SetTrigger("Damaged");
+            StartCoroutine(DamagedBlinkBlack(3f, 0.1f));
             StartCoroutine(ChangeStateDamagedToIdleByDuration(GetAnimationClipLength("EtherDroneDamaged")));
             StartCoroutine(KnockBack(knockBackSpeed, knockBackTime));
+        }
+    }
+    private IEnumerator DamagedBlinkBlack(float blinkCount, float blinkDuration)
+    {
+        for (int i = 0; i < blinkCount; i++)
+        {
+            spriteRenderer.color = Color.black;    // 검은색 전환
+            yield return new WaitForSeconds(blinkDuration);
+            spriteRenderer.color = currentColor;  // 원래 색상으로 복원
+            yield return new WaitForSeconds(blinkDuration);
         }
     }
 
