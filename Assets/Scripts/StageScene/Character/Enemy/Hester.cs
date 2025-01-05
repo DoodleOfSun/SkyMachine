@@ -1,6 +1,7 @@
 using BulletPro;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Hester : MovingObject
@@ -36,20 +37,36 @@ public class Hester : MovingObject
     public BulletEmitter counterBulletEmitter;  // 카운터 상태 시 사용하는 Bullet Emitter
 
     public GameObject spriteAndAnimation;
+
+    // VFX
+    public GameObject barrierVFXPrefabs;
+    private GameObject barrierVFX;
+    public GameObject rageVFXPrefabs;
+    private GameObject rageVFX;
+    public GameObject stunVFXPrefabs;
+    private GameObject stunVFX;
+
+
     private SpriteRenderer spriteRenderer;
     private Animator animator;
     private Color currentColor;
 
+    private bool isWallStuck;
+    private bool isRandomMoved;
 
     private EnemyState enemyState;
 
     private bool isDamagedWhileGuard;
+
+    private Vector2 targetPosition;
 
     private int currentGuardCount;
     private float currentStunValue;
     private float currentSpeed;
 
     private Coroutine attackCoroutine;
+    private Coroutine movingCoroutine;
+    private Coroutine rageCoroutine;
 
     protected override void Start()
     {
@@ -79,6 +96,8 @@ public class Hester : MovingObject
         }
         */
 
+        targetPosition = Vector2.zero;
+
         enemyState = EnemyState.Idle;
 
         isDamagedWhileGuard = false;
@@ -92,6 +111,21 @@ public class Hester : MovingObject
         animator = spriteAndAnimation.GetComponent<Animator>();
         isStun = false;
         attackCoroutine = null;
+        movingCoroutine = null;
+        rageCoroutine = null;
+        isWallStuck = false;
+        isRandomMoved = false;
+        // 방어막 VFX 오브젝트
+        barrierVFX = Instantiate(barrierVFXPrefabs);
+        barrierVFX.gameObject.SetActive(false);
+        
+        // 분노 VFX 오브젝트
+        rageVFX = Instantiate(rageVFXPrefabs);
+        rageVFX.gameObject.SetActive(false);
+
+        // 기절 VFX 오브젝트
+        stunVFX = Instantiate(stunVFXPrefabs);
+        stunVFX.gameObject.SetActive(false);
         base.Start();
     }
 
@@ -132,23 +166,42 @@ public class Hester : MovingObject
                 Debug.Log("현재 Pause중");
                 break;
             case EnemyState.Idle:
+
                 if (attackCoroutine == null)
                 {
-                    attackCoroutine = StartCoroutine(IdleAttack(0.345f));
+                    attackCoroutine = StartCoroutine(IdleAttack(0.7f));
                 }
+
+                if (movingCoroutine == null)
+                {
+                    if (isWallStuck)
+                    {
+                        movingCoroutine = StartCoroutine(WallStuckingEscape());
+                    }
+                    else if (!isWallStuck)
+                    {
+                        movingCoroutine = StartCoroutine(RandomMoving());
+                    }
+                }
+
                 //idleBulletEmitter.Play();
                 //counterBulletEmitter.Pause();
                 break;
             case EnemyState.Guard:
-
                 break;
             case EnemyState.Counter:
-                //idleBulletEmitter.Pause();
-                //counterBulletEmitter.Play();
+
+                if (attackCoroutine == null)
+                {
+                    attackCoroutine = StartCoroutine(IdleAttack(0.3f));
+                }
+                if (rageCoroutine == null)
+                {
+                    rageCoroutine = StartCoroutine(RageAttack(0.7f));
+                }
                 break;
             case EnemyState.Stun:
-                //idleBulletEmitter.Pause();
-                //counterBulletEmitter.Pause();
+                stunVFX.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 1f, this.transform.position.z + -1);
                 break;
         }
         isDamagedWhileGuard = false;
@@ -194,12 +247,48 @@ public class Hester : MovingObject
         attackCoroutine = null;
     }
 
+    private IEnumerator RageAttack(float limitedTime)
+    {
+        float elapsedTime = 0f;
+        // 실제로 탄막을 쏘고 Pause로 돌리는데 0.2f가 걸리게 한다. (이유는 BulletEmitter에서 공격속도를 0.2F로 조정해놓았기 때문에.)
+
+        while (elapsedTime < 0.1f)
+        {
+            elapsedTime += Time.fixedDeltaTime;
+            yield return null;
+        }
+
+        elapsedTime = 0f;
+
+        counterBulletEmitter.Play();
+
+        while (elapsedTime < 0.2f)
+        {
+            elapsedTime += Time.fixedDeltaTime;
+            yield return null;
+        }
+
+        counterBulletEmitter.Stop();
+
+        // 초기화하고 다시 공격할떄까지 대기
+
+        elapsedTime = 0f;
+
+        while (elapsedTime < limitedTime)
+        {
+            elapsedTime += Time.fixedDeltaTime;
+            yield return null;
+        }
+
+        rageCoroutine = null;
+    }
+
+
 
     // 이 함수는 가드 상태에서 피격당하면 스턴치를 쌓는다. 이 함수는 일정 시간동안 공격당하지 않으면 상태를 Idle로 전환시킨다.
     // GuardCount 만큼 피격당하면 플레이어를 크게 밀쳐내고 Counter 상태로 전환시킨다.
     private void Guard()
     {
-        // 가드 애니메이션 실행
         // 가드 횟수 검사 후 플레이어를 밀쳐내고 카운터 공격 실행
         if (currentGuardCount >= guardCountLimit)
         {
@@ -209,19 +298,35 @@ public class Hester : MovingObject
             ChangeStateGuardToCounter();
             currentGuardCount = 0;
         }
+
         // 가드 횟수와 스턴치를 쌓고 애니메이션 재생
         else
         {
+            // 가드 애니메이션 실행
+            animator.SetTrigger("Attack");
+            StartCoroutine(GuardVFX());
             currentGuardCount++;
             currentStunValue++;
-
+            Debug.Log(currentStunValue);
             // 플레이어를 밀침
             StartCoroutine(Player.instance.Dashing(guardKnockBackValue, guardKnockBackTime, true));
 
             // 애니메이션 재생
 
         }
+    }
 
+    private IEnumerator GuardVFX()
+    {
+        barrierVFX.transform.position = this.transform.position;
+        barrierVFX.SetActive(true);
+        float elapsedTime = 0f;
+        while (elapsedTime < 0.5f)
+        {
+            elapsedTime += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        barrierVFX.SetActive(false);
     }
 
     // 상태를 전환시켜주는 함수들
@@ -281,6 +386,9 @@ public class Hester : MovingObject
     // 이유는 대개 카운터에서 다른 상태가 된다면 스턴밖에 없는데, 스턴 그거 무시하고 Idle로 돌려줄 이유가 없음.
     private IEnumerator Counter()
     {
+        rageVFX.transform.position = this.transform.position;
+        rageVFX.SetActive(true);
+        
         enemyState = EnemyState.Counter;
         float elapsedTime = 0f;
         while (elapsedTime < counterDurationLimit)
@@ -293,8 +401,11 @@ public class Hester : MovingObject
             yield return new WaitForFixedUpdate();
         }
 
+        rageVFX.SetActive(false);
         enemyState = EnemyState.Idle;
     }
+
+
 
     // 스턴 -> 통상
     private void ChangeStateStunToIdle(EnemyState changeState)
@@ -302,6 +413,67 @@ public class Hester : MovingObject
         enemyState = changeState;
     }
 
+    private IEnumerator RandomMoving()
+    {
+        float randomX = Random.Range(-2f, 2f);
+        float randomY = Random.Range(-2f, 2f);
+        // isRandomMoved가 false일 때 새로운 위치 지정
+        if (!isRandomMoved)
+        {
+            // 새로운 랜덤 위치 지정
+            targetPosition = new Vector2(
+                transform.position.x + randomX,
+                transform.position.y + randomY);
+            isRandomMoved = true; // 이동 시작 상태로 변경
+        }
+
+        // 현재 위치에서 목표 위치로 이동
+        while (Vector3.Distance(transform.position, targetPosition) > 0.1f) // 목표에 도달할 때까지
+        {
+            if (isWallStuck || enemyState == EnemyState.Guard || enemyState == EnemyState.Counter)
+            {
+                break;
+            }
+            else
+            {
+                AttemptMove(randomX, randomY);
+                //transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+                yield return null; // 다음 프레임까지 대기
+            }
+        }
+
+        // 목표 위치에 도달한 경우
+        isRandomMoved = false; // 다시 새로운 위치 지정 가능
+        yield return new WaitForSeconds(1f); // 다음 이동 전 대기 (선택적)
+        movingCoroutine = null;
+    }
+
+
+    private IEnumerator WallStuckingEscape()
+    {
+        float xDir = (Player.instance.transform.position - transform.position).normalized.x;
+        float yDir = (Player.instance.transform.position - transform.position).normalized.y;
+        targetPosition = new Vector2(
+            transform.position.x + xDir,
+            transform.position.y + yDir);
+
+        while (Vector3.Distance(transform.position, targetPosition) > 0.1f)
+        {
+            if (enemyState == EnemyState.Guard || enemyState == EnemyState.Stun)
+            {
+                yield return null;
+                break;
+            }
+            AttemptMove(xDir, yDir);
+            yield return null; // 다음 프레임까지 대기
+        }
+
+        isRandomMoved = false; // 다시 새로운 위치 지정 가능
+        isWallStuck = false;
+        yield return new WaitForSeconds(1f); // 다음 이동 전 대기 (선택적)
+        movingCoroutine = null;
+
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -329,9 +501,23 @@ public class Hester : MovingObject
                         break;
                 }
             }
+            else if (collision.transform.tag == "Wall")
+            {
+                //Debug.Log("Oncolision");
+                isWallStuck = true;
+            }
         }
     }
 
+    // 추가적인 버그를 방지하기 위해 OnCollisionStay의 경우도 추가해주었다.
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision != null && collision.transform.tag == "Wall")
+        {
+            //Debug.Log("Oncolision");
+            isWallStuck = true;
+        }
+    }
     public void TakeDamage(float damage)
     {
         Debug.Log("에너미 데미지 받음.");
@@ -406,7 +592,8 @@ public class Hester : MovingObject
     private IEnumerator Stun()
     {
         Debug.Log("가드 브레이크! 스턴!");
-
+        stunVFX.transform.position = this.transform.position;
+        stunVFX.SetActive(true);
         currentStunValue = 0;
         enemyState = EnemyState.Stun;
 
@@ -424,6 +611,7 @@ public class Hester : MovingObject
             yield return new WaitForFixedUpdate();
         }
 
+        stunVFX.SetActive(false);
         isStun = false;
         Debug.Log("스턴 종료");
         ChangeStateStunToIdle(EnemyState.Idle);

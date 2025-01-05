@@ -144,8 +144,6 @@ public class EtherDrone : MovingObject
     // Pause에서 플레이어의 진행도를 감지
     private void CheckingWaveType()
     {
-        
-
         if (GameManager.instance.wave1Activate && waveType == "Wave1")
         {
             

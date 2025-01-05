@@ -53,7 +53,8 @@ namespace BulletPro
 		// Component references, serialized to spare time at Awake
 		public Transform self;
 		public SpriteRenderer spriteRenderer;
-		public MeshRenderer meshRenderer;
+        private SpriteRenderer spriteRendererForDieAnime;
+        public MeshRenderer meshRenderer;
 		public MeshFilter meshFilter;
 		public BulletRenderMode renderMode; // stored in this script because it helps handle pooling
 
@@ -123,6 +124,7 @@ namespace BulletPro
 
 		#region Monobehaviour
 
+
 		// Start sets up all modules and references at the beginning of the scene
 		public void Start()
 		{
@@ -174,6 +176,8 @@ namespace BulletPro
 			moduleParameters.Awake();
 			moduleVFX.Awake();
 			dynamicSolver.Awake();
+
+			spriteRendererForDieAnime = GetComponent<SpriteRenderer>();
 
 			// Get references to managers
 			GetManagers();
@@ -296,12 +300,21 @@ namespace BulletPro
 		// Overload 1 : Make this bullet die, thus eligible to pooling again.
 		public void Die(Vector3 vfxPosition)
 		{
+			DieCustomVFX();
 			// this double check ensures that any kill function (such as BulletInitiator.KillAllBullets()) can't kill it twice
 			if (isAvailableInPool) return;
 
 			Death_BeforeVFX();
 			moduleVFX.Die(vfxPosition);
 			Death_AfterVFX();
+		}
+
+		private void DieCustomVFX()
+		{
+			if (spriteRendererForDieAnime.enabled)
+			{
+				StartCoroutine(GameManager.instance.DieVFX(spriteRendererForDieAnime.sprite.name, this.transform.position));
+            }
 		}
 
 		// Overload 2 : Setting the argument to false disallows VFX. "true" launches VFX at bullet position.

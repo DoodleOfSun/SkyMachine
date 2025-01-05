@@ -1,6 +1,8 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Xml.Linq;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -39,6 +41,18 @@ public class GameManager : MonoBehaviour
     public GameManagerState gmState;
 
 
+    // VFX 오브젝트 풀. 딕셔너리 자료구조 이용
+    public List<VFXPrefab> vfxPrefabs; // 여러 VFX 프리팹 리스트
+    private Dictionary<string, Queue<GameObject>> vfxPools = new Dictionary<string, Queue<GameObject>>(); // VFX 풀 딕셔너리
+    public int poolSize = 10; // 기본 풀 크기
+
+    [System.Serializable]
+    public class VFXPrefab
+    {
+        public string name; // VFX 이름
+        public GameObject prefab; // VFX 프리팹
+    }
+
 
 
     void Awake()
@@ -74,6 +88,27 @@ public class GameManager : MonoBehaviour
         wave1Activate = false;
         wave2Activate = false;
         wave3Activate = false;
+
+        foreach (var vfx in vfxPrefabs)
+        {
+            InitializePool(vfx.name, vfx.prefab);
+        }
+    }
+    private void InitializePool(string vfxName, GameObject prefab)
+    {
+        if (!vfxPools.ContainsKey(vfxName))
+        {
+            Queue<GameObject> newPool = new Queue<GameObject>();
+
+            for (int i = 0; i < poolSize; i++)
+            {
+                GameObject vfx = Instantiate(prefab);
+                vfx.SetActive(false);
+                newPool.Enqueue(vfx);
+            }
+
+            vfxPools.Add(vfxName, newPool); // 풀 추가
+        }
     }
 
     private void SystemKeyDetecting()
@@ -187,5 +222,63 @@ public class GameManager : MonoBehaviour
         // 유니티 에디터인 경우
         UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
+    }
+
+    public IEnumerator DieVFX(string vfxName, Vector2 position)
+    {
+        GameObject vfx = GetVFX(vfxName);
+
+        if (vfx != null)
+        {
+            vfx.transform.position = position;
+
+            // 일정 시간 후 반환
+            // 초록탄환
+            if (vfxName.Contains("Green"))
+            {
+                yield return new WaitForSeconds(0.3f);
+            }
+            // 헤스터의 수류탄
+            else if (vfxName.Contains("Granade"))
+            {
+                yield return new WaitForSeconds(0.6f);
+            }
+            ReturnVFX(vfxName, vfx);
+        }
+
+        yield return null;
+    }
+
+    private GameObject GetVFX(string vfxName)
+    {
+        if (vfxPools.ContainsKey(vfxName) && vfxPools[vfxName].Count > 0)
+        {
+            GameObject vfx = vfxPools[vfxName].Dequeue();
+            vfx.SetActive(true);
+            return vfx;
+        }
+        else if (vfxPools.ContainsKey(vfxName))
+        {
+            // 풀이 비어있을 경우 새로 생성
+            GameObject vfx = Instantiate(vfxPrefabs.Find(vfx => vfx.name == vfxName).prefab);
+            return vfx;
+        }
+
+        Debug.LogWarning($"VFX {vfxName} not found!");
+        return null;
+    }
+
+    private void ReturnVFX(string vfxName, GameObject vfx)
+    {
+        if (vfxPools.ContainsKey(vfxName))
+        {
+            vfx.SetActive(false);
+            vfxPools[vfxName].Enqueue(vfx); // 풀에 다시 추가
+        }
+        else
+        {
+            Debug.LogWarning($"VFX {vfxName} not found in pool!");
+            Destroy(vfx); // 예외적으로 풀에 없으면 제거
+        }
     }
 }
