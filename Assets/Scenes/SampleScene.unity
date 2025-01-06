@@ -914,6 +914,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hester
       objectReference: {fileID: 0}
+    - target: {fileID: 4367920706013287944, guid: 5d3069fc159fb944886f56aa06f48429, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5158169610624219666, guid: 5d3069fc159fb944886f56aa06f48429, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.06
@@ -1027,6 +1031,18 @@ PrefabInstance:
     - target: {fileID: 947161417112194471, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5255153219277889391, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 62fe84395d136034eb20e25d55c47914, type: 2}
+    - target: {fileID: 6069884812404099248, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
+      propertyPath: ether
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6069884812404099248, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
+      propertyPath: parryCoolTime
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7893218233497132778, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
       propertyPath: m_LocalPosition.x

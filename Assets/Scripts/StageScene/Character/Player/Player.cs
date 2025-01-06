@@ -86,6 +86,9 @@ public class Player : MovingObject
     private bool isFocusing;                // 현재 쉬프트를 누르고 있는지를 검사한다.
     private bool isPositionBinding;         // 지금 플레이어의 움직임을 막아야 하는지를 검사한다.
     private bool isBarrierActivate;
+    private bool isAttacking;
+    private bool isParrying;
+    private bool isSkill1Playing;
 
 
     private float horizontal;
@@ -96,6 +99,7 @@ public class Player : MovingObject
     private SpriteRenderer spriteRenderer;      // 스프라이트 렌더러
     private Color currentColor;                 // 기본 컬러셋 저장
     private float etherLimit;
+    private string currentAnimeState;
 
     // 변수 초기화
     protected override void Start()
@@ -119,6 +123,17 @@ public class Player : MovingObject
         {
             return;
         }
+
+        Debug.Log(" ");
+        Debug.Log(" ");
+        Debug.Log(" ");
+        Debug.Log("isMoving : " + isMoving);
+        Debug.Log("isParryAiming : " + isParryAiming);
+        Debug.Log("isAttacking : " + isAttacking);
+        Debug.Log("isParrying : " + isParrying);
+        Debug.Log("isSkill1Playing : " + isSkill1Playing);
+
+        
         PlayerHitCircleRotate(GameManager.instance.worldMousePos);
         CheckingSkill1Count();
         PlayerMovingOrIdleRotate();
@@ -126,8 +141,49 @@ public class Player : MovingObject
         AllPlayerMoving();
         //EtherIncreaseByTime();
         VFXActivate();
+        PlayingAnimation();
         horizontal = 0;
         vertical = 0;
+    }
+
+    // 조건에 따른 애니메이션 재생
+    private void PlayingAnimation()
+    {
+        string newState = "";
+
+        // 이동
+        if (isMoving && !isAttacking && !isParryAiming && !isParrying && !isSkill1Playing)
+        {
+            newState = "Move";
+        }
+        // 패리
+        else if (!isMoving && !isAttacking && !isParryAiming && isParrying && !isSkill1Playing)
+        {
+            newState = "Parry";
+        }
+        // 조준
+        else if ((!isMoving && !isAttacking && isParryAiming && !isParrying && !isSkill1Playing) ||
+                 (isMoving && !isAttacking && isParryAiming && !isParrying && !isSkill1Playing))
+        {
+            newState = "MagicMove2";
+        }
+        // 스킬 사용
+        else if (!isMoving && !isAttacking && !isParryAiming && !isParrying && isSkill1Playing)
+        {
+            newState = "Skill1";
+        }
+        // 대기
+        else if (!isMoving && !isAttacking && !isParryAiming && !isParrying && !isSkill1Playing)
+        {
+            newState = "Idle";
+        }
+
+        // 상태 변경이 있을 때만 애니메이션 트리거
+        if (newState != currentAnimeState)
+        {
+            animator.SetTrigger(newState);
+            currentAnimeState = newState;
+        }
     }
 
     // 이곳에 위치 초기화가 실시간으로 필요한 VFX 객체들을 정의한다.
@@ -177,6 +233,9 @@ public class Player : MovingObject
         isPositionBinding = false;
         etherIncreaseByTimeCoroutine = null;
         isBarrierActivate = false;
+        isAttacking = false;
+        isParrying = false;
+        isSkill1Playing = false;
 
         //isDash = false;
         
@@ -197,7 +256,7 @@ public class Player : MovingObject
         blueBarrierVFX = Instantiate(blueBarrierVFXPrefabs);
         blueBarrierVFX.gameObject.SetActive(false);
 
-
+        currentAnimeState = "";
         be.Pause();
     }
     
@@ -208,15 +267,15 @@ public class Player : MovingObject
 
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
-
+        // 원래 애니메이션
         if (horizontal != 0 || vertical != 0)
         {
-            animator.SetTrigger("IdleToMove");
+            //animator.SetTrigger("IdleToMove");
             isMoving = true;
         }
         else
         {
-            animator.SetTrigger("MoveToIdle");
+            //animator.SetTrigger("MoveToIdle");
             isMoving = false;
         }
 
@@ -602,18 +661,15 @@ public class Player : MovingObject
     {
         if (ether >= etherSkill1Cost)
         {
-            animator.SetTrigger("Skill1");
+            // 원래 애니메이션
+            //animator.SetTrigger("Skill1");
             Vector2 direction = (playerAttackBox.transform.position - transform.position).normalized;
-
+            StartCoroutine(Skill1DurationPlayForAnimation());
             RotateByAction(playerAttackBox.transform.position - transform.position);
             EtherFluctuation(etherSkill1Cost * -1f);
-
-
             StartCoroutine(Dashing(attackDashingDistance, attackDashingTime, false));
 
             isReadyToSkill1 = false;
-
-
             // Raycast 발사 로직
             /*
             RaycastHit2D[] hit = Physics2D.RaycastAll(transform.position, direction, 1000);
@@ -644,6 +700,13 @@ public class Player : MovingObject
         }
     }
 
+    private IEnumerator Skill1DurationPlayForAnimation()
+    {
+        isSkill1Playing = true;
+        yield return new WaitForSeconds(0.5f);
+        isSkill1Playing = false;
+    }
+
     // 플레이어가 집중 상태일 때 이동속도를 저하시키고, 특정 애니메이션을 재생시킨다.
     // 집중 상태는 플레이어가 원거리 공격을 조준중이거나, 마법진을 소환할 때 두가지가 있다.
     private void CheckingPlayerFocus()
@@ -652,15 +715,21 @@ public class Player : MovingObject
         if (isParryAiming && parryCoroutine == null || isFocusing)
         {
             moveSpeed = focusSpeed;
-            /*
-            animator.SetTrigger("IdleToMagicMove");
-            animator.SetTrigger("MoveToMagicMove");
-            */
             if (isParryAiming)
             {
-                animator.SetTrigger("IdleToMagicMove");
-                animator.SetTrigger("MoveToMagicMove");
 
+                // 애니메이션 로직 테스트
+                // 원래 애니메이션
+                /*
+                if (isMoving)
+                {
+                    animator.SetTrigger("MoveToMagicMove");
+                }
+                else
+                {
+                    animator.SetTrigger("IdleToMagicMove");
+                }
+                */
                 playerSpriteAndAnimation.transform.eulerAngles = new Vector3(0f, 180f, 0f);
                 if (playerHitCircle.transform.eulerAngles.z >= 0f && playerHitCircle.transform.eulerAngles.z < 180f)
                 {
@@ -678,8 +747,32 @@ public class Player : MovingObject
         {
             moveSpeed = currentSpeed;
 
-            animator.SetTrigger("MagicMoveToIdle");
-            animator.SetTrigger("MagicMoveToMove");
+            // 애니메이션 로직 테스트 원래 애니메이션
+            /*
+            if (!isFocusing && !isParryAiming)
+            {
+                if (isMoving)
+                {
+                    animator.SetTrigger("MagicMoveToMove");
+                }
+                else
+                {
+                    animator.SetTrigger("MagicMoveToIdle");
+                }
+            }
+            else if (isParryAiming)
+            {
+                if (isMoving)
+                {
+                    animator.SetTrigger("MoveToMagicMove");
+                }
+                else
+                {
+                    animator.SetTrigger("IdleToMagicMove");
+                }
+            }
+            */
+
 
             playerHitCircle.GetComponent<SpriteRenderer>().enabled = false;
         }
@@ -899,6 +992,7 @@ public class Player : MovingObject
                 EtherFluctuation(etherAttackCost * -1f);
                 isAttack = false;
                 isContinueCombo = false;
+                StartCoroutine(AttackDurationPlayForAnimation());
                 StartCoroutine(DashingWhileAttack());
                 StartCoroutine(WaitForNextComboInput());
                 StartCoroutine(WaitingForBindingRotation());
@@ -906,15 +1000,25 @@ public class Player : MovingObject
         }
     }
 
+    private IEnumerator AttackDurationPlayForAnimation()
+    {
+        isAttacking = true;
+        yield return new WaitForSeconds(0.5f);
+        isAttacking = false;
+    }
+
     // 패리 함수
     private void Parry()
     {
         if (ether >= etherParryCost)
         {
+            // 원래 애니메이션
+            //animator.SetTrigger("Parry");
             //EtherFluctuation(etherParryCost * -1);
+            StartCoroutine(ParryDurationPlayForAnimation());
             isReadyToParry = true;
             parryCoroutine = StartCoroutine(DisableParryTemporarily());
-            animator.SetTrigger("Magic");
+
             if (bindingPosCoroutine == null)
             {
                 bindingPosCoroutine = StartCoroutine(BindingPositionFocusing());
@@ -923,6 +1027,14 @@ public class Player : MovingObject
             // 20241213 추가부분
             isParryAiming = false;
         }
-
     }
+
+    private IEnumerator ParryDurationPlayForAnimation()
+    {
+        isParrying = true;
+        isParryAiming = false;
+        yield return new WaitForSeconds(1f);
+        isParrying = false;
+    }
+
 }

@@ -56,7 +56,7 @@ MonoBehaviour:
   health: 3
   attackDuration: 0.5
   invincibleTime: 0.2
-  ether: 0.7
+  ether: 0.5
   etherAttackCost: 0
   etherSkill1Cost: 0.65
   etherParryCost: 0
