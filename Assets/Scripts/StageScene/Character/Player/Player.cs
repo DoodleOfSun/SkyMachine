@@ -151,16 +151,20 @@ public class Player : MovingObject
     {
         string newState = "";
 
-        // 이동
-        if (isMoving && !isAttacking && !isParryAiming && !isParrying && !isSkill1Playing)
-        {
-            newState = "Move";
-        }
+        
         // 패리
-        else if (!isMoving && !isAttacking && !isParryAiming && isParrying && !isSkill1Playing)
+        if (!isMoving && !isAttacking && !isParryAiming && isParrying && !isSkill1Playing ||
+                  isMoving && !isAttacking && !isParryAiming && isParrying && !isSkill1Playing)
         {
             newState = "Parry";
         }
+
+        // 이동
+        else if (isMoving && !isAttacking && !isParryAiming && !isParrying && !isSkill1Playing)
+        {
+            newState = "Move";
+        }
+
         // 조준
         else if ((!isMoving && !isAttacking && isParryAiming && !isParrying && !isSkill1Playing) ||
                  (isMoving && !isAttacking && isParryAiming && !isParrying && !isSkill1Playing))
@@ -1033,7 +1037,7 @@ public class Player : MovingObject
     {
         isParrying = true;
         isParryAiming = false;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.6f);
         isParrying = false;
     }
 
