@@ -8,7 +8,7 @@ public class WaveManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Player.instance.transform.position.x >= this.transform.position.x && !GameManager.instance.wave1Activate && this.transform.name == "Wave1Trigger")
+        if (!CutsceneManager.instance.isCutscene && !GameManager.instance.wave1Activate && this.transform.name == "Wave1Trigger")
         {
             GameManager.instance.wave1Activate = true;
             enabled = false;    

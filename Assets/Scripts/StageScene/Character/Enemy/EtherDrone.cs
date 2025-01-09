@@ -38,7 +38,8 @@ public class EtherDrone : MovingObject
     private SpriteRenderer spriteRenderer;
     private Color currentColor;
 
-    private Coroutine wave1ActivateCoroutine;
+#pragma warning disable CS0414
+    [SerializeField] private Coroutine wave1ActivateCoroutine;
 
     
 
@@ -160,16 +161,19 @@ public class EtherDrone : MovingObject
         }
     }
 
-    // Wave 1, 해당 타입의 드론이 앞으로 전진한 후 Idle로 전환한다.
+    // Wave 2, 해당 타입의 드론이 앞으로 전진한 후 Idle로 전환한다.
     private IEnumerator MovingForward(float distance)
     {
         Vector2 targetPos = new Vector2(this.transform.position.x + distance, this.transform.position.y);
+        moveSpeed = 10;
 
         while (Vector3.Distance(this.transform.position, targetPos) > 0.1f)
         {
             AttemptMove(distance, 0f);
             yield return null;
         }
+
+        moveSpeed = currentSpeed;
         enemyState = EnemyState.Idle;
     }
 

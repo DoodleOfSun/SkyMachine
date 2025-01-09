@@ -110,7 +110,7 @@ public class Player : MovingObject
 
     private void Update()
     {
-        if (Time.timeScale == 0f)
+        if (Time.timeScale == 0f || CutsceneManager.instance.isCutscene)
         {
             return;
         }
@@ -123,7 +123,7 @@ public class Player : MovingObject
         {
             return;
         }
-
+        /*
         Debug.Log(" ");
         Debug.Log(" ");
         Debug.Log(" ");
@@ -131,7 +131,7 @@ public class Player : MovingObject
         Debug.Log("isParryAiming : " + isParryAiming);
         Debug.Log("isAttacking : " + isAttacking);
         Debug.Log("isParrying : " + isParrying);
-        Debug.Log("isSkill1Playing : " + isSkill1Playing);
+        Debug.Log("isSkill1Playing : " + isSkill1Playing);*/
 
         
         PlayerHitCircleRotate(GameManager.instance.worldMousePos);
@@ -183,7 +183,12 @@ public class Player : MovingObject
         }
 
         // 상태 변경이 있을 때만 애니메이션 트리거
-        if (newState != currentAnimeState)
+        
+        if(newState == "" && currentAnimeState == "")
+        {
+            // empty
+        }
+        else if (newState != currentAnimeState)
         {
             animator.SetTrigger(newState);
             currentAnimeState = newState;
@@ -271,6 +276,19 @@ public class Player : MovingObject
 
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
+
+        // 우클릭을 눌렀을 때 조준 시작
+        // 여기도 마찬가지로 쿨 돌기 전까지는 true로 안바꿔줌.
+        if (Input.GetMouseButton(1) && !isParryAiming && parryCoroutine == null)
+        {
+            isParryAiming = true;
+        }
+        // 우클릭을 뗐을 시 조준 비활성화
+        else if (Input.GetMouseButtonUp(1) && isParryAiming)
+        {
+            isParryAiming = false;
+        }
+
         // 원래 애니메이션
         if (horizontal != 0 || vertical != 0)
         {
@@ -361,17 +379,7 @@ public class Player : MovingObject
         }
 
         
-        // 우클릭을 눌렀을 때 조준 시작
-        // 여기도 마찬가지로 쿨 돌기 전까지는 true로 안바꿔줌.
-        if (Input.GetMouseButton(1) && !isParryAiming && parryCoroutine == null)
-        {
-            isParryAiming = true;
-        }
-        // 우클릭을 뗐을 시 조준 비활성화
-        else if (Input.GetMouseButtonUp(1) && isParryAiming)
-        {
-            isParryAiming = false;
-        }
+        
         
     }
 

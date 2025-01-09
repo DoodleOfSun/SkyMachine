@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Xml.Linq;
 using Unity.VisualScripting;
@@ -248,23 +249,30 @@ public class GameManager : MonoBehaviour
 
         yield return null;
     }
-
     private GameObject GetVFX(string vfxName)
     {
-        if (vfxPools.ContainsKey(vfxName) && vfxPools[vfxName].Count > 0)
+        // 1. vfxPools에서 조건에 맞는 키 찾기
+        string foundKey = vfxPools.Keys.FirstOrDefault(key => vfxName.Contains(key));
+
+        if (!string.IsNullOrEmpty(foundKey))
         {
-            GameObject vfx = vfxPools[vfxName].Dequeue();
-            vfx.SetActive(true);
-            return vfx;
-        }
-        else if (vfxPools.ContainsKey(vfxName))
-        {
-            // 풀이 비어있을 경우 새로 생성
-            GameObject vfx = Instantiate(vfxPrefabs.Find(vfx => vfx.name == vfxName).prefab);
-            return vfx;
+            // 2. 해당 키에 매칭되는 VFX 가져오기
+            if (vfxPools[foundKey].Count > 0)
+            {
+                GameObject vfx = vfxPools[foundKey].Dequeue();
+                vfx.SetActive(true);
+                return vfx;
+            }
+            else
+            {
+                // 풀이 비어있을 경우 새로 생성
+                GameObject vfx = Instantiate(vfxPrefabs.Find(vfx => vfx.name.Contains(foundKey)).prefab);
+                return vfx;
+            }
         }
 
-        Debug.LogWarning($"VFX {vfxName} not found!");
+        // 3. 키를 찾지 못한 경우
+        Debug.LogWarning($"VFX for {vfxName} not found!");
         return null;
     }
 
@@ -277,7 +285,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning($"VFX {vfxName} not found in pool!");
+            //Debug.LogWarning($"VFX {vfxName} not found in pool!");
             Destroy(vfx); // 예외적으로 풀에 없으면 제거
         }
     }

@@ -842,10 +842,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: EtherDrone
       objectReference: {fileID: 0}
-    - target: {fileID: 6264028531484554581, guid: 8b8d962a96936d0489118faffe6359bb, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7325369652741829490, guid: 8b8d962a96936d0489118faffe6359bb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3
@@ -914,10 +910,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hester
       objectReference: {fileID: 0}
-    - target: {fileID: 4367920706013287944, guid: 5d3069fc159fb944886f56aa06f48429, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5158169610624219666, guid: 5d3069fc159fb944886f56aa06f48429, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.06
@@ -975,6 +967,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BulletPro Scene Setup
       objectReference: {fileID: 0}
+    - target: {fileID: 3596121466100988453, guid: ea511b57da0a9954f941f29b525bb55b, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7591492556347592930, guid: ea511b57da0a9954f941f29b525bb55b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1031,18 +1027,6 @@ PrefabInstance:
     - target: {fileID: 947161417112194471, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5255153219277889391, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 62fe84395d136034eb20e25d55c47914, type: 2}
-    - target: {fileID: 6069884812404099248, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
-      propertyPath: ether
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 6069884812404099248, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
-      propertyPath: parryCoolTime
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7893218233497132778, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1271,10 +1255,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: EtherBot
       objectReference: {fileID: 0}
-    - target: {fileID: 3175318917368615482, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8811303745209960259, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.59
@@ -1414,89 +1394,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 640789107}
     - target: {fileID: 663047194135505595, guid: d60d9b6f598bacb479a9710c2a9fa5e0, type: 3}
-      propertyPath: vfxPrefabs.Array.size
-      value: 9
-      objectReference: {fileID: 0}
-    - target: {fileID: 663047194135505595, guid: d60d9b6f598bacb479a9710c2a9fa5e0, type: 3}
       propertyPath: playerReadyToSkillAnimation
       value: 
       objectReference: {fileID: 1878949021}
-    - target: {fileID: 663047194135505595, guid: d60d9b6f598bacb479a9710c2a9fa5e0, type: 3}
-      propertyPath: greenThunderBulletVFXPrefabs
-      value: 
-      objectReference: {fileID: 2395615813837837843, guid: 56c836e6be44a484ea858dab0eb8fbe6, type: 3}
-    - target: {fileID: 663047194135505595, guid: d60d9b6f598bacb479a9710c2a9fa5e0, type: 3}
-      propertyPath: vfxPrefabs.Array.data[0].name
-      value: Green Effect and Bullet 16x16_24
-      objectReference: {fileID: 0}
-    - target: {fileID: 663047194135505595, guid: d60d9b6f598bacb479a9710c2a9fa5e0, type: 3}
-      propertyPath: vfxPrefabs.Array.data[1].name
-      value: HesterGranade_0
-      objectReference: {fileID: 0}
-    - target: {fileID: 663047194135505595, guid: d60d9b6f598bacb479a9710c2a9fa5e0, type: 3}
-      propertyPath: vfxPrefabs.Array.data[2].name
-      value: HesterGranade_1
-      objectReference: {fileID: 0}
-    - target: {fileID: 663047194135505595, guid: d60d9b6f598bacb479a9710c2a9fa5e0, type: 3}
-      propertyPath: vfxPrefabs.Array.data[3].name
-      value: HesterGranade_2
-      objectReference: {fileID: 0}
-    - target: {fileID: 663047194135505595, guid: d60d9b6f598bacb479a9710c2a9fa5e0, type: 3}
-      propertyPath: vfxPrefabs.Array.data[4].name
-      value: HesterGranade_3
-      objectReference: {fileID: 0}
-    - target: {fileID: 663047194135505595, guid: d60d9b6f598bacb479a9710c2a9fa5e0, type: 3}
-      propertyPath: vfxPrefabs.Array.data[5].name
-      value: HesterGranade_4
-      objectReference: {fileID: 0}
-    - target: {fileID: 663047194135505595, guid: d60d9b6f598bacb479a9710c2a9fa5e0, type: 3}
-      propertyPath: vfxPrefabs.Array.data[6].name
-      value: HesterGranade_5
-      objectReference: {fileID: 0}
-    - target: {fileID: 663047194135505595, guid: d60d9b6f598bacb479a9710c2a9fa5e0, type: 3}
-      propertyPath: vfxPrefabs.Array.data[7].name
-      value: HesterGranade_6
-      objectReference: {fileID: 0}
-    - target: {fileID: 663047194135505595, guid: d60d9b6f598bacb479a9710c2a9fa5e0, type: 3}
-      propertyPath: vfxPrefabs.Array.data[8].name
-      value: HesterGranade_7
-      objectReference: {fileID: 0}
-    - target: {fileID: 663047194135505595, guid: d60d9b6f598bacb479a9710c2a9fa5e0, type: 3}
-      propertyPath: vfxPrefabs.Array.data[0].prefab
-      value: 
-      objectReference: {fileID: 2395615813837837843, guid: 56c836e6be44a484ea858dab0eb8fbe6, type: 3}
-    - target: {fileID: 663047194135505595, guid: d60d9b6f598bacb479a9710c2a9fa5e0, type: 3}
-      propertyPath: vfxPrefabs.Array.data[1].prefab
-      value: 
-      objectReference: {fileID: 7954511571834059514, guid: 4d537678b61934513a768ae6afa64deb, type: 3}
-    - target: {fileID: 663047194135505595, guid: d60d9b6f598bacb479a9710c2a9fa5e0, type: 3}
-      propertyPath: vfxPrefabs.Array.data[2].prefab
-      value: 
-      objectReference: {fileID: 7954511571834059514, guid: 4d537678b61934513a768ae6afa64deb, type: 3}
-    - target: {fileID: 663047194135505595, guid: d60d9b6f598bacb479a9710c2a9fa5e0, type: 3}
-      propertyPath: vfxPrefabs.Array.data[3].prefab
-      value: 
-      objectReference: {fileID: 7954511571834059514, guid: 4d537678b61934513a768ae6afa64deb, type: 3}
-    - target: {fileID: 663047194135505595, guid: d60d9b6f598bacb479a9710c2a9fa5e0, type: 3}
-      propertyPath: vfxPrefabs.Array.data[4].prefab
-      value: 
-      objectReference: {fileID: 7954511571834059514, guid: 4d537678b61934513a768ae6afa64deb, type: 3}
-    - target: {fileID: 663047194135505595, guid: d60d9b6f598bacb479a9710c2a9fa5e0, type: 3}
-      propertyPath: vfxPrefabs.Array.data[5].prefab
-      value: 
-      objectReference: {fileID: 7954511571834059514, guid: 4d537678b61934513a768ae6afa64deb, type: 3}
-    - target: {fileID: 663047194135505595, guid: d60d9b6f598bacb479a9710c2a9fa5e0, type: 3}
-      propertyPath: vfxPrefabs.Array.data[6].prefab
-      value: 
-      objectReference: {fileID: 7954511571834059514, guid: 4d537678b61934513a768ae6afa64deb, type: 3}
-    - target: {fileID: 663047194135505595, guid: d60d9b6f598bacb479a9710c2a9fa5e0, type: 3}
-      propertyPath: vfxPrefabs.Array.data[7].prefab
-      value: 
-      objectReference: {fileID: 7954511571834059514, guid: 4d537678b61934513a768ae6afa64deb, type: 3}
-    - target: {fileID: 663047194135505595, guid: d60d9b6f598bacb479a9710c2a9fa5e0, type: 3}
-      propertyPath: vfxPrefabs.Array.data[8].prefab
-      value: 
-      objectReference: {fileID: 7954511571834059514, guid: 4d537678b61934513a768ae6afa64deb, type: 3}
     - target: {fileID: 1646716104542719972, guid: d60d9b6f598bacb479a9710c2a9fa5e0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -197,12 +197,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4505868210946246852}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb24adc66fd184b4b9fa7b999db210b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damping: 0.5
+  damping: 0.2
   lookAheadFactor: 0.25
   lookAheadReturnSpeed: 0.7
   lookAheadMoveThreshold: 0.1

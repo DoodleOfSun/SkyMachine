@@ -31,7 +31,8 @@ public class EtherBot : MovingObject
 
     private Vector2 targetPosition;
 
-    private Coroutine wave1ActivateCoroutine;
+#pragma warning disable CS0414
+    [SerializeField] private Coroutine wave1ActivateCoroutine;
 
     private SpriteRenderer spriteRenderer;
     private Color currentColor;
@@ -39,7 +40,12 @@ public class EtherBot : MovingObject
     //private float currentStunValue;
     private float currentSpeed;
     private bool isShooting;
+
+
+#pragma warning disable CS0414
     private bool isRandomMoved;
+
+
     private bool isWallStuck;
 
     // Start is called before the first frame update
@@ -82,8 +88,6 @@ public class EtherBot : MovingObject
     // Pause에서 플레이어의 진행도를 감지
     private void CheckingWaveType()
     {
-
-
         if (GameManager.instance.wave1Activate && waveType == "Wave1")
         {
             enemyState = EnemyState.Idle;
@@ -92,6 +96,10 @@ public class EtherBot : MovingObject
         {
             //StartCoroutine(MovingForward(-3f));
             //enemyState = EnemyState.Idle;
+        }
+        else if (GameManager.instance.wave3Activate && waveType == "Wave3")
+        {
+            enemyState = EnemyState.Idle;
         }
         else if (waveType == "")
         {

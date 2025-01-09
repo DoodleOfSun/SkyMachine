@@ -98,7 +98,7 @@ public class Hester : MovingObject
 
         targetPosition = Vector2.zero;
 
-        enemyState = EnemyState.Idle;
+        enemyState = EnemyState.Pause;
 
         isDamagedWhileGuard = false;
 
@@ -163,7 +163,7 @@ public class Hester : MovingObject
         switch (enemyState)
         {
             case EnemyState.Pause:
-                Debug.Log("현재 Pause중");
+                //CheckingCutscene();
                 break;
             case EnemyState.Idle:
 
@@ -205,6 +205,14 @@ public class Hester : MovingObject
                 break;
         }
         isDamagedWhileGuard = false;
+    }
+
+    private void CheckingCutscene()
+    {
+        if (!CutsceneManager.instance.isCutscene)
+        {
+            enemyState = EnemyState.Idle;
+        }
     }
 
     // 이 밑으로, 각 상태에서 사용하는 함수를 정의한다
