@@ -18,7 +18,8 @@ public class EtherBot : MovingObject
     public float knockBackSpeed;        // 넉백 시 밀려나는 속도
     public float knockBackTime;         // 넉백 시 밀려나는 시간
     public float ether;                 // 가지고 있는 에테르, 죽으면 플레이어에게 부여된다.
-    public string waveType = "";             // 웨이브 유형 String
+    //public string waveType = "";             // 웨이브 유형 String
+    public int waveLevel;
 
     public GameObject spriteAndAnimation;
 
@@ -88,23 +89,20 @@ public class EtherBot : MovingObject
     // Pause에서 플레이어의 진행도를 감지
     private void CheckingWaveType()
     {
-        if (GameManager.instance.wave1Activate && waveType == "Wave1")
+        if (WaveManager.instance.waveInfo[WaveManager.instance.waveCount].waveActivate && WaveManager.instance.waveCount == waveLevel)
         {
             enemyState = EnemyState.Idle;
         }
-        else if (GameManager.instance.wave2Activate && waveType == "Wave2")
+        else if (WaveManager.instance.waveInfo[WaveManager.instance.waveCount].waveActivate && WaveManager.instance.waveCount == waveLevel)
         {
             //StartCoroutine(MovingForward(-3f));
             //enemyState = EnemyState.Idle;
         }
-        else if (GameManager.instance.wave3Activate && waveType == "Wave3")
+        else if (WaveManager.instance.waveInfo[WaveManager.instance.waveCount].waveActivate && WaveManager.instance.waveCount == waveLevel)
         {
             enemyState = EnemyState.Idle;
         }
-        else if (waveType == "")
-        {
-            enemyState = EnemyState.Idle;
-        }
+
     }
 
     private void CheckingGameOver()

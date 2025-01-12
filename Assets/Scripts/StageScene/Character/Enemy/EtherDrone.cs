@@ -23,7 +23,8 @@ public class EtherDrone : MovingObject
     public float knockBackSpeed;        // 넉백 시 밀려나는 속도
     public float knockBackTime;         // 넉백 시 밀려나는 시간
     public float ether;                 // 가지고 있는 에테르, 죽으면 플레이어에게 부여된다.
-    public string waveType = "";             // 웨이브 유형 String
+    //public string waveType = "";             // 웨이브 유형 String
+    public int waveLevel;
 
     public GameObject spriteAndAnimation;
 
@@ -145,18 +146,13 @@ public class EtherDrone : MovingObject
     // Pause에서 플레이어의 진행도를 감지
     private void CheckingWaveType()
     {
-        if (GameManager.instance.wave1Activate && waveType == "Wave1")
+        if (WaveManager.instance.waveInfo[WaveManager.instance.waveCount].waveActivate && WaveManager.instance.waveCount == waveLevel)
         {
-            
             enemyState = EnemyState.Idle;
         }
-        else if (GameManager.instance.wave2Activate && waveType == "Wave2")
+        else if (WaveManager.instance.waveInfo[WaveManager.instance.waveCount].waveActivate && WaveManager.instance.waveCount == waveLevel)
         {
-            StartCoroutine(MovingForward(-3f));
-            //enemyState = EnemyState.Idle;
-        }
-        else if (waveType == "")
-        {
+            //StartCoroutine(MovingForward(-3f));
             enemyState = EnemyState.Idle;
         }
     }
@@ -199,7 +195,6 @@ public class EtherDrone : MovingObject
 
     public void TakeDamage(float damage)
     {
-        Debug.Log("에너미 데미지 받음. : " + damage);
         hp -= damage;
         if (hp <= 0)
         {
@@ -244,6 +239,7 @@ public class EtherDrone : MovingObject
         isShooting = false;
         if (dieCoroutine == null)
         {
+            moveSpeed = 0f;
             dieCoroutine = StartCoroutine(Kill());
         }
     }
@@ -251,7 +247,6 @@ public class EtherDrone : MovingObject
     private IEnumerator Kill()
     {
         animator.SetTrigger("Die");
-        Debug.Log("죽음");
         bulletEmitterTransform.gameObject.SetActive(false);
         idleBulletEmitter.Pause();
         Player.instance.EtherIncreseByKillEnemy(ether);
@@ -289,7 +284,6 @@ public class EtherDrone : MovingObject
         switch (enemyState)
         {
             case EnemyState.Idle:
-                Debug.Log("대기 상태 피격");
                 TakeDamage(Player.instance.attack);
                 break;
         }

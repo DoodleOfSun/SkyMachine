@@ -23,10 +23,13 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public Vector3 worldMousePos;
     [HideInInspector] public Vector3 screenMousePos;
-
+    
+    /*
     [HideInInspector] public bool wave1Activate;
     [HideInInspector] public bool wave2Activate;
     [HideInInspector] public bool wave3Activate;
+    [HideInInspector] public bool wave4Activate;
+    */
 
     public Text gameOverText;
     public Image ether;
@@ -86,9 +89,11 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Confined;
         gmState = GameManagerState.GamePlay;
 
+        /*
         wave1Activate = false;
         wave2Activate = false;
         wave3Activate = false;
+        */
 
         foreach (var vfx in vfxPrefabs)
         {
@@ -182,7 +187,7 @@ public class GameManager : MonoBehaviour
         {
             playerReadyToSkillAnimation.SetActive(true);
         }
-        else
+        else if (!Player.instance.isReadyToSkill1)
         {
             playerReadyToSkillAnimation.SetActive(false);
         }

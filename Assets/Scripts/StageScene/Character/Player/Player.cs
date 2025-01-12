@@ -119,8 +119,9 @@ public class Player : MovingObject
    
     private void FixedUpdate()
     {
-        if (Time.timeScale == 0f)
+        if (Time.timeScale == 0f || CutsceneManager.instance.isCutscene)
         {
+            PlayingAnimation();
             return;
         }
         /*
@@ -665,6 +666,10 @@ public class Player : MovingObject
         {
             //ether = etherSkill1Cost;
             isReadyToSkill1 = true;
+        }
+        else if (ether < etherSkill1Cost)
+        {
+            isReadyToSkill1 = false;
         }
     }
 

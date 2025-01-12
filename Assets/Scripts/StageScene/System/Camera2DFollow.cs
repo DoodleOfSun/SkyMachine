@@ -1,5 +1,6 @@
 using JetBrains.Annotations;
 using System;
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace UnityStandardAssets._2D
         public float lookAheadFactor = 3;
         public float lookAheadReturnSpeed = 0.5f;
         public float lookAheadMoveThreshold = 0.1f;
-        public Transform target;
+        public List<GameObject> wave;
 
         private float offsetZ;
         private Vector3 lastTargetPosition;
@@ -22,14 +23,13 @@ namespace UnityStandardAssets._2D
         // 처음에는 플레이어를 카메라가 따라가야 하므로 다음과 같이 초기화한다.
         private void Start()
         {
-            InitCam(target.transform.position);
+            //InitCam(target.transform.position);
         }
-
 
         // Update is called once per frame
         private void Update()
         {
-            ChasingByTransform(target.transform.position);
+            //ChasingByTransform(target.transform.position);
         }
 
         private void InitCam(Vector3 targetPos)
@@ -67,36 +67,5 @@ namespace UnityStandardAssets._2D
             transform.position = newPos;
             lastTargetPosition = targetPos;
         }
-
-        /*
-        private void Zooming(Transform target)
-        {
-            Vector3 velocity = player.position - previousPosition;
-
-            // 타겟과 플레이어 사이의 방향 벡터 계산
-            Vector3 directionToTarget = target.position - player.position;
-
-            // 두 벡터의 내적을 계산하여 가까워지고 있는지 판단
-            float dotProduct = Vector3.Dot(velocity.normalized, directionToTarget.normalized);
-            //Debug.Log(dotProduct);
-
-            if (dotProduct > 0)
-            {
-                Camera.main.orthographicSize = Mathf.Max(minCameraSize, Camera.main.orthographicSize - zoomingEachFrame * Time.deltaTime);
-            }
-            else if (dotProduct < 0)
-            {
-                Camera.main.orthographicSize = Mathf.Min(maxCameraSize, Camera.main.orthographicSize + zoomingEachFrame * Time.deltaTime);
-            }
-
-            // 플레이어의 현재 위치를 다음 프레임에서 이전 위치로 사용하기 위해 저장
-            previousPosition = player.position;
-        }
-        
-        private void ZoomingWhenNotLockOn()
-        {
-            Camera.main.orthographicSize = Mathf.Max(minCameraSize, Camera.main.orthographicSize - zoomingEachFrame * Time.deltaTime);
-        }
-        */
     }
 }

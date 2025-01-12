@@ -9,7 +9,6 @@ public class MovingObject : MonoBehaviour
     public float moveSpeed;
     protected CircleCollider2D circleCollider;
     protected Sprite sprite;
-    protected int wallLayerMask;
     //protected Quaternion originalRotate;
     //protected Animator animator
 
@@ -20,7 +19,6 @@ public class MovingObject : MonoBehaviour
     {
         //originalRotate = transform.localRotation;
         //animator = GetComponent<Animator>();
-        wallLayerMask = LayerMask.NameToLayer("InvisibleWall");
         rb2D = GetComponent<Rigidbody2D>();
         circleCollider = GetComponent<CircleCollider2D>();
         sprite = GetComponent<Sprite>();
