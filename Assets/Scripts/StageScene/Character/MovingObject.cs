@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MovingObject : MonoBehaviour
 {
@@ -14,6 +16,7 @@ public class MovingObject : MonoBehaviour
 
     protected Rigidbody2D rb2D;
 
+    private Vector3 currentVelocity;
 
     protected virtual void Start()
     {
@@ -32,6 +35,14 @@ public class MovingObject : MonoBehaviour
 
     protected IEnumerator Move(float xDir, float yDir)
     {
+        UsingRb2D(xDir, yDir);
+        //UsingSmoothDamp(xDir, yDir);
+        yield return null;
+    }
+    
+    // NOTE : 정상작동하나, 기초적이다.
+    private void UsingRb2D(float xDir, float yDir)
+    {
         float horizontal = rb2D.position.x + xDir;
         float vertical = rb2D.position.y + yDir;
 
@@ -39,8 +50,22 @@ public class MovingObject : MonoBehaviour
         Vector3 nextPos = Vector3.MoveTowards(transform.position, targetPos, Time.fixedDeltaTime * moveSpeed);
 
         rb2D.MovePosition(nextPos);
-
-        yield return null;
     }
-    
+
+    // TODO : 부드러운 이동을 위한 SmoothDamp를 사용한 이동 로직
+    // 다른 이동 함수들과 호환이 되지 않는다 (Ex. 공격, 스킬, 회전 등)
+    private void UsingSmoothDamp(float xDir, float yDir)
+    {
+        moveSpeed = moveSpeed * 50;
+        // 이동 방향 벡터 계산
+        Vector3 direction = new Vector3(xDir, yDir, 0f).normalized;
+
+        // 목표 위치 계산 (현재 위치에 이동 방향을 moveSpeed로 곱한 값)
+        Vector3 targetPosition = transform.position + direction * moveSpeed * Time.fixedDeltaTime;
+
+        // SmoothDamp로 부드럽게 이동
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref currentVelocity, 0.8f);
+        
+    }
+
 }

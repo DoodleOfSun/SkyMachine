@@ -91,6 +91,7 @@ public class WaveManager : MonoBehaviour
 
     public void MovingNextRoom(string dirStr)
     {
+        
         if (dirStr.Contains(waveInfo[waveCount].exit))
         {
             // 플레이어와 waveRoom을 이동시킨다.
@@ -135,6 +136,7 @@ public class WaveManager : MonoBehaviour
                 }
             }
             waveCount++;
+            StartCoroutine(CamFollowByTransform.instance.MoveByTransform(waveInfo[waveCount].roomPos.transform.position));
             waveInfo[waveCount].waveActivate = true;
             isCleared = false;
         }

@@ -187,7 +187,11 @@ public class EtherBot : MovingObject
 
     public void TakeDamage(float damage)
     {
-        Debug.Log(this.transform.name + " 데미지 받음. : " + damage);
+        if (enemyState == EnemyState.Pause)
+        {
+            return;
+        }
+
         hp -= damage;
         if (hp <= 0)
         {

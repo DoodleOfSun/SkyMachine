@@ -195,6 +195,11 @@ public class EtherDrone : MovingObject
 
     public void TakeDamage(float damage)
     {
+        if (enemyState == EnemyState.Pause)
+        {
+            return;
+        }
+
         hp -= damage;
         if (hp <= 0)
         {

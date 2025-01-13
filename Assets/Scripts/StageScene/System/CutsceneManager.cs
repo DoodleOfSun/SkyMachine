@@ -21,7 +21,7 @@ public class CutsceneManager : MonoBehaviour
     private Vector3 currentBlackBarUp;
     private Vector3 currentBlackBarDown;
 
-    public string dialogueType;
+    public string dialogueType;     // 대화의 타입. 없으면 None으로 설정할 것
 
     private int dialogueInt;
     private Coroutine dialogueCoroutine;
@@ -60,6 +60,11 @@ public class CutsceneManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (dialogueType == "None")
+        {
+            isCutscene = false;
+            return;
+        }
         if (letterboxCoroutine == null && isCutscene)
         {
             letterboxCoroutine = StartCoroutine(LetterBox());
@@ -78,15 +83,19 @@ public class CutsceneManager : MonoBehaviour
         {
 
             DisplayDialogueByType(elapsedCutscene);
-
             // 좌클릭이 입력되고, 타입이 종료되었을 때를 검사
             if (Input.GetMouseButtonDown(0) && isTyped)
             {
                 isTyped = false;
                 elapsedCutscene++;
             }
+            else if (Input.GetMouseButtonDown(1) && isTyped)
+            {
+                isTyped = false;
+                break;
+            }
 
-            yield return null; // 한 프레임 대기
+            yield return null;
         }
 
         // 컷신 종료
@@ -122,6 +131,10 @@ public class CutsceneManager : MonoBehaviour
                 rt.anchoredPosition = new Vector2(-450, 200);
                 typingCoroutine = StartCoroutine(TypeText("No way. Bring it on! "));
             }
+        }
+        else
+        {
+            return;
         }
 
     }
@@ -164,6 +177,7 @@ public class CutsceneManager : MonoBehaviour
 
     private IEnumerator LetterBoxReturn()
     {
+        
         Vector2 targetPosUp = currentBlackBarUp;
         Vector2 targetPosDown = currentBlackBarDown;
 
@@ -180,6 +194,7 @@ public class CutsceneManager : MonoBehaviour
 
         ResetLetterBox();
         letterboxCoroutine = null;
+
     }
 
     private void ResetLetterBox()

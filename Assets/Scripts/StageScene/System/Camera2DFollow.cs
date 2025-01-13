@@ -8,6 +8,7 @@ namespace UnityStandardAssets._2D
 {
     public class Camera2DFollow : MonoBehaviour
     {
+        public static Camera2DFollow instance;
         public float damping = 1;
         public float lookAheadFactor = 3;
         public float lookAheadReturnSpeed = 0.5f;
@@ -23,6 +24,14 @@ namespace UnityStandardAssets._2D
         // 처음에는 플레이어를 카메라가 따라가야 하므로 다음과 같이 초기화한다.
         private void Start()
         {
+            if (instance == null)
+            {
+                instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
             //InitCam(target.transform.position);
         }
 

@@ -842,6 +842,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EtherDrone
       objectReference: {fileID: 0}
+    - target: {fileID: 6264028531484554581, guid: 8b8d962a96936d0489118faffe6359bb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7325369652741829490, guid: 8b8d962a96936d0489118faffe6359bb, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3
@@ -909,6 +913,10 @@ PrefabInstance:
     - target: {fileID: 4367920706013287944, guid: 5d3069fc159fb944886f56aa06f48429, type: 3}
       propertyPath: m_Name
       value: Hester
+      objectReference: {fileID: 0}
+    - target: {fileID: 4367920706013287944, guid: 5d3069fc159fb944886f56aa06f48429, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5158169610624219666, guid: 5d3069fc159fb944886f56aa06f48429, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1027,6 +1035,18 @@ PrefabInstance:
     - target: {fileID: 947161417112194471, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6069884812404099248, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
+      propertyPath: moveSpeed
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6069884812404099248, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
+      propertyPath: attackDashingTime
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6069884812404099248, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
+      propertyPath: attackDashingSpeed
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 7893218233497132778, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1168,6 +1188,10 @@ PrefabInstance:
     - target: {fileID: 1616693670954568879, guid: cd40e9c5c8b6275428485e794e7e6e69, type: 3}
       propertyPath: m_Name
       value: Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4821658794270296480, guid: cd40e9c5c8b6275428485e794e7e6e69, type: 3}
+      propertyPath: dialogueType
+      value: None
       objectReference: {fileID: 0}
     - target: {fileID: 5968980125484346455, guid: cd40e9c5c8b6275428485e794e7e6e69, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -1454,6 +1478,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1550651015546987764, guid: b4b9b9f25b1eeb64492ac04842bfe423, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4505868210946246852, guid: b4b9b9f25b1eeb64492ac04842bfe423, type: 3}
       propertyPath: m_Name
       value: Main Camera
@@ -1502,6 +1530,10 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 1884036170273263569}
+    - target: {fileID: 7996092877639711754, guid: b4b9b9f25b1eeb64492ac04842bfe423, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
