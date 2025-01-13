@@ -16,7 +16,7 @@ public class MovingObject : MonoBehaviour
 
     protected Rigidbody2D rb2D;
 
-    private Vector3 currentVelocity;
+    protected Vector3 currentVelocity;
 
     protected virtual void Start()
     {
@@ -52,7 +52,7 @@ public class MovingObject : MonoBehaviour
         rb2D.MovePosition(nextPos);
     }
 
-    // TODO : 부드러운 이동을 위한 SmoothDamp를 사용한 이동 로직
+    // HACK : 부드러운 이동을 위한 SmoothDamp를 사용한 이동 로직
     // 다른 이동 함수들과 호환이 되지 않는다 (Ex. 공격, 스킬, 회전 등)
     private void UsingSmoothDamp(float xDir, float yDir)
     {
@@ -68,4 +68,15 @@ public class MovingObject : MonoBehaviour
         
     }
 
+    protected IEnumerator UsingSmoothDampByPos(Vector3 targetPos)
+    {
+        while (Vector3.Distance(this.transform.position, targetPos) > 0.1f)
+        {
+            targetPos.z = -10f;
+            Vector3 newPos = Vector3.SmoothDamp(transform.position, targetPos, ref currentVelocity, 0.3f);
+            newPos.y = 0f;
+            transform.position = newPos;
+            yield return null;
+        }
+    }
 }

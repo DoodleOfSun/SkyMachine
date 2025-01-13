@@ -595,8 +595,6 @@ public class Player : MovingObject
         xDir = horizontal + attackDashingDistance * (playerAttackBox.transform.position - transform.position).normalized.x;
         yDir = vertical + attackDashingDistance * (playerAttackBox.transform.position - transform.position).normalized.y;
 
-        Debug.Log(attackDashingDistance * (playerAttackBox.transform.position - transform.position).normalized.x);
-
         RotateByAction(playerAttackBox.transform.position - transform.position);
 
         while (elapsedTime < attackDashingTime)

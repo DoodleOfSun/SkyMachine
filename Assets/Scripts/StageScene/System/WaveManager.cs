@@ -15,17 +15,27 @@ public class WaveExit
     public bool waveActivate;
 }
 
+[Serializable]
+public class Arrows
+{
+    public GameObject parents;
+    public GameObject up;
+    public GameObject down;
+    public GameObject left;
+    public GameObject right;
+}
+
 public class WaveManager : MonoBehaviour
 {
     public static WaveManager instance;
     public GameObject waveRoom;
-    public GameObject arrow;    // TODO : 맵 클리어 시 출구 화살표
     
     // NOTE : 어떤 방에서의 위치정보, 각 웨이브의 몬스터와 그 출구가 어디인지 (string)을 저장하는 List
     public List<WaveExit> waveInfo = new List<WaveExit>();
 
-    [HideInInspector] public int waveCount;   // 현재 웨이브 숫자
+    public Arrows arrows = new Arrows();
 
+    [HideInInspector] public int waveCount;   // 현재 웨이브 숫자
     [HideInInspector] public bool isCleared;    // 방 클리어 여부    
 
     void Start()
@@ -40,6 +50,7 @@ public class WaveManager : MonoBehaviour
         }
         waveCount = 0;  
         isCleared = false;
+        deactivateAllArrows();
     }
 
     void Update()
@@ -64,34 +75,63 @@ public class WaveManager : MonoBehaviour
         if (waveInfo[waveCount].waveActivate && waveInfo[waveCount].wavePool.transform.childCount == 0 && isCleared == false)
         {
             isCleared = true;
+            ExitArrow(waveInfo[waveCount].exit, waveInfo[waveCount].roomPos.transform.position);
             Debug.Log("웨이브 카운트 : " + waveCount);
             Debug.Log("방 1 클리어");
         }
     }
     
     // TODO : 현재 스테이지의 출구 string에 따라 화살표를 표시한다
-    private void ExitArrow()
+    private void ExitArrow(string exit, Vector3 targetPos)
     {
-
+        Debug.Log(exit);
+        arrows.parents.transform.position = targetPos;
+        arrows.parents.SetActive(true);
+        if (exit == "Left")
+        {
+            StartCoroutine(arrowBlink(arrows.left));
+        }
+        else if (exit == "Right")
+        {
+            StartCoroutine(arrowBlink(arrows.right));
+        }
+        else if (exit == "Up")
+        {
+            StartCoroutine(arrowBlink(arrows.up));
+        }
+        else if (exit == "Down")
+        {
+            StartCoroutine(arrowBlink(arrows.down));
+        }
     }
 
-    // TODO : WaveRoom에는 4개의 벽이 동서남북으로 둘러쳐져 있다. 원하는 벽에 충돌했을 때 다음 방으로 넘기게 하려면 어떻게 해야 할까?
-    // 또한 WaveRoom은 하위 자식 오브젝트를 가진 부모 오브젝트인데, 이 자체로는 Transform만 가지고 있다.
-    // 또 각 Room마다 어느 부분에 화살표를 표시를 하고, 어디 부분으로 이동을 할지 (왼쪽, 오른쪽? 위 아래?)를 같이 넘겨주어야 한다. string이면 충분할 것 같은데..
+    private IEnumerator arrowBlink(GameObject arrow)
+    {
+        while (arrows.parents.activeSelf)
+        {
+            arrow.SetActive(true);
+            yield return new WaitForSeconds(0.3f);
+            arrow.SetActive(false); 
+            yield return new WaitForSeconds(0.3f);
+        }
+    }
 
-    // 이 함수는 Wall.cs에서 호출된다. isCleared를 검사하고, true인 경우 다음을 수행한다.
-    /*
-     * 0. waveCount를 1 증가시키고, isCleared를 false로 바꾼다.
-     * 1. 플레이어를 일정한 x 혹은 y좌표만큼 순간이동시킨다. (벽에 끼이지 않을 정도면 충분하다. 방을 이동하는 것이기에..)
-     * 이 경우 어디로 이동시킬지는 string 파라메터를 받아서 조건문으로 정한다.
-     * 2. waveRoom을 waveExit의 다음 roomPos로 이동시킨다.
-     * 3. 각 웨이브의 wave?Activate를 true로 바꾼다. (몬스터들이 활동을 시작한다)
-     * 4. 카메라를 움직여주어여 하는데, 부드럽게 움직여주어야 한다.
-     */
+    private void deactivateAllArrows()
+    {
+        arrows.parents.SetActive(false);
+        arrows.up.SetActive(false);
+        arrows.down.SetActive(false);
+        arrows.left.SetActive(false);
+        arrows.right.SetActive(false);
+    }
+
+    // NOTE : 이 함수는 스테이지를 다음 방으로 옮긴다.
+    // 방을 옮기기 전에, 모든 화살표를 비활성화하고 플레이어를 옮긴다.
+    // 그 다음 모든 방 객체를 옮기고 waveInfo를 새 스테이지의 값으로 초기화한다.
 
     public void MovingNextRoom(string dirStr)
     {
-        
+        deactivateAllArrows();
         if (dirStr.Contains(waveInfo[waveCount].exit))
         {
             // 플레이어와 waveRoom을 이동시킨다.
@@ -136,7 +176,7 @@ public class WaveManager : MonoBehaviour
                 }
             }
             waveCount++;
-            StartCoroutine(CamFollowByTransform.instance.MoveByTransform(waveInfo[waveCount].roomPos.transform.position));
+            CamFollowByTransform.instance.MoveByTransform(waveInfo[waveCount].roomPos.transform.position);
             waveInfo[waveCount].waveActivate = true;
             isCleared = false;
         }

@@ -39,10 +39,10 @@ namespace BulletPro.EditorScripts
 			Rect orientationRect = new Rect(position.x, position.y + 18, position.width, 20);
 			string[] options = new string[]
 			{
-				"Up - Vertical gameplay, character",
-				"Down - Vertical gameplay, enemy",
-				"Left - Horizontal gameplay, enemy",
-				"Right - Horizontal gameplay, character"
+				"up - Vertical gameplay, character",
+				"down - Vertical gameplay, enemy",
+				"left - Horizontal gameplay, enemy",
+				"right - Horizontal gameplay, character"
 			};
 			
 			SerializedProperty orientation = property.FindPropertyRelative("orientation");
