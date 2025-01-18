@@ -93,16 +93,6 @@ public class EtherBot : MovingObject
         {
             enemyState = EnemyState.Idle;
         }
-        else if (WaveManager.instance.waveInfo[WaveManager.instance.waveCount].waveActivate && WaveManager.instance.waveCount == waveLevel)
-        {
-            //StartCoroutine(MovingForward(-3f));
-            //enemyState = EnemyState.Idle;
-        }
-        else if (WaveManager.instance.waveInfo[WaveManager.instance.waveCount].waveActivate && WaveManager.instance.waveCount == waveLevel)
-        {
-            enemyState = EnemyState.Idle;
-        }
-
     }
 
     private void CheckingGameOver()

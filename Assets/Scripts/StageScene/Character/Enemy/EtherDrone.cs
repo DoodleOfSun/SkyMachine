@@ -150,11 +150,6 @@ public class EtherDrone : MovingObject
         {
             enemyState = EnemyState.Idle;
         }
-        else if (WaveManager.instance.waveInfo[WaveManager.instance.waveCount].waveActivate && WaveManager.instance.waveCount == waveLevel)
-        {
-            //StartCoroutine(MovingForward(-3f));
-            enemyState = EnemyState.Idle;
-        }
     }
 
     // Wave 2, 해당 타입의 드론이 앞으로 전진한 후 Idle로 전환한다.
