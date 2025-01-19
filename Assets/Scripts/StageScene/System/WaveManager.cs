@@ -103,6 +103,10 @@ public class WaveManager : MonoBehaviour
         {
             StartCoroutine(arrowBlink(arrows.down));
         }
+        else if (exit == "None")
+        {
+
+        }
     }
 
     private IEnumerator arrowBlink(GameObject arrow)

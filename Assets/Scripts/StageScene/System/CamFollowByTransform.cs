@@ -33,6 +33,8 @@ public class CamFollowByTransform : MovingObject
 
     public void MoveByTransform(Vector3 targetPos)
     {
-        StartCoroutine(UsingSmoothDampByPos(targetPos));
+        transform.position = new Vector3(targetPos.x, targetPos.y, -10);
+        //StartCoroutine(UsingSmoothDampByPos(targetPos));
     }
+
 }

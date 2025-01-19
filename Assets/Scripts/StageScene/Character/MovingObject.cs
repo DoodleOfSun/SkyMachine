@@ -79,4 +79,6 @@ public class MovingObject : MonoBehaviour
             yield return null;
         }
     }
+
+
 }

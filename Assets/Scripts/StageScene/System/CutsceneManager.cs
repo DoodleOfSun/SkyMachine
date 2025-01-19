@@ -124,11 +124,11 @@ public class CutsceneManager : MonoBehaviour
         dialogue.SetActive(false);
         RectTransform rt = dialogue.GetComponent<RectTransform>();
         rt.anchoredPosition = Vector2.zero;
+        rt.sizeDelta = Vector2.zero;
         isCutscene = false;
         dialogueCoroutine = null;
     }
 
-    // BUG : 보스전 첫번째 대사가 너무 빠르게 실행되서 잘못된 플레이어 위치를 적용하고 있다.
     private void DisplayDialogueByType(int data)
     {
         RectTransform rt = dialogue.GetComponent<RectTransform>();
