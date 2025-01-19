@@ -121,12 +121,13 @@ public class Player : MovingObject
     {
         if (Time.timeScale == 0f || CutsceneManager.instance.isCutscene)
         {
-            PlayingAnimation();
+            this.transform.eulerAngles = new Vector3(0f, 0f, 0f);
+            animator.SetTrigger("Idle");
             return;
         }
         /*
         Debug.Log(" ");
-        Debug.Log(" ");
+        Debug.Log(" ");.
         Debug.Log(" ");
         Debug.Log("isMoving : " + isMoving);
         Debug.Log("isParryAiming : " + isParryAiming);

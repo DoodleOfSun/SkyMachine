@@ -135,7 +135,21 @@ public class WaveManager : MonoBehaviour
         if (dirStr.Contains(waveInfo[waveCount].exit))
         {
             // 플레이어와 waveRoom을 이동시킨다.
-            if (waveInfo[waveCount].exit == "Left")
+            // 보스방인 경우
+            if (waveInfo.Count - 2 == waveCount)
+            {
+                Debug.Log("보스방 입장");
+                CutsceneManager.instance.isCutscene = true;
+                Player.instance.transform.position = new Vector3(waveInfo[waveCount + 1].roomPos.transform.position.x - 3f,
+                                                                waveInfo[waveCount + 1].roomPos.transform.position.y,
+                                                                waveInfo[waveCount + 1].roomPos.transform.position.z);
+                if (waveCount + 1 < waveInfo.Count && waveInfo[waveCount + 1] != null)
+                {
+                    waveRoom.transform.position = waveInfo[waveCount + 1].roomPos.transform.position;
+                }
+            }
+
+            else if (waveInfo[waveCount].exit == "Left")
             {
                 Player.instance.transform.position = new Vector3(Player.instance.transform.position.x - 1.1f, 
                                                                  Player.instance.transform.position.y,

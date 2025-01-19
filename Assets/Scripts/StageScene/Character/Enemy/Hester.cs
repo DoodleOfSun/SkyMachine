@@ -15,7 +15,7 @@ public class Hester : MovingObject
         Stun
     }
 
-    //[HideInInspector] public static Hester instance;
+    [HideInInspector] public static Hester instance;
     public float hp;                // 체력
     public int stunValueLimit;         // 스턴치
     public int guardCountLimit;          // 가드 횟수
@@ -29,6 +29,7 @@ public class Hester : MovingObject
     public float counterKnockBackTime;   // 카운터 공격 개시 시 밀쳐내는 시간
     public float knockBackSpeed;        // 넉백 시 밀려나는 속도
     public float knockBackTime;         // 넉백 시 밀려나는 시간
+    public float waveLevel;             // 배치된 웨이브 레벨
 
     [HideInInspector] public bool isStun;   // 스턴 상태인지 외부에서 접근
 
@@ -83,8 +84,6 @@ public class Hester : MovingObject
 
     private void AllInstantiate()
     {
-
-        /*
         if (instance == null)
         {
             instance = this;
@@ -94,7 +93,6 @@ public class Hester : MovingObject
         {
             Destroy(gameObject);
         }
-        */
 
         targetPosition = Vector2.zero;
 
@@ -163,7 +161,7 @@ public class Hester : MovingObject
         switch (enemyState)
         {
             case EnemyState.Pause:
-                //CheckingCutscene();
+                
                 break;
             case EnemyState.Idle:
 
@@ -215,7 +213,19 @@ public class Hester : MovingObject
         }
     }
 
+    // BUG : 이 함수가 isCutscene의 초기화보다 더 빠르게 실행되어서 컷신 도중에 먼저 움직여버린다.
+    // NOTE : 함수를 CutsceneManager에서 호출시켜서 해결
     // 이 밑으로, 각 상태에서 사용하는 함수를 정의한다
+    // Pause에서 플레이어의 진행도를 감지
+    public void CheckingWaveType()
+    {
+        if (WaveManager.instance.waveInfo[WaveManager.instance.waveCount].waveActivate && WaveManager.instance.waveCount == waveLevel && !CutsceneManager.instance.isCutscene)
+        {
+            enemyState = EnemyState.Idle;
+        }
+    }
+
+
     // 대기상태 시 기본 공격, limitedTime은 다시 공격하고 대기하는 동안의 시간
     private IEnumerator IdleAttack(float limitedTime)
     {

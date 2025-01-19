@@ -18,16 +18,20 @@ public class CutsceneManager : MonoBehaviour
 
     public GameObject BlackBarUp;
     public GameObject BlackBarDown;
+    public int bossWave;            // 보스 웨이브의 번호
+    public GameObject talkingEnemy;
+
     private Vector3 currentBlackBarUp;
     private Vector3 currentBlackBarDown;
 
     public string dialogueType;     // 대화의 타입. 없으면 None으로 설정할 것
 
-    private int dialogueInt;
+    private int dialogueInt;        // 대화 창의 개수 (대사가 3개면 3개)
     private Coroutine dialogueCoroutine;
     private Coroutine typingCoroutine;
     private Coroutine letterboxCoroutine;
     private bool isTyped;       // 현재 글자가 타이핑이 되고 있는지를 검사. false인 동안 입력을 하고, 입력이 종료되었을 때만 true가 된다.
+    private bool isBossDialogue;
 
     // Start is called before the first frame update
     void Start()
@@ -43,6 +47,7 @@ public class CutsceneManager : MonoBehaviour
 
         isCutscene = true;
         isTyped = false;
+        isBossDialogue = false;
 
         dialogueCoroutine = null;
         typingCoroutine = null;
@@ -65,23 +70,36 @@ public class CutsceneManager : MonoBehaviour
             isCutscene = false;
             return;
         }
-        if (letterboxCoroutine == null && isCutscene)
-        {
-            letterboxCoroutine = StartCoroutine(LetterBox());
-        }
-        if (dialogueCoroutine == null && isCutscene)
+
+        if (WaveManager.instance.waveCount != bossWave && dialogueCoroutine == null && isCutscene)
         {
             dialogueCoroutine = StartCoroutine(Cutscene(dialogueInt));
         }
+
+        
+        // 보스 전 도달시 컷씬 진행
+        if (WaveManager.instance.waveCount == bossWave && dialogueCoroutine == null && !isBossDialogue)
+        {
+            isBossDialogue = true;
+            dialogueInt = 4;
+            dialogueCoroutine = StartCoroutine(Cutscene(dialogueInt));
+        }
+        Hester.instance.CheckingWaveType();
     }
 
     private IEnumerator Cutscene(int dialogueData)
     {
         int elapsedCutscene = 0;
+        isCutscene = true;
+
+        // 컷신 시작, 레터박스 하강
+        if (letterboxCoroutine == null)
+        {
+            letterboxCoroutine = StartCoroutine(LetterBox());
+        }
 
         while (elapsedCutscene < dialogueData)
         {
-
             DisplayDialogueByType(elapsedCutscene);
             // 좌클릭이 입력되고, 타입이 종료되었을 때를 검사
             if (Input.GetMouseButtonDown(0) && isTyped)
@@ -98,40 +116,77 @@ public class CutsceneManager : MonoBehaviour
             yield return null;
         }
 
-        // 컷신 종료
+        // 컷신 종료, 레터박스 상승
         if (letterboxCoroutine == null)
         {
             letterboxCoroutine = StartCoroutine(LetterBoxReturn());
         }
         dialogue.SetActive(false);
+        RectTransform rt = dialogue.GetComponent<RectTransform>();
+        rt.anchoredPosition = Vector2.zero;
         isCutscene = false;
         dialogueCoroutine = null;
     }
 
-    // HACK : Player의 포지션의 초기화 순서보다 CutSceneManager가 더 빨리 실행되는 문제 때문에 대화창의 위치가 하드코딩되어 있다.
+    // BUG : 보스전 첫번째 대사가 너무 빠르게 실행되서 잘못된 플레이어 위치를 적용하고 있다.
     private void DisplayDialogueByType(int data)
     {
         RectTransform rt = dialogue.GetComponent<RectTransform>();
-        if (dialogueType == "Stage1" && typingCoroutine == null)
+        
+        // 1스테이지 시작 시 대사
+        if (dialogueType == "Stage1" && typingCoroutine == null && WaveManager.instance.waveCount == 0)
         {
             dialogue.SetActive(true);
             if (data == 0 && !isTyped)
             {
-                rt.anchoredPosition = new Vector2(-450, 200);
-                typingCoroutine = StartCoroutine(TypeText("When did all these drones show up?"));
-
+                rt.anchoredPosition = AdjustScreenPos(Player.instance.transform.position);
+                //typingCoroutine = StartCoroutine(TypeText("When did all these drones show up?"));
+                typingCoroutine = StartCoroutine(TypeText("하늘에 드론이 이렇게 깔리다니."));
             }
             else if (data == 1 && !isTyped)
             {
-                rt.anchoredPosition = new Vector2(400, 150);
-                typingCoroutine = StartCoroutine(TypeText("Access denied. Return home immediately."));
+                rt.anchoredPosition = AdjustScreenPos(talkingEnemy.transform.position);
+
+                //typingCoroutine = StartCoroutine(TypeText("Access denied. Return home immediately."));
+                typingCoroutine = StartCoroutine(TypeText("접근 금지. 돌아가십시오."));
             }
             else if (data == 2 && !isTyped)
             {
-                rt.anchoredPosition = new Vector2(-450, 200);
-                typingCoroutine = StartCoroutine(TypeText("No way. Bring it on! "));
+                rt.anchoredPosition = AdjustScreenPos(Player.instance.transform.position);
+                //typingCoroutine = StartCoroutine(TypeText("No way. Bring it on! "));
+                typingCoroutine = StartCoroutine(TypeText("그렇겐 안 되지. 덤벼!"));
             }
         }
+
+        // 1스테이지 보스전 시작 시 대사
+        if (dialogueType == "Stage1" && typingCoroutine == null && WaveManager.instance.waveCount == CutsceneManager.instance.bossWave)
+        {
+            dialogue.SetActive(true);
+
+            if (data == 0 && !isTyped)
+            {
+                rt.anchoredPosition = AdjustScreenPos(Player.instance.transform.position);
+                Debug.Log(rt.anchoredPosition);
+                typingCoroutine = StartCoroutine(TypeText("이건 뭐야? 일조권 침해라고."));
+            }
+            else if (data == 1 && !isTyped)
+            {
+                rt.anchoredPosition = AdjustScreenPos(Hester.instance.transform.position);
+
+                typingCoroutine = StartCoroutine(TypeText("배야. 넌 상상도 못할 정도로 큰!"));
+            }
+            else if (data == 2 && !isTyped)
+            {
+                rt.anchoredPosition = AdjustScreenPos(Player.instance.transform.position);
+                typingCoroutine = StartCoroutine(TypeText("날지 못한다면, 저기에 타 있지 그래?"));
+            }
+            else if (data == 3 && !isTyped)
+            {
+                rt.anchoredPosition = AdjustScreenPos(Hester.instance.transform.position);
+                typingCoroutine = StartCoroutine(TypeText("..까불고 있네, 터트려주지!"));
+            }
+        }
+
         else
         {
             return;
@@ -142,6 +197,7 @@ public class CutsceneManager : MonoBehaviour
     // 텍스트를 한 자 한 자 뜨게 만든다
     private IEnumerator TypeText(string fullText)
     {
+        fullText = fullText + " ";
         text.text = "";  // 시작할 때 텍스트를 초기화
 
         foreach (char letter in fullText.ToCharArray())
@@ -152,6 +208,19 @@ public class CutsceneManager : MonoBehaviour
 
         isTyped = true;
         typingCoroutine = null;
+    }
+
+    private Vector3 AdjustScreenPos(Vector3 pos)
+    {
+        Vector2 targetPos = Camera.main.WorldToScreenPoint(new Vector3(pos.x,
+                                                                   pos.y + 1f,
+                                                                   pos.z
+                                                                   ));
+        // 화면 중심 좌표 계산
+        Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
+        // 화면 중심 기준으로 보정
+        Vector2 adjustedPos = targetPos - screenCenter;
+        return adjustedPos;
     }
 
     // 레터박스 효과
