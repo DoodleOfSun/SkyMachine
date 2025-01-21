@@ -41,6 +41,7 @@ public class EtherBot : MovingObject
     //private float currentStunValue;
     private float currentSpeed;
     private bool isShooting;
+    private bool isActive;
 
 
 #pragma warning disable CS0414
@@ -63,6 +64,7 @@ public class EtherBot : MovingObject
         targetPosition = Vector2.zero;
         isShooting = true;
         isWallStuck = false;
+        isActive = false;
 
         //currentStunValue = 0;
         currentSpeed = moveSpeed;
@@ -89,8 +91,9 @@ public class EtherBot : MovingObject
     // Pause에서 플레이어의 진행도를 감지
     private void CheckingWaveType()
     {
-        if (WaveManager.instance.waveInfo[WaveManager.instance.waveCount].waveActivate && WaveManager.instance.waveCount == waveLevel)
+        if (WaveManager.instance.waveInfo[WaveManager.instance.waveCount].waveActivate && WaveManager.instance.waveCount == waveLevel && !CutsceneManager.instance.isCutscene && isActive == false)
         {
+            isActive = true;
             enemyState = EnemyState.Idle;
         }
     }

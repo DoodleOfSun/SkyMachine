@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: Bullet
   m_EditorClassIdentifier: 
   parameterType: 0
-  uniqueIndex: 473393
+  uniqueIndex: 16595453
   profile: {fileID: 11400000}
   parent: {fileID: 114201774248674550}
   children: []
@@ -3165,7 +3165,7 @@ MonoBehaviour:
   foldoutVFX: 1
   hideSpriteList: 0
   vfxOpened: 0
-  currentlyDisplayedModule: 1
+  currentlyDisplayedModule: 2
   canMove: 1
   canCollide: 1
   isVisible: 1
@@ -3280,7 +3280,7 @@ MonoBehaviour:
         parameterType: 0
         relativeTo: 0
         parameterName: 
-      defaultValue: 5
+      defaultValue: 2.5
     useSlider: 0
     sliderMin: 0
     sliderMax: 0
@@ -7848,7 +7848,7 @@ MonoBehaviour:
   m_Name: Shot
   m_EditorClassIdentifier: 
   parameterType: 1
-  uniqueIndex: 6620062
+  uniqueIndex: 2852489
   profile: {fileID: 11400000}
   parent: {fileID: 114917193883442684}
   children:
@@ -9415,7 +9415,7 @@ MonoBehaviour:
           parameterType: 0
           relativeTo: 0
           parameterName: 
-        defaultValue: 30
+        defaultValue: 15
       useSlider: 0
       sliderMin: 0
       sliderMax: 0
@@ -10221,7 +10221,7 @@ MonoBehaviour:
     selectionRectsVisible: 0
     postEffectBulletSpawns:
     - index: 0
-      bulletOrigin: {x: 0, y: 0, z: 30}
+      bulletOrigin: {x: 0, y: 0, z: 15}
       useDifferentBullet: 0
       bulletParams: {fileID: 0}
     - index: 1
@@ -10229,15 +10229,15 @@ MonoBehaviour:
       useDifferentBullet: 0
       bulletParams: {fileID: 0}
     - index: 2
-      bulletOrigin: {x: 0, y: 0, z: -30}
+      bulletOrigin: {x: 0, y: 0, z: -15}
       useDifferentBullet: 0
       bulletParams: {fileID: 0}
     enabled: 1
   bulletParamsRandom: 0
   listOfPossibleBulletParams: []
   possibleBulletParams: 0
-  highestValues: {x: 0, y: 0, z: 30}
-  lowestValues: {x: 0, y: 0, z: -30}
+  highestValues: {x: 0, y: 0, z: 15}
+  lowestValues: {x: 0, y: 0, z: -15}
   hasBeenSerializedOnce: 1
   fakeBulletAmount: 0
   foldout0: 0
@@ -10282,7 +10282,7 @@ MonoBehaviour:
   m_Name: Root Emitter
   m_EditorClassIdentifier: 
   parameterType: 0
-  uniqueIndex: 1025934
+  uniqueIndex: 13358483
   profile: {fileID: 11400000}
   parent: {fileID: 0}
   children:
@@ -17398,7 +17398,7 @@ MonoBehaviour:
   m_Name: Pattern
   m_EditorClassIdentifier: 
   parameterType: 2
-  uniqueIndex: 4473686
+  uniqueIndex: 5097846
   profile: {fileID: 11400000}
   parent: {fileID: 114671512830859702}
   children:

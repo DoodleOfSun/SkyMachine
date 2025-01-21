@@ -914,10 +914,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hester
       objectReference: {fileID: 0}
-    - target: {fileID: 4367920706013287944, guid: 5d3069fc159fb944886f56aa06f48429, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5158169610624219666, guid: 5d3069fc159fb944886f56aa06f48429, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.06
@@ -1206,63 +1202,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd40e9c5c8b6275428485e794e7e6e69, type: 3}
---- !u!1001 &6116309529259002797
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 3166899473272013203, guid: b6fbe7b1f55adda43842e1a271dbb400, type: 3}
-      propertyPath: m_Name
-      value: NextRoomArrows
-      objectReference: {fileID: 0}
-    - target: {fileID: 6955406000996197366, guid: b6fbe7b1f55adda43842e1a271dbb400, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6955406000996197366, guid: b6fbe7b1f55adda43842e1a271dbb400, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6955406000996197366, guid: b6fbe7b1f55adda43842e1a271dbb400, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6955406000996197366, guid: b6fbe7b1f55adda43842e1a271dbb400, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6955406000996197366, guid: b6fbe7b1f55adda43842e1a271dbb400, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6955406000996197366, guid: b6fbe7b1f55adda43842e1a271dbb400, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6955406000996197366, guid: b6fbe7b1f55adda43842e1a271dbb400, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6955406000996197366, guid: b6fbe7b1f55adda43842e1a271dbb400, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6955406000996197366, guid: b6fbe7b1f55adda43842e1a271dbb400, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6955406000996197366, guid: b6fbe7b1f55adda43842e1a271dbb400, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b6fbe7b1f55adda43842e1a271dbb400, type: 3}
 --- !u!1001 &6273504426459411460
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1274,6 +1213,10 @@ PrefabInstance:
     - target: {fileID: 4488617878951139013, guid: 156db51d8c5c5f445b9ee25fbbd4cf08, type: 3}
       propertyPath: m_Name
       value: StageLimitWall
+      objectReference: {fileID: 0}
+    - target: {fileID: 6415301819445717141, guid: 156db51d8c5c5f445b9ee25fbbd4cf08, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -943.23
       objectReference: {fileID: 0}
     - target: {fileID: 8630732627099310960, guid: 156db51d8c5c5f445b9ee25fbbd4cf08, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1614,4 +1557,3 @@ SceneRoots:
   - {fileID: 697115598}
   - {fileID: 8172814244807459338}
   - {fileID: 3062633125712862077}
-  - {fileID: 6116309529259002797}

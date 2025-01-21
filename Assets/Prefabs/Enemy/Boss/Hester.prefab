@@ -149,19 +149,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
-  hp: 3
+  hp: 0.6
   stunValueLimit: 6
   guardCountLimit: 3
   guardDurationLimit: 2
   counterDurationLimit: 5
   stunDurationLimit: 3
   smallStunDurationLimit: 1
-  guardKnockBackValue: 0.05
+  guardKnockBackValue: 0.15
   guardKnockBackTime: 0.2
   counterKnockBackValue: 20
   counterKnockBackTime: 0.4
   knockBackSpeed: 5
   knockBackTime: 0.2
+  waveLevel: 0
   isStun: 0
   idleBulletEmitter: {fileID: 3414233723897699849}
   counterBulletEmitter: {fileID: 2543091667735320946}
@@ -230,7 +231,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.7
 --- !u!1 &5694064505608967873
 GameObject:
   m_ObjectHideFlags: 0

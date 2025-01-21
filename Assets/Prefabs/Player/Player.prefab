@@ -62,8 +62,8 @@ MonoBehaviour:
   etherParryCost: 0
   isReadyToSkill1: 0
   blinkCount: 3
-  attackDashingTime: 0.2
-  attackDashingSpeed: 3
+  attackDashingTime: 0.1
+  attackDashingSpeed: 1.5
   attackDashingDistance: 10
   focusSpeed: 2
   blinkDuration: 0.1

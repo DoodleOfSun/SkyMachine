@@ -36,6 +36,12 @@ public class CutsceneManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Init();
+    }
+
+    private void Init()
+    {
+
         if (instance == null)
         {
             instance = this;
@@ -61,6 +67,7 @@ public class CutsceneManager : MonoBehaviour
         // 이후 이 카운트는 유동적으로 관리된다.
         dialogueInt = 3;
     }
+
 
     // Update is called once per frame
     void Update()

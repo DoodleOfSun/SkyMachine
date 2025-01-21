@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour
 
     public GameManagerState gmState;
 
+    public string currentSceneName;
+
 
     // VFX 오브젝트 풀. 딕셔너리 자료구조 이용
     public List<VFXPrefab> vfxPrefabs; // 여러 VFX 프리팹 리스트
@@ -66,6 +68,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        currentSceneName = SceneManager.GetActiveScene().name;
         SystemKeyDetecting();
         ActingByState();
     }
@@ -132,6 +135,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
     private void ActingByState()
     {
         switch (gmState)
@@ -146,6 +150,10 @@ public class GameManager : MonoBehaviour
                 break;
             case GameManagerState.GameOver:
                 Cursor.visible = true;
+                if (Input.GetKeyDown(KeyCode.R))
+                {
+                    RestartThisScene();
+                }
                 break;
         }
     }
@@ -204,7 +212,7 @@ public class GameManager : MonoBehaviour
     {
         gmState = GameManagerState.GameOver;
         health1.enabled = false;
-        gameOverText.text = "Game Over !";
+        gameOverText.text = "Press R To Restart";
         //enabled = false;
     }
 
@@ -293,5 +301,11 @@ public class GameManager : MonoBehaviour
             //Debug.LogWarning($"VFX {vfxName} not found in pool!");
             Destroy(vfx); // 예외적으로 풀에 없으면 제거
         }
+    }
+
+    public void PlayNextScene()
+    {
+        TitleManager.targetScene = "Stage2";
+        SceneManager.LoadScene("LoadingScene");
     }
 }

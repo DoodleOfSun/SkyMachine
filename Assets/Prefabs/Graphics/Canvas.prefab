@@ -614,7 +614,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d6fc15c58bd14c847b827eaf4840a8d0, type: 3}
+  m_Sprite: {fileID: 236719404, guid: 3209f3c4ad1911f4788b232391f32098, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2192,8 +2192,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -418, y: 182}
-  m_SizeDelta: {x: 99.333336, y: 100}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1045168111584854626
 MonoBehaviour:
@@ -2998,7 +2998,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d6fc15c58bd14c847b827eaf4840a8d0, type: 3}
+  m_Sprite: {fileID: 236719404, guid: 3209f3c4ad1911f4788b232391f32098, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4433,7 +4433,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d6fc15c58bd14c847b827eaf4840a8d0, type: 3}
+  m_Sprite: {fileID: 236719404, guid: 3209f3c4ad1911f4788b232391f32098, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4776,6 +4776,8 @@ MonoBehaviour:
   dialogue: {fileID: 4007009987743656749}
   BlackBarUp: {fileID: 2317053100130693559}
   BlackBarDown: {fileID: 3043799102117020094}
+  bossWave: 4
+  talkingEnemy: {fileID: 0}
   dialogueType: Stage1
 --- !u!1 &8181859451923227757
 GameObject:

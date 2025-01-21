@@ -74,6 +74,7 @@ public class WaveManager : MonoBehaviour
     {
         if (waveInfo[waveCount].waveActivate && waveInfo[waveCount].wavePool.transform.childCount == 0 && isCleared == false)
         {
+
             isCleared = true;
             ExitArrow(waveInfo[waveCount].exit, waveInfo[waveCount].roomPos.transform.position);
             Debug.Log("웨이브 카운트 : " + waveCount);
