@@ -85,6 +85,11 @@ public class PlayerSlash : MonoBehaviour
                     hs.TakeDamage(DamageToEnemyHowMuch(this.transform.name));
                 }
             }
+            if (collision.transform.name.Contains("EtherTower"))
+            {
+                EtherTower et = collision.GetComponent<EtherTower>();
+                et.TakeDamage(DamageToEnemyHowMuch(this.transform.name));
+            }
         }
     }
 

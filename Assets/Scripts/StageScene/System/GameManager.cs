@@ -252,8 +252,8 @@ public class GameManager : MonoBehaviour
             {
                 yield return new WaitForSeconds(0.3f);
             }
-            // 헤스터의 수류탄
-            else if (vfxName.Contains("Granade"))
+            // 헤스터의 수류탄, 로켓
+            else if (vfxName.Contains("Granade") || vfxName.Contains("Rocket"))
             {
                 yield return new WaitForSeconds(0.6f);
             }

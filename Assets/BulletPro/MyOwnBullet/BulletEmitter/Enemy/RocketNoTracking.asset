@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da8a7c80eab4c474da1e90eb12356b89, type: 3}
-  m_Name: Granade
+  m_Name: RocketNoTracking
   m_EditorClassIdentifier: 
   rootBullet: {fileID: 114671512830859702}
   subAssets:
@@ -30,7 +30,7 @@ MonoBehaviour:
   foldoutEmptyBin: 0
   foldoutCompactMode: 0
   currentParamsSelected: {fileID: 114027673760526898}
-  numberOfSubAssets: 0
+  numberOfSubAssets: 4
 --- !u!114 &114027673760526898
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: Bullet
   m_EditorClassIdentifier: 
   parameterType: 0
-  uniqueIndex: 7615575
+  uniqueIndex: 1693131
   profile: {fileID: 11400000}
   parent: {fileID: 114201774248674550}
   children: []
@@ -631,9 +631,9 @@ MonoBehaviour:
           repartitionCurve:
             serializedVersion: 2
             m_Curve: []
-            m_PreInfinity: 2
-            m_PostInfinity: 2
-            m_RotationOrder: 4
+            m_PreInfinity: 0
+            m_PostInfinity: 0
+            m_RotationOrder: 0
           shareValueBetweenInstances: 0
           rerollFrequency: 0
           interpolationFactorFromShot: 0
@@ -683,8 +683,8 @@ MonoBehaviour:
               outSlope: 1
               tangentMode: 0
               weightedMode: 0
-              inWeight: 0.33333334
-              outWeight: 0.33333334
+              inWeight: 0
+              outWeight: 0
             - serializedVersion: 3
               time: 1
               value: 1
@@ -692,8 +692,8 @@ MonoBehaviour:
               outSlope: 0
               tangentMode: 0
               weightedMode: 0
-              inWeight: 0.33333334
-              outWeight: 0.33333334
+              inWeight: 0
+              outWeight: 0
             m_PreInfinity: 2
             m_PostInfinity: 2
             m_RotationOrder: 4
@@ -726,12 +726,12 @@ MonoBehaviour:
         indexOfTo: 0
         indexOfBlendedChildren: 
         weight: 0
-        headerTitle: 
+        headerTitle: Element 0
         blendColor: {r: 0, g: 0, b: 0, a: 0}
         parameterType: 0
         relativeTo: 0
         parameterName: 
-      defaultValue: {fileID: 343164952, guid: 23dd4c26070fc804c879a789b24999f1, type: 3}
+      defaultValue: {fileID: -1035048557, guid: 2c07fa0bc24c1b844b7b35ea024149df, type: 3}
     narrowType: 1
     requireComponent: 0
     typeName: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral,
@@ -745,9 +745,9 @@ MonoBehaviour:
           repartitionCurve:
             serializedVersion: 2
             m_Curve: []
-            m_PreInfinity: 2
-            m_PostInfinity: 2
-            m_RotationOrder: 4
+            m_PreInfinity: 0
+            m_PostInfinity: 0
+            m_RotationOrder: 0
           shareValueBetweenInstances: 0
           rerollFrequency: 0
           interpolationFactorFromShot: 0
@@ -797,8 +797,8 @@ MonoBehaviour:
               outSlope: 1
               tangentMode: 0
               weightedMode: 0
-              inWeight: 0.33333334
-              outWeight: 0.33333334
+              inWeight: 0
+              outWeight: 0
             - serializedVersion: 3
               time: 1
               value: 1
@@ -806,8 +806,8 @@ MonoBehaviour:
               outSlope: 0
               tangentMode: 0
               weightedMode: 0
-              inWeight: 0.33333334
-              outWeight: 0.33333334
+              inWeight: 0
+              outWeight: 0
             m_PreInfinity: 2
             m_PostInfinity: 2
             m_RotationOrder: 4
@@ -840,12 +840,12 @@ MonoBehaviour:
         indexOfTo: 0
         indexOfBlendedChildren: 
         weight: 0
-        headerTitle: 
+        headerTitle: Element 0
         blendColor: {r: 0, g: 0, b: 0, a: 0}
         parameterType: 0
         relativeTo: 0
         parameterName: 
-      defaultValue: {fileID: 1340792983, guid: 23dd4c26070fc804c879a789b24999f1, type: 3}
+      defaultValue: {fileID: 1706837307, guid: 2c07fa0bc24c1b844b7b35ea024149df, type: 3}
     narrowType: 1
     requireComponent: 0
     typeName: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral,
@@ -859,9 +859,9 @@ MonoBehaviour:
           repartitionCurve:
             serializedVersion: 2
             m_Curve: []
-            m_PreInfinity: 2
-            m_PostInfinity: 2
-            m_RotationOrder: 4
+            m_PreInfinity: 0
+            m_PostInfinity: 0
+            m_RotationOrder: 0
           shareValueBetweenInstances: 0
           rerollFrequency: 0
           interpolationFactorFromShot: 0
@@ -911,8 +911,8 @@ MonoBehaviour:
               outSlope: 1
               tangentMode: 0
               weightedMode: 0
-              inWeight: 0.33333334
-              outWeight: 0.33333334
+              inWeight: 0
+              outWeight: 0
             - serializedVersion: 3
               time: 1
               value: 1
@@ -920,8 +920,8 @@ MonoBehaviour:
               outSlope: 0
               tangentMode: 0
               weightedMode: 0
-              inWeight: 0.33333334
-              outWeight: 0.33333334
+              inWeight: 0
+              outWeight: 0
             m_PreInfinity: 2
             m_PostInfinity: 2
             m_RotationOrder: 4
@@ -954,12 +954,12 @@ MonoBehaviour:
         indexOfTo: 0
         indexOfBlendedChildren: 
         weight: 0
-        headerTitle: 
+        headerTitle: Element 0
         blendColor: {r: 0, g: 0, b: 0, a: 0}
         parameterType: 0
         relativeTo: 0
         parameterName: 
-      defaultValue: {fileID: -1631461460, guid: 23dd4c26070fc804c879a789b24999f1, type: 3}
+      defaultValue: {fileID: -2111592689, guid: 2c07fa0bc24c1b844b7b35ea024149df, type: 3}
     narrowType: 1
     requireComponent: 0
     typeName: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral,
@@ -973,9 +973,9 @@ MonoBehaviour:
           repartitionCurve:
             serializedVersion: 2
             m_Curve: []
-            m_PreInfinity: 2
-            m_PostInfinity: 2
-            m_RotationOrder: 4
+            m_PreInfinity: 0
+            m_PostInfinity: 0
+            m_RotationOrder: 0
           shareValueBetweenInstances: 0
           rerollFrequency: 0
           interpolationFactorFromShot: 0
@@ -1025,8 +1025,8 @@ MonoBehaviour:
               outSlope: 1
               tangentMode: 0
               weightedMode: 0
-              inWeight: 0.33333334
-              outWeight: 0.33333334
+              inWeight: 0
+              outWeight: 0
             - serializedVersion: 3
               time: 1
               value: 1
@@ -1034,8 +1034,8 @@ MonoBehaviour:
               outSlope: 0
               tangentMode: 0
               weightedMode: 0
-              inWeight: 0.33333334
-              outWeight: 0.33333334
+              inWeight: 0
+              outWeight: 0
             m_PreInfinity: 2
             m_PostInfinity: 2
             m_RotationOrder: 4
@@ -1068,12 +1068,12 @@ MonoBehaviour:
         indexOfTo: 0
         indexOfBlendedChildren: 
         weight: 0
-        headerTitle: 
+        headerTitle: Element 0
         blendColor: {r: 0, g: 0, b: 0, a: 0}
         parameterType: 0
         relativeTo: 0
         parameterName: 
-      defaultValue: {fileID: 128376541, guid: 23dd4c26070fc804c879a789b24999f1, type: 3}
+      defaultValue: {fileID: 348018070, guid: 2c07fa0bc24c1b844b7b35ea024149df, type: 3}
     narrowType: 1
     requireComponent: 0
     typeName: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral,
@@ -1087,9 +1087,9 @@ MonoBehaviour:
           repartitionCurve:
             serializedVersion: 2
             m_Curve: []
-            m_PreInfinity: 2
-            m_PostInfinity: 2
-            m_RotationOrder: 4
+            m_PreInfinity: 0
+            m_PostInfinity: 0
+            m_RotationOrder: 0
           shareValueBetweenInstances: 0
           rerollFrequency: 0
           interpolationFactorFromShot: 0
@@ -1139,8 +1139,8 @@ MonoBehaviour:
               outSlope: 1
               tangentMode: 0
               weightedMode: 0
-              inWeight: 0.33333334
-              outWeight: 0.33333334
+              inWeight: 0
+              outWeight: 0
             - serializedVersion: 3
               time: 1
               value: 1
@@ -1148,8 +1148,8 @@ MonoBehaviour:
               outSlope: 0
               tangentMode: 0
               weightedMode: 0
-              inWeight: 0.33333334
-              outWeight: 0.33333334
+              inWeight: 0
+              outWeight: 0
             m_PreInfinity: 2
             m_PostInfinity: 2
             m_RotationOrder: 4
@@ -1182,12 +1182,12 @@ MonoBehaviour:
         indexOfTo: 0
         indexOfBlendedChildren: 
         weight: 0
-        headerTitle: 
+        headerTitle: Element 0
         blendColor: {r: 0, g: 0, b: 0, a: 0}
         parameterType: 0
         relativeTo: 0
         parameterName: 
-      defaultValue: {fileID: 729490690, guid: 23dd4c26070fc804c879a789b24999f1, type: 3}
+      defaultValue: {fileID: -1569392265, guid: 2c07fa0bc24c1b844b7b35ea024149df, type: 3}
     narrowType: 1
     requireComponent: 0
     typeName: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral,
@@ -1201,9 +1201,9 @@ MonoBehaviour:
           repartitionCurve:
             serializedVersion: 2
             m_Curve: []
-            m_PreInfinity: 2
-            m_PostInfinity: 2
-            m_RotationOrder: 4
+            m_PreInfinity: 0
+            m_PostInfinity: 0
+            m_RotationOrder: 0
           shareValueBetweenInstances: 0
           rerollFrequency: 0
           interpolationFactorFromShot: 0
@@ -1253,8 +1253,8 @@ MonoBehaviour:
               outSlope: 1
               tangentMode: 0
               weightedMode: 0
-              inWeight: 0.33333334
-              outWeight: 0.33333334
+              inWeight: 0
+              outWeight: 0
             - serializedVersion: 3
               time: 1
               value: 1
@@ -1262,8 +1262,8 @@ MonoBehaviour:
               outSlope: 0
               tangentMode: 0
               weightedMode: 0
-              inWeight: 0.33333334
-              outWeight: 0.33333334
+              inWeight: 0
+              outWeight: 0
             m_PreInfinity: 2
             m_PostInfinity: 2
             m_RotationOrder: 4
@@ -1296,240 +1296,12 @@ MonoBehaviour:
         indexOfTo: 0
         indexOfBlendedChildren: 
         weight: 0
-        headerTitle: 
+        headerTitle: Element 0
         blendColor: {r: 0, g: 0, b: 0, a: 0}
         parameterType: 0
         relativeTo: 0
         parameterName: 
-      defaultValue: {fileID: 1791048876, guid: 23dd4c26070fc804c879a789b24999f1, type: 3}
-    narrowType: 1
-    requireComponent: 0
-    typeName: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-    requiredComponentName: 
-  - valueTree:
-    - settings:
-        valueType: 0
-        interpolationValue:
-          interpolationFactor: 0
-          repartitionCurve:
-            serializedVersion: 2
-            m_Curve: []
-            m_PreInfinity: 2
-            m_PostInfinity: 2
-            m_RotationOrder: 4
-          shareValueBetweenInstances: 0
-          rerollFrequency: 0
-          interpolationFactorFromShot: 0
-          interpolationFactorFromPattern: 0
-          interpolationFactorFromBullet: 0
-          relativeTo: 0
-          parameterName: 
-          loopDepth: 0
-          useComplexRerollSequence: 0
-          checkEveryNLoops: 0
-          loopSequence: 0
-          period: 0
-          wrapMode: 0
-          sortMode: 0
-          sortDirection: 0
-          repartitionTexture: {fileID: 0}
-          centerX: 0
-          centerY: 0
-          radius: 0
-          wrapPoint: 0
-          countClockwise: 0
-          differentValuesPerShot: 0
-        combinedInterpolationFactors: 0
-        index: 0
-        indexOfParent: 0
-        indexOfFrom: 0
-        indexOfTo: 0
-        indexOfBlendedChildren: 
-        weight: 0
-        headerTitle: 
-        blendColor: {r: 0, g: 0, b: 0, a: 0}
-        parameterType: 0
-        relativeTo: 0
-        parameterName: 
-      defaultValue: {fileID: 0}
-    - settings:
-        valueType: 0
-        interpolationValue:
-          interpolationFactor: 0
-          repartitionCurve:
-            serializedVersion: 2
-            m_Curve:
-            - serializedVersion: 3
-              time: 0
-              value: 0
-              inSlope: 0
-              outSlope: 1
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0.33333334
-              outWeight: 0.33333334
-            - serializedVersion: 3
-              time: 1
-              value: 1
-              inSlope: 1
-              outSlope: 0
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0.33333334
-              outWeight: 0.33333334
-            m_PreInfinity: 2
-            m_PostInfinity: 2
-            m_RotationOrder: 4
-          shareValueBetweenInstances: 0
-          rerollFrequency: 0
-          interpolationFactorFromShot: 0
-          interpolationFactorFromPattern: 0
-          interpolationFactorFromBullet: 0
-          relativeTo: 0
-          parameterName: 
-          loopDepth: 0
-          useComplexRerollSequence: 0
-          checkEveryNLoops: 0
-          loopSequence: 0
-          period: 0
-          wrapMode: 0
-          sortMode: 0
-          sortDirection: 0
-          repartitionTexture: {fileID: 0}
-          centerX: 0
-          centerY: 0
-          radius: 0
-          wrapPoint: 0
-          countClockwise: 0
-          differentValuesPerShot: 0
-        combinedInterpolationFactors: 0
-        index: 1
-        indexOfParent: 0
-        indexOfFrom: 0
-        indexOfTo: 0
-        indexOfBlendedChildren: 
-        weight: 0
-        headerTitle: 
-        blendColor: {r: 0, g: 0, b: 0, a: 0}
-        parameterType: 0
-        relativeTo: 0
-        parameterName: 
-      defaultValue: {fileID: 869828307, guid: 23dd4c26070fc804c879a789b24999f1, type: 3}
-    narrowType: 1
-    requireComponent: 0
-    typeName: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral,
-      PublicKeyToken=null
-    requiredComponentName: 
-  - valueTree:
-    - settings:
-        valueType: 0
-        interpolationValue:
-          interpolationFactor: 0
-          repartitionCurve:
-            serializedVersion: 2
-            m_Curve: []
-            m_PreInfinity: 2
-            m_PostInfinity: 2
-            m_RotationOrder: 4
-          shareValueBetweenInstances: 0
-          rerollFrequency: 0
-          interpolationFactorFromShot: 0
-          interpolationFactorFromPattern: 0
-          interpolationFactorFromBullet: 0
-          relativeTo: 0
-          parameterName: 
-          loopDepth: 0
-          useComplexRerollSequence: 0
-          checkEveryNLoops: 0
-          loopSequence: 0
-          period: 0
-          wrapMode: 0
-          sortMode: 0
-          sortDirection: 0
-          repartitionTexture: {fileID: 0}
-          centerX: 0
-          centerY: 0
-          radius: 0
-          wrapPoint: 0
-          countClockwise: 0
-          differentValuesPerShot: 0
-        combinedInterpolationFactors: 0
-        index: 0
-        indexOfParent: 0
-        indexOfFrom: 0
-        indexOfTo: 0
-        indexOfBlendedChildren: 
-        weight: 0
-        headerTitle: 
-        blendColor: {r: 0, g: 0, b: 0, a: 0}
-        parameterType: 0
-        relativeTo: 0
-        parameterName: 
-      defaultValue: {fileID: 0}
-    - settings:
-        valueType: 0
-        interpolationValue:
-          interpolationFactor: 0
-          repartitionCurve:
-            serializedVersion: 2
-            m_Curve:
-            - serializedVersion: 3
-              time: 0
-              value: 0
-              inSlope: 0
-              outSlope: 1
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0.33333334
-              outWeight: 0.33333334
-            - serializedVersion: 3
-              time: 1
-              value: 1
-              inSlope: 1
-              outSlope: 0
-              tangentMode: 0
-              weightedMode: 0
-              inWeight: 0.33333334
-              outWeight: 0.33333334
-            m_PreInfinity: 2
-            m_PostInfinity: 2
-            m_RotationOrder: 4
-          shareValueBetweenInstances: 0
-          rerollFrequency: 0
-          interpolationFactorFromShot: 0
-          interpolationFactorFromPattern: 0
-          interpolationFactorFromBullet: 0
-          relativeTo: 0
-          parameterName: 
-          loopDepth: 0
-          useComplexRerollSequence: 0
-          checkEveryNLoops: 0
-          loopSequence: 0
-          period: 0
-          wrapMode: 0
-          sortMode: 0
-          sortDirection: 0
-          repartitionTexture: {fileID: 0}
-          centerX: 0
-          centerY: 0
-          radius: 0
-          wrapPoint: 0
-          countClockwise: 0
-          differentValuesPerShot: 0
-        combinedInterpolationFactors: 0
-        index: 1
-        indexOfParent: 0
-        indexOfFrom: 0
-        indexOfTo: 0
-        indexOfBlendedChildren: 
-        weight: 0
-        headerTitle: 
-        blendColor: {r: 0, g: 0, b: 0, a: 0}
-        parameterType: 0
-        relativeTo: 0
-        parameterName: 
-      defaultValue: {fileID: -507463109, guid: 23dd4c26070fc804c879a789b24999f1, type: 3}
+      defaultValue: {fileID: -1952227613, guid: 2c07fa0bc24c1b844b7b35ea024149df, type: 3}
     narrowType: 1
     requireComponent: 0
     typeName: UnityEngine.Sprite, UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral,
@@ -3165,7 +2937,7 @@ MonoBehaviour:
   foldoutVFX: 1
   hideSpriteList: 0
   vfxOpened: 0
-  currentlyDisplayedModule: 2
+  currentlyDisplayedModule: 4
   canMove: 1
   canCollide: 1
   isVisible: 1
@@ -3637,7 +3409,7 @@ MonoBehaviour:
   maxSimultaneousCollisionsPerFrame: 1
   shapeFoldout: 0
   collisionTagsFoldout: 0
-  homing: 1
+  homing: 0
   homingTags:
     tagList: 1
   chaseMode: 1
@@ -7848,7 +7620,7 @@ MonoBehaviour:
   m_Name: Shot
   m_EditorClassIdentifier: 
   parameterType: 1
-  uniqueIndex: 276542
+  uniqueIndex: 7686986
   profile: {fileID: 11400000}
   parent: {fileID: 114917193883442684}
   children:
@@ -8075,21 +7847,13 @@ MonoBehaviour:
         parameterType: 0
         relativeTo: 0
         parameterName: 
-      defaultValue: 3
+      defaultValue: 1
     useSlider: 0
     sliderMin: 0
     sliderMax: 0
     buttons: fbffffffffffffff0100000005000000
   bulletSpawns:
   - index: 0
-    bulletOrigin: {x: 0, y: 0, z: 0}
-    useDifferentBullet: 0
-    bulletParams: {fileID: 0}
-  - index: 1
-    bulletOrigin: {x: 0, y: 0, z: 0}
-    useDifferentBullet: 0
-    bulletParams: {fileID: 0}
-  - index: 2
     bulletOrigin: {x: 0, y: 0, z: 0}
     useDifferentBullet: 0
     bulletParams: {fileID: 0}
@@ -10221,23 +9985,15 @@ MonoBehaviour:
     selectionRectsVisible: 0
     postEffectBulletSpawns:
     - index: 0
-      bulletOrigin: {x: 0, y: 0, z: 15}
-      useDifferentBullet: 0
-      bulletParams: {fileID: 0}
-    - index: 1
       bulletOrigin: {x: 0, y: 0, z: 0}
-      useDifferentBullet: 0
-      bulletParams: {fileID: 0}
-    - index: 2
-      bulletOrigin: {x: 0, y: 0, z: -15}
       useDifferentBullet: 0
       bulletParams: {fileID: 0}
     enabled: 1
   bulletParamsRandom: 0
   listOfPossibleBulletParams: []
   possibleBulletParams: 0
-  highestValues: {x: 0, y: 0, z: 15}
-  lowestValues: {x: 0, y: 0, z: -15}
+  highestValues: {x: 0, y: 0, z: 0}
+  lowestValues: {x: 0, y: 0, z: 0}
   hasBeenSerializedOnce: 1
   fakeBulletAmount: 0
   foldout0: 0
@@ -10282,7 +10038,7 @@ MonoBehaviour:
   m_Name: Root Emitter
   m_EditorClassIdentifier: 
   parameterType: 0
-  uniqueIndex: 532260
+  uniqueIndex: 14653661
   profile: {fileID: 11400000}
   parent: {fileID: 0}
   children:
@@ -17398,7 +17154,7 @@ MonoBehaviour:
   m_Name: Pattern
   m_EditorClassIdentifier: 
   parameterType: 2
-  uniqueIndex: 1406331
+  uniqueIndex: 3361149
   profile: {fileID: 11400000}
   parent: {fileID: 114671512830859702}
   children:
