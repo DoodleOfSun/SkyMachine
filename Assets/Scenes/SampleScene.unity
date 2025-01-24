@@ -998,17 +998,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b8d962a96936d0489118faffe6359bb, type: 3}
---- !u!114 &1960356605271926957 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7257181294305073393, guid: 8b8d962a96936d0489118faffe6359bb, type: 3}
-  m_PrefabInstance: {fileID: 1960356605271926956}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e627a12866e3ddb4b84cbd1bb8219934, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2059189563069581903
 GameObject:
   m_ObjectHideFlags: 0
@@ -1292,7 +1281,7 @@ PrefabInstance:
     - target: {fileID: 6211659993650221382, guid: 316bc9dbc66520f45acf490a97b86644, type: 3}
       propertyPath: OnHitByBullet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1960356605271926957}
+      objectReference: {fileID: 9187970090043912285}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1834,7 +1823,7 @@ MonoBehaviour:
   OnHitByBullet:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1960356605271926957}
+      - m_Target: {fileID: 9187970090043912285}
         m_TargetAssemblyTypeName: EtherDrone, Assembly-CSharp
         m_MethodName: InteractiveWithPlayerBullet
         m_Mode: 1
@@ -2064,7 +2053,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a676b285f069c3c4884c27e78d0fc696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emitterProfile: {fileID: 11400000, guid: 14a816ededaacf4479fc3149efd6b2fd, type: 2}
+  emitterProfile: {fileID: 11400000, guid: c3ef3944a855b7548932d9498ffef490, type: 2}
   patternOrigin: {fileID: 5784121278873731838}
   playAtStart: 0
   useDefaultGizmoColor: 1
@@ -2081,10 +2070,14 @@ PrefabInstance:
     - target: {fileID: 2163942836733426853, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
       propertyPath: OnHitByBullet.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1960356605271926957}
+      objectReference: {fileID: 9187970090043912285}
     - target: {fileID: 3175318917368615482, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
       propertyPath: m_Name
       value: EtherBot
+      objectReference: {fileID: 0}
+    - target: {fileID: 3175318917368615482, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8811303745209960259, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2249,7 +2242,7 @@ PrefabInstance:
       objectReference: {fileID: 1878949021}
     - target: {fileID: 663047194135505595, guid: d60d9b6f598bacb479a9710c2a9fa5e0, type: 3}
       propertyPath: vfxPrefabs.Array.data[2].name
-      value: Turret
+      value: Rocket
       objectReference: {fileID: 0}
     - target: {fileID: 663047194135505595, guid: d60d9b6f598bacb479a9710c2a9fa5e0, type: 3}
       propertyPath: vfxPrefabs.Array.data[2].prefab
@@ -2391,6 +2384,17 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &9187970090043912285 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7257181294305073393, guid: 8b8d962a96936d0489118faffe6359bb, type: 3}
+  m_PrefabInstance: {fileID: 1960356605271926956}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e627a12866e3ddb4b84cbd1bb8219934, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9194854539464472710
 GameObject:
   m_ObjectHideFlags: 0

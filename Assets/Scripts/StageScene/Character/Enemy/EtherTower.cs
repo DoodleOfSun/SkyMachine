@@ -92,19 +92,19 @@ public class EtherTower : MovingObject
     private void CheckingWaveType()
     {
         // 테스트용
+        
         if (GameManager.instance.currentSceneName == "SampleScene" && isActive == false)
         {
             isActive = true;
             enemyState = EnemyState.Idle;
         }
-
-        /*
-        if (WaveManager.instance.waveInfo[WaveManager.instance.waveCount].waveActivate && WaveManager.instance.waveCount == waveLevel && !CutsceneManager.instance.isCutscene && isActive == false)
+        
+        else if (WaveManager.instance.waveInfo[WaveManager.instance.waveCount].waveActivate && WaveManager.instance.waveCount == waveLevel && !CutsceneManager.instance.isCutscene && isActive == false)
         {
             isActive = true;
             enemyState = EnemyState.Idle;
-        }*/
-
+        }
+        
     }
 
     private void CheckingGameOver()
@@ -263,7 +263,7 @@ public class EtherTower : MovingObject
         bulletEmitterTransform.gameObject.SetActive(false);
         idleBulletEmitter.Pause();
         Player.instance.EtherIncreseByKillEnemy(ether);
-        yield return new WaitForSeconds(GetAnimationClipLength("EtherTowerDie") - 0.35f);
-        //Destroy(gameObject);
+        yield return new WaitForSeconds(GetAnimationClipLength("EtherTowerDie") + 3f);
+        Destroy(gameObject);
     }
 }

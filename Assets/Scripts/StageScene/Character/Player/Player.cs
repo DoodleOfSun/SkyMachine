@@ -379,9 +379,6 @@ public class Player : MovingObject
                 Parry();
             }
         }
-
-        
-        
         
     }
 
@@ -1011,7 +1008,10 @@ public class Player : MovingObject
                 isAttack = false;
                 isContinueCombo = false;
                 StartCoroutine(AttackDurationPlayForAnimation());
-                StartCoroutine(DashingWhileAttack());
+                if (!isFocusing)
+                {
+                    StartCoroutine(DashingWhileAttack());
+                }
                 StartCoroutine(WaitForNextComboInput());
                 StartCoroutine(WaitingForBindingRotation());
             }
