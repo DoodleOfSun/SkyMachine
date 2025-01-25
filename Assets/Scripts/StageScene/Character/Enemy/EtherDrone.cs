@@ -149,6 +149,7 @@ public class EtherDrone : MovingObject
     // Pause에서 플레이어의 진행도를 감지
     private void CheckingWaveType()
     {
+
         if (WaveManager.instance.waveInfo[WaveManager.instance.waveCount].waveActivate && WaveManager.instance.waveCount == waveLevel && !CutsceneManager.instance.isCutscene && isActive == false)
         {
             isActive = true;
@@ -250,6 +251,7 @@ public class EtherDrone : MovingObject
 
     private IEnumerator Kill()
     {
+        GameManager.instance.killedEnemyScore++;
         animator.SetTrigger("Die");
         bulletEmitterTransform.gameObject.SetActive(false);
         idleBulletEmitter.Pause();

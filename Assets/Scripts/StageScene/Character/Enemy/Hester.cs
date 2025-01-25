@@ -138,7 +138,7 @@ public class Hester : MovingObject
     {
         if (hp <= 0)
         {
-            GameManager.instance.PlayNextScene();
+            Kill();
         }
     }
 
@@ -605,13 +605,14 @@ public class Hester : MovingObject
 
     private void Kill()
     {
-        
+        GameManager.instance.killedEnemyScore++;
         idleBulletEmitter.Kill();
         counterBulletEmitter.Kill();
         Destroy(barrierVFX);
         Destroy(stunVFX);
         Destroy(rageVFX);
         Destroy(gameObject);
+        GameManager.instance.ScoreScene();
     }
 
     // 카운터 공격 중 스킬로 피격당하면 잠시 경직됨 (소경직)

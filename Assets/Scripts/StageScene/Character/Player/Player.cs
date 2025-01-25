@@ -578,6 +578,21 @@ public class Player : MovingObject
         isRotateBinding = true;
     }
 
+    private IEnumerator NoDashWhileAttack()
+    {
+        // 플레이어가 몬스터를 히트박스로 공격
+
+        playerSlashInstance.gameObject.SetActive(true);
+        Vector3 middlePoint = new Vector3((playerAttackBox.transform.position.x + transform.position.x) / 2f,
+                                          (playerAttackBox.transform.position.y + transform.position.y) / 2f,
+                                           playerAttackBox.transform.position.z);
+        playerSlashInstance.transform.position = middlePoint;
+        playerSlashInstance.transform.rotation = playerHitCircle.transform.rotation;
+        playerSlashInstance.Attack(attackDuration, playerSlashInstance.gameObject);
+
+        yield return null;
+    }
+
     // 공격에 전진성을 부여하는 함수
     // 회피 로직으로 구현하였으나, 공격할 때 많이 불편할 거 같으므로 evadDistance를 attackDashingDistance로 바꾸고 인스펙터에서 조정
     private IEnumerator DashingWhileAttack()
@@ -818,6 +833,7 @@ public class Player : MovingObject
                 StartCoroutine(DamagedBlinkBlack());
                 StartCoroutine(DamagedInvincibility(invincibleTime));
                 health -= 1;
+                GameManager.instance.playerHeartScore--;
             }
             //StartCoroutine(KnockBack(attackDashingDistance, damagedKnockBackTime));
             CheckingIfGameOver();
@@ -1011,6 +1027,10 @@ public class Player : MovingObject
                 if (!isFocusing)
                 {
                     StartCoroutine(DashingWhileAttack());
+                }
+                else
+                {
+                    StartCoroutine(NoDashWhileAttack());
                 }
                 StartCoroutine(WaitForNextComboInput());
                 StartCoroutine(WaitingForBindingRotation());

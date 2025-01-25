@@ -249,6 +249,7 @@ public class EtherBot : MovingObject
 
     private IEnumerator Kill()
     {
+        GameManager.instance.killedEnemyScore++;
         animator.SetTrigger("Die");
         Debug.Log("Á×À½");
         bulletEmitterTransform.gameObject.SetActive(false);

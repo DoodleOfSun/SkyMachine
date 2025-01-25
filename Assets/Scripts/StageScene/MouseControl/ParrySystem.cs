@@ -86,7 +86,7 @@ public class ParrySystem : MonoBehaviour
             // 총알이 마법진 안에 들어가 있을 때
             if (Vector2.Distance(center, bullet.transform.position) <= radius)
             {
-                Debug.Log("패리 성공");
+                GameManager.instance.parriedBulletScore++;
                 //bullet.gameObject.SetActive(false);
                 Bullet bulletScript = bullet.gameObject.GetComponent<Bullet>();
                 bulletScript.Die(bullet.gameObject.transform.position);

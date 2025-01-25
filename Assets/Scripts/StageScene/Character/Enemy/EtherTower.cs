@@ -258,6 +258,7 @@ public class EtherTower : MovingObject
 
     private IEnumerator Kill()
     {
+        GameManager.instance.killedEnemyScore++;
         animator.SetTrigger("Die");
         Debug.Log("Á×À½");
         bulletEmitterTransform.gameObject.SetActive(false);

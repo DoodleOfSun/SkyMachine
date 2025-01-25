@@ -2042,6 +2042,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4334027789770393752, guid: 316bc9dbc66520f45acf490a97b86644, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4334027789770393752, guid: 316bc9dbc66520f45acf490a97b86644, type: 3}
       propertyPath: waveLevel
       value: 8
       objectReference: {fileID: 0}
@@ -2643,6 +2647,10 @@ PrefabInstance:
     - target: {fileID: 3175318917368615482, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
       propertyPath: m_Name
       value: EtherBot
+      objectReference: {fileID: 0}
+    - target: {fileID: 5082805270669119199, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
+      propertyPath: hp
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5082805270669119199, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
       propertyPath: waveLevel
@@ -6597,6 +6605,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5082805270669119199, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5082805270669119199, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
       propertyPath: waveLevel
       value: 3
       objectReference: {fileID: 0}
@@ -6902,6 +6914,10 @@ PrefabInstance:
       value: EtherBot
       objectReference: {fileID: 0}
     - target: {fileID: 5082805270669119199, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5082805270669119199, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
       propertyPath: waveLevel
       value: 7
       objectReference: {fileID: 0}
@@ -7112,6 +7128,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5082805270669119199, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5082805270669119199, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
       propertyPath: waveLevel
       value: 4
       objectReference: {fileID: 0}
@@ -7210,6 +7230,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3175318917368615482, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5082805270669119199, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
+      propertyPath: hp
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5082805270669119199, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
@@ -9611,6 +9635,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6337657799801253968, guid: 5d3069fc159fb944886f56aa06f48429, type: 3}
+      propertyPath: hp
+      value: 1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6337657799801253968, guid: 5d3069fc159fb944886f56aa06f48429, type: 3}
       propertyPath: waveLevel
       value: 9
       objectReference: {fileID: 0}
@@ -9671,6 +9699,10 @@ PrefabInstance:
     - target: {fileID: 3719933621417294400, guid: 316bc9dbc66520f45acf490a97b86644, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4334027789770393752, guid: 316bc9dbc66520f45acf490a97b86644, type: 3}
+      propertyPath: hp
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4334027789770393752, guid: 316bc9dbc66520f45acf490a97b86644, type: 3}
       propertyPath: waveLevel
@@ -9771,6 +9803,10 @@ PrefabInstance:
     - target: {fileID: 3175318917368615482, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
       propertyPath: m_Name
       value: EtherBot (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5082805270669119199, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
+      propertyPath: hp
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5082805270669119199, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
       propertyPath: waveLevel
@@ -12410,7 +12446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0
-  hp: 5
+  hp: 1
   bulletEmitterTransform: {fileID: 1108437123933388728}
   idleBulletEmitter: {fileID: 7177278667075641583}
   knockBackSpeed: 0
@@ -12432,7 +12468,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0
-  hp: 5
+  hp: 1
   bulletEmitterTransform: {fileID: 1108437124036018587}
   idleBulletEmitter: {fileID: 7177278666939440844}
   knockBackSpeed: 0
@@ -12454,7 +12490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0
-  hp: 5
+  hp: 1
   bulletEmitterTransform: {fileID: 1108437124255971242}
   idleBulletEmitter: {fileID: 7177278666753059069}
   knockBackSpeed: 0
@@ -12476,7 +12512,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0
-  hp: 5
+  hp: 1
   bulletEmitterTransform: {fileID: 1108437125837833142}
   idleBulletEmitter: {fileID: 7177278667318664417}
   knockBackSpeed: 0
@@ -12498,7 +12534,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0
-  hp: 5
+  hp: 1
   bulletEmitterTransform: {fileID: 1108437125253370234}
   idleBulletEmitter: {fileID: 7177278667871669805}
   knockBackSpeed: 0

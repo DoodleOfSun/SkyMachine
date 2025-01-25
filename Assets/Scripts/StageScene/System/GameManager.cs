@@ -47,6 +47,12 @@ public class GameManager : MonoBehaviour
     public string currentSceneName;
 
 
+
+    public int playerHeartScore;
+    public int killedEnemyScore;
+    public int parriedBulletScore;
+
+
     // VFX 오브젝트 풀. 딕셔너리 자료구조 이용
     public List<VFXPrefab> vfxPrefabs; // 여러 VFX 프리팹 리스트
     private Dictionary<string, Queue<GameObject>> vfxPools = new Dictionary<string, Queue<GameObject>>(); // VFX 풀 딕셔너리
@@ -75,9 +81,14 @@ public class GameManager : MonoBehaviour
 
     private void AllInstantiate()
     {
+        playerHeartScore = 3;
+        killedEnemyScore = 0;
+        parriedBulletScore = 0;
+
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
 
         else if (instance != this)
@@ -175,6 +186,10 @@ public class GameManager : MonoBehaviour
 
     private void UpdateHealthAndEtherUI()
     {
+        if (Player.instance == null)
+        {
+            return;
+        }
         ether.fillAmount = Player.instance.ether;
         if (Player.instance.health == 2)
         {
@@ -303,9 +318,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /*
     public void PlayNextScene()
     {
         TitleManager.targetScene = "Stage2";
+        SceneManager.LoadScene("LoadingScene");
+    }
+    */
+
+    public void ScoreScene()
+    {
+        TitleManager.targetScene = "ScoreScene";
         SceneManager.LoadScene("LoadingScene");
     }
 }
