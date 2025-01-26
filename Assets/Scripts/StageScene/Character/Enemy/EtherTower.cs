@@ -264,7 +264,7 @@ public class EtherTower : MovingObject
         bulletEmitterTransform.gameObject.SetActive(false);
         idleBulletEmitter.Pause();
         Player.instance.EtherIncreseByKillEnemy(ether);
-        yield return new WaitForSeconds(GetAnimationClipLength("EtherTowerDie") + 3f);
+        yield return new WaitForSeconds(GetAnimationClipLength("EtherTowerDie") + 0.5f);
         Destroy(gameObject);
     }
 }

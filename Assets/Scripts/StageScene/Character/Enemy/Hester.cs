@@ -612,6 +612,7 @@ public class Hester : MovingObject
         Destroy(stunVFX);
         Destroy(rageVFX);
         Destroy(gameObject);
+        //GameManager.instance.gameOveredSceneName = "Cleared!";
         GameManager.instance.ScoreScene();
     }
 

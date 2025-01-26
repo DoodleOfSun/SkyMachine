@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 
 public class ScoreManager : MonoBehaviour
 {
+    public Text gameStateText;
     public Text parriedBullet;
     public Text enemyKilled;
     public Text remainHeart;
@@ -16,12 +17,34 @@ public class ScoreManager : MonoBehaviour
     private Coroutine typingCoroutine;
     private int typingOrder;
 
+    public GameObject restartBoard;
+    public GameObject returnBoard;
+    private string restartSceneName;
+    private string gameState;
+
+
     // Start is called before the first frame update
     void Start()
     {
-        typingSpeed = 0.1f;
+        typingSpeed = 0.05f;
         typingCoroutine = null;
         typingOrder = 0;
+        restartBoard.SetActive(false);
+        returnBoard.SetActive(false);
+
+        if (GameManager.instance != null)
+        {
+            gameState = GameManager.instance.gmState.ToString();
+            restartSceneName = GameManager.instance.gameOveredSceneName;
+            Debug.Log(restartSceneName);
+        }
+
+        // 씬에서 직접 테스트용
+        else
+        {
+            gameState = "Testing!";
+            restartSceneName = "Stage1";
+        }
     }
 
     // Update is called once per frame
@@ -31,20 +54,34 @@ public class ScoreManager : MonoBehaviour
         {
             if (typingOrder == 0)
             {
-                parriedBullet.text = "Removed Bullet: " + GameManager.instance.parriedBulletScore;
-                typingCoroutine = StartCoroutine(TypeText(parriedBullet.text, parriedBullet));
+                if (gameState == "GameOver")
+                {
+                    gameStateText.text = "Game Over";
+                    typingCoroutine = StartCoroutine(TypeText(gameStateText.text, gameStateText));
+                }
+                else
+                {
+                    Debug.Log(gameState);
+                    gameStateText.text = "Stage Cleared";
+                    typingCoroutine = StartCoroutine(TypeText(gameStateText.text, gameStateText));
+                }
             }
             else if (typingOrder == 1)
             {
-                enemyKilled.text = "Killed Enemy : " + GameManager.instance.killedEnemyScore;
-                typingCoroutine = StartCoroutine(TypeText(enemyKilled.text, enemyKilled));
+                parriedBullet.text = "Removed Bullet: " + (GameManager.instance.parriedBulletScore * 100);
+                typingCoroutine = StartCoroutine(TypeText(parriedBullet.text, parriedBullet));
             }
             else if (typingOrder == 2)
             {
-                remainHeart.text = "Remaining Health : " + GameManager.instance.playerHeartScore;
-                typingCoroutine = StartCoroutine(TypeText(remainHeart.text, remainHeart));
+                enemyKilled.text = "Killed Enemy : " + (GameManager.instance.killedEnemyScore * 1000);
+                typingCoroutine = StartCoroutine(TypeText(enemyKilled.text, enemyKilled));
             }
             else if (typingOrder == 3)
+            {
+                remainHeart.text = "Remaining Health : " + (GameManager.instance.playerHeartScore * 30000);
+                typingCoroutine = StartCoroutine(TypeText(remainHeart.text, remainHeart));
+            }
+            else if (typingOrder == 4)
             {
                 int result = (GameManager.instance.killedEnemyScore * 1000) + 
                              (GameManager.instance.playerHeartScore * 30000) + 
@@ -52,7 +89,7 @@ public class ScoreManager : MonoBehaviour
                 resultScore.text = "Score : " + result;
                 typingCoroutine = StartCoroutine(TypeText(resultScore.text, resultScore));
             }
-            else if (typingOrder == 4)
+            else if (typingOrder == 5)
             {
                 betaText.text = "Stay tuned for updates!";
                 typingCoroutine = StartCoroutine(TypeText(betaText.text, betaText));
@@ -64,20 +101,34 @@ public class ScoreManager : MonoBehaviour
         {
             if (typingOrder == 0)
             {
-                parriedBullet.text = "Removed Bullet: " + 1;
-                typingCoroutine = StartCoroutine(TypeText(parriedBullet.text, parriedBullet));
+                if (gameState == "GameOver")
+                {
+                    gameStateText.text = "Game Over";
+                    typingCoroutine = StartCoroutine(TypeText(gameStateText.text, gameStateText));
+                }
+                else
+                {
+                    Debug.Log(gameState);
+                    gameStateText.text = "Stage Cleared";
+                    typingCoroutine = StartCoroutine(TypeText(gameStateText.text, gameStateText));
+                }
             }
             else if (typingOrder == 1)
             {
-                enemyKilled.text = "Killed Enemy : " + 1;
-                typingCoroutine = StartCoroutine(TypeText(enemyKilled.text, enemyKilled));
+                parriedBullet.text = "Removed Bullet: " + (1 * 100);
+                typingCoroutine = StartCoroutine(TypeText(parriedBullet.text, parriedBullet));
             }
             else if (typingOrder == 2)
             {
-                remainHeart.text = "Remaining Health : " + 1;
-                typingCoroutine = StartCoroutine(TypeText(remainHeart.text, remainHeart));
+                enemyKilled.text = "Killed Enemy : " + (1 * 1000);
+                typingCoroutine = StartCoroutine(TypeText(enemyKilled.text, enemyKilled));
             }
             else if (typingOrder == 3)
+            {
+                remainHeart.text = "Remaining Health : " + (1 * 30000);
+                typingCoroutine = StartCoroutine(TypeText(remainHeart.text, remainHeart));
+            }
+            else if (typingOrder == 4)
             {
                 int result = (1 * 1000) +
                              (1 * 30000) +
@@ -85,7 +136,7 @@ public class ScoreManager : MonoBehaviour
                 resultScore.text = "Score : " + result;
                 typingCoroutine = StartCoroutine(TypeText(resultScore.text, resultScore));
             }
-            else if (typingOrder == 4)
+            else if (typingOrder == 5)
             {
                 betaText.text = "Stay tuned for updates!";
                 typingCoroutine = StartCoroutine(TypeText(betaText.text, betaText));
@@ -108,9 +159,44 @@ public class ScoreManager : MonoBehaviour
         typingOrder++;
     }
 
+    public void ActivateRetryPanel()
+    {
+        restartBoard.SetActive(true);
+    }
+
+    public void ActivateReturnPanel()
+    {
+        returnBoard.SetActive(true);
+    }
+
+    public void DeactivateRetryPanel()
+    {
+        restartBoard.SetActive(false);
+    }
+
+    public void DeactivateReturnPanel()
+    {
+        returnBoard.SetActive(false);
+    }
+
     public void ReturnToMainScene()
     {
         TitleManager.targetScene = "MainScene";
         SceneManager.LoadScene("LoadingScene");
     }
+
+    public void Continue()
+    {
+        if (gameState == "GameOver")
+        {
+            Debug.Log(restartSceneName);
+            TitleManager.targetScene = restartSceneName;
+            SceneManager.LoadScene("LoadingScene");
+        }
+        else
+        {
+            Debug.Log(gameState + " 다음 씬으로 이동");
+        }
+    }
+    
 }

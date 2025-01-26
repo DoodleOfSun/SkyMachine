@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
     public Image health3;
 
     public GameObject PausedUI;
+    
 
 
     public GameManagerState gmState;
@@ -74,7 +75,12 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        currentSceneName = SceneManager.GetActiveScene().name;
+        
+        currentSceneName = SceneManager.GetActiveScene().name; 
+        if (currentSceneName == "ScoreScene")
+        {
+            return;
+        }
         SystemKeyDetecting();
         ActingByState();
     }
@@ -146,6 +152,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    private bool isMoveToScoreScene = false;
+    public string gameOveredSceneName = "";
 
     private void ActingByState()
     {
@@ -161,10 +169,18 @@ public class GameManager : MonoBehaviour
                 break;
             case GameManagerState.GameOver:
                 Cursor.visible = true;
+                if (!isMoveToScoreScene)
+                {
+                    gameOveredSceneName = currentSceneName;
+                    ScoreScene();
+                    isMoveToScoreScene = true;
+                }
+                /*
                 if (Input.GetKeyDown(KeyCode.R))
                 {
                     RestartThisScene();
                 }
+                */
                 break;
         }
     }
@@ -328,6 +344,7 @@ public class GameManager : MonoBehaviour
 
     public void ScoreScene()
     {
+        Cursor.visible = true;
         TitleManager.targetScene = "ScoreScene";
         SceneManager.LoadScene("LoadingScene");
     }
