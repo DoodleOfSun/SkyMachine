@@ -31,7 +31,6 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public bool wave4Activate;
     */
 
-    public Text gameOverText;
     public Image ether;
     public GameObject playerReadyToSkillAnimation;
 
@@ -47,7 +46,7 @@ public class GameManager : MonoBehaviour
 
     public string currentSceneName;
 
-
+    private Coroutine timeStopCoroutine;
 
     public int playerHeartScore;
     public int killedEnemyScore;
@@ -87,6 +86,7 @@ public class GameManager : MonoBehaviour
 
     private void AllInstantiate()
     {
+        timeStopCoroutine = null;
         playerHeartScore = 3;
         killedEnemyScore = 0;
         parriedBulletScore = 0;
@@ -199,6 +199,25 @@ public class GameManager : MonoBehaviour
         gmState = GameManagerState.GamePlay;
     }
 
+    // 순간적으로 게임을 멈춤 ( 피격 시, 정예 적 처치 시 )
+    // 외부에서 사용
+    public void TimeStopLow(float time)
+    {
+        if (timeStopCoroutine == null)
+        {
+            timeStopCoroutine = StartCoroutine(TimeStopRigidity(time));
+        }
+    }
+
+    private IEnumerator TimeStopRigidity(float time)
+    {
+        Time.timeScale = 0f;
+        yield return new WaitForSecondsRealtime(time);
+        Time.timeScale = 1f;
+        timeStopCoroutine = null;
+    }
+    
+
 
     private void UpdateHealthAndEtherUI()
     {
@@ -243,7 +262,6 @@ public class GameManager : MonoBehaviour
     {
         gmState = GameManagerState.GameOver;
         health1.enabled = false;
-        gameOverText.text = "Press R To Restart";
         //enabled = false;
     }
 
@@ -293,6 +311,7 @@ public class GameManager : MonoBehaviour
 
         yield return null;
     }
+
     private GameObject GetVFX(string vfxName)
     {
         // 1. vfxPools에서 조건에 맞는 키 찾기
@@ -348,4 +367,7 @@ public class GameManager : MonoBehaviour
         TitleManager.targetScene = "ScoreScene";
         SceneManager.LoadScene("LoadingScene");
     }
+
+    
+
 }

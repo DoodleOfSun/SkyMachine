@@ -59,6 +59,7 @@ public class ParrySystem : MonoBehaviour
     {
         if (Player.instance.isReadyToParry)
         {
+            Debug.Log("ÆÐ¸µ");
             InspectAllBullets(bulletPool);
             Player.instance.isReadyToParry = false;
         }

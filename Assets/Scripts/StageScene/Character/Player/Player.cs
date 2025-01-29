@@ -844,7 +844,7 @@ public class Player : MovingObject
     {
         isBarrierActivate = true;
         //blueBarrierVFX.transform.position = transform.position;
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.1f);
         isBarrierActivate = false;
     }
 

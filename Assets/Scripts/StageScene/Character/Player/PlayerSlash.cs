@@ -67,8 +67,9 @@ public class PlayerSlash : MonoBehaviour
     {
         if (collision.transform != null && collision.transform.tag == "Enemy")
         {
-            if (collision.transform.name.Contains("EtherDrone"))
+            if (collision.transform.name.Contains("EtherDrone") || collision.transform.name.Contains("Test"))
             {
+                Debug.Log(1111);
                 EtherDrone ed = collision.GetComponent<EtherDrone>();
                 ed.TakeDamage(DamageToEnemyHowMuch(this.transform.name));
             }

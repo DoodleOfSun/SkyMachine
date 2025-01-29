@@ -202,7 +202,7 @@ public class EtherTower : MovingObject
         else
         {
             animator.SetTrigger("Damaged");
-            StartCoroutine(DamagedBlinkBlack(3f, 0.1f));
+            //StartCoroutine(DamagedBlinkBlack(3f, 0.1f));
             StartCoroutine(ChangeStateDamagedToIdleByDuration(GetAnimationClipLength("EtherTowerDamaged")));
         }
     }

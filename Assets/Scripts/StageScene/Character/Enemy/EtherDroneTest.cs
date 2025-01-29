@@ -6,7 +6,7 @@ using UnityEngine;
 
 // 이 클래스는 에테르 드론을 어떻게 제어할것인지에 대한 스크립트이다.
 // 에테르 드론은 보스 적보다 강하지 않은 일반 필드 몬스터로 기획되어야 한다.
-public class EtherDrone : MovingObject
+public class EtherDroneTest : MovingObject
 {
 
     private enum EnemyState
@@ -116,7 +116,6 @@ public class EtherDrone : MovingObject
                 break;
 
             case EnemyState.Damaged:
-                moveSpeed = 0f;
                 idleBulletEmitter.Pause();
                 break;
         }
@@ -146,10 +145,18 @@ public class EtherDrone : MovingObject
 
 
     // 이 밑으로, 각 상태에서 사용하는 함수를 정의한다
+
     // Pause에서 플레이어의 진행도를 감지
     private void CheckingWaveType()
     {
+        /*
         if (WaveManager.instance.waveInfo[WaveManager.instance.waveCount].waveActivate && WaveManager.instance.waveCount == waveLevel && !CutsceneManager.instance.isCutscene && isActive == false)
+        {
+            isActive = true;
+            enemyState = EnemyState.Idle;
+        }
+        */
+        if (isActive == false)
         {
             isActive = true;
             enemyState = EnemyState.Idle;
@@ -188,7 +195,7 @@ public class EtherDrone : MovingObject
             elapsedTime += Time.fixedDeltaTime;
             yield return new WaitForFixedUpdate();
         }
-        moveSpeed = currentSpeed;
+
         enemyState = EnemyState.Idle;
     }
 
@@ -207,7 +214,7 @@ public class EtherDrone : MovingObject
         else
         {
             animator.SetTrigger("Damaged");
-            //StartCoroutine(DamagedBlinkBlack(3f, 0.1f));
+            StartCoroutine(DamagedBlinkBlack(3f, 0.1f));
             StartCoroutine(ChangeStateDamagedToIdleByDuration(GetAnimationClipLength("EtherDroneDamaged")));
             StartCoroutine(KnockBack(knockBackSpeed, knockBackTime));
         }

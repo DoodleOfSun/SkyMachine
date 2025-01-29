@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da8a7c80eab4c474da1e90eb12356b89, type: 3}
-  m_Name: 08_FasterAndFaster
+  m_Name: FasterAndFaster
   m_EditorClassIdentifier: 
   rootBullet: {fileID: 114973981610224202}
   subAssets:
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: Pattern
   m_EditorClassIdentifier: 
   parameterType: 2
-  uniqueIndex: 12173095
+  uniqueIndex: 10159038
   profile: {fileID: 11400000}
   parent: {fileID: 114973981610224202}
   children:
@@ -29379,7 +29379,7 @@ MonoBehaviour:
   m_Name: Shot
   m_EditorClassIdentifier: 
   parameterType: 1
-  uniqueIndex: 844146
+  uniqueIndex: 7513816
   profile: {fileID: 11400000}
   parent: {fileID: 114084119151855526}
   children:
@@ -34287,7 +34287,7 @@ MonoBehaviour:
   m_Name: Bullet
   m_EditorClassIdentifier: 
   parameterType: 0
-  uniqueIndex: 13681358
+  uniqueIndex: 520187
   profile: {fileID: 11400000}
   parent: {fileID: 114636591556706544}
   children: []
@@ -42016,7 +42016,7 @@ MonoBehaviour:
   m_Name: Root Emitter
   m_EditorClassIdentifier: 
   parameterType: 0
-  uniqueIndex: 13366884
+  uniqueIndex: 145359
   profile: {fileID: 11400000}
   parent: {fileID: 0}
   children:

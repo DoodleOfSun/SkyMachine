@@ -251,7 +251,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a676b285f069c3c4884c27e78d0fc696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emitterProfile: {fileID: 11400000, guid: cdd785b23fc8c794db190273180d92e7, type: 2}
+  emitterProfile: {fileID: 11400000, guid: 51fcbde402178124983e380cf7cf13cd, type: 2}
   patternOrigin: {fileID: 209660905140276416}
   playAtStart: 0
   useDefaultGizmoColor: 1

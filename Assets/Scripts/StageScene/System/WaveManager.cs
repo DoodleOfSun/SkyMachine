@@ -29,6 +29,8 @@ public class WaveManager : MonoBehaviour
 {
     public static WaveManager instance;
     public GameObject waveRoom;
+    public GameObject backGroundPrefabs;
+    private GameObject backGround;
     
     // NOTE : 어떤 방에서의 위치정보, 각 웨이브의 몬스터와 그 출구가 어디인지 (string)을 저장하는 List
     public List<WaveExit> waveInfo = new List<WaveExit>();
@@ -51,6 +53,9 @@ public class WaveManager : MonoBehaviour
         waveCount = 0;  
         isCleared = false;
         deactivateAllArrows();
+        backGround = Instantiate(backGroundPrefabs);
+        backGround.transform.position = new Vector3(6.5f,0,0);
+        backGround.SetActive(true);
     }
 
     void Update()
@@ -150,47 +155,52 @@ public class WaveManager : MonoBehaviour
                                                                 waveInfo[waveCount + 1].roomPos.transform.position.z);
                 if (waveCount + 1 < waveInfo.Count && waveInfo[waveCount + 1] != null)
                 {
+                    backGround.transform.position = waveInfo[waveCount + 1].roomPos.transform.position;
                     waveRoom.transform.position = waveInfo[waveCount + 1].roomPos.transform.position;
                 }
             }
 
             else if (waveInfo[waveCount].exit == "Left")
             {
-                Player.instance.transform.position = new Vector3(Player.instance.transform.position.x - 1.1f, 
+                Player.instance.transform.position = new Vector3(Player.instance.transform.position.x, 
                                                                  Player.instance.transform.position.y,
                                                                  Player.instance.transform.position.z);
                 if (waveCount + 1 < waveInfo.Count && waveInfo[waveCount + 1] != null)
                 {
+                    backGround.transform.position = waveInfo[waveCount + 1].roomPos.transform.position;
                     waveRoom.transform.position = waveInfo[waveCount + 1].roomPos.transform.position;
                 }
             }
             else if (waveInfo[waveCount].exit == "Right")
             {
-                Player.instance.transform.position = new Vector3(Player.instance.transform.position.x + 1.1f,
+                Player.instance.transform.position = new Vector3(Player.instance.transform.position.x,
                                                                  Player.instance.transform.position.y,
                                                                  Player.instance.transform.position.z);
                 if (waveCount + 1 < waveInfo.Count && waveInfo[waveCount + 1] != null)
                 {
+                    backGround.transform.position = waveInfo[waveCount + 1].roomPos.transform.position;
                     waveRoom.transform.position = waveInfo[waveCount + 1].roomPos.transform.position;
                 }
             }
             else if (waveInfo[waveCount].exit == "Up")
             {
                 Player.instance.transform.position = new Vector3(Player.instance.transform.position.x,
-                                                                 Player.instance.transform.position.y + 1.1f,
+                                                                 Player.instance.transform.position.y,
                                                                  Player.instance.transform.position.z);
                 if (waveCount + 1 < waveInfo.Count && waveInfo[waveCount + 1] != null)
                 {
+                    backGround.transform.position = waveInfo[waveCount + 1].roomPos.transform.position;
                     waveRoom.transform.position = waveInfo[waveCount + 1].roomPos.transform.position;
                 }
             }
             else if (waveInfo[waveCount].exit == "Down")
             {
                 Player.instance.transform.position = new Vector3(Player.instance.transform.position.x,
-                                                                 Player.instance.transform.position.y - 1.1f,
+                                                                 Player.instance.transform.position.y,
                                                                  Player.instance.transform.position.z);
                 if (waveCount + 1 < waveInfo.Count && waveInfo[waveCount + 1] != null)
                 {
+                    backGround.transform.position = waveInfo[waveCount + 1].roomPos.transform.position;
                     waveRoom.transform.position = waveInfo[waveCount + 1].roomPos.transform.position;
                 }
             }
