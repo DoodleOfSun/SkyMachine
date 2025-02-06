@@ -55,6 +55,7 @@ public class Player : MovingObject
     public GameObject playerHitCircle;      // 플레이어 피탄점. 각도 계산에 사용하는 자식 객체임.
     public GameObject playerAttackBox;      // 피탄점의 자식 객체로, 피탄점의 각도에 따라 원을 그리며 움직임.
     public GameObject playerSpriteAndAnimation;     // 플레이어의 스프라이트와 애니메이션 오브젝트
+    public GameObject dieEffect;                // 플레이어 사망 시 이펙트
 
     //Vfx 변수
     // 근접 공격
@@ -268,6 +269,7 @@ public class Player : MovingObject
         blueBarrierVFX.gameObject.SetActive(false);
 
         currentAnimeState = "";
+        dieEffect.SetActive(false);
         be.Pause();
     }
     
@@ -864,9 +866,16 @@ public class Player : MovingObject
     {
         if (health == 0)
         {
-            GameManager.instance.GameOver();
-            gameObject.SetActive(false);
+            StartCoroutine(GameOverCoroutine());
         }
+    }
+
+    private IEnumerator GameOverCoroutine()
+    {
+        dieEffect.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        GameManager.instance.GameOver();
+        gameObject.SetActive(false);
     }
 
     // 원하는 좌표와 넉백 거리, 좌표를 받아, 그 방향으로 받은 힘만큼 객체를 이동시키고, 각도를 잠시 변화시킨다.

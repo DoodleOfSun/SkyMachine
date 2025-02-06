@@ -24,7 +24,14 @@ public class TitleManager : MonoBehaviour
 
     private void LoadingNextScene()
     {
-        targetScene = "Stage1";
+        StartCoroutine(LoadingNextSceneCoroutine());
+    }
+
+    private IEnumerator LoadingNextSceneCoroutine()
+    {
+        FadeInAndOut.instance.FadeFlag(false);
+        yield return new WaitForSeconds(2f);
+        targetScene = "StartCutscene";
         SceneManager.LoadScene("LoadingScene");
     }
 

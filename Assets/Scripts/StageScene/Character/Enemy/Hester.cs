@@ -47,6 +47,8 @@ public class Hester : MovingObject
     public GameObject stunVFXPrefabs;
     private GameObject stunVFX;
 
+    public GameObject dieEffect;
+
 
     private SpriteRenderer spriteRenderer;
     private Animator animator;
@@ -131,6 +133,8 @@ public class Hester : MovingObject
         // 기절 VFX 오브젝트
         stunVFX = Instantiate(stunVFXPrefabs);
         stunVFX.gameObject.SetActive(false);
+
+        dieEffect.SetActive(false);
         base.Start();
     }
 
@@ -605,6 +609,13 @@ public class Hester : MovingObject
 
     private void Kill()
     {
+        StartCoroutine(DieCoroutine());
+    }
+
+    private IEnumerator DieCoroutine()
+    {
+        yield return new WaitForFixedUpdate();
+        dieEffect.SetActive(true);
         GameManager.instance.killedEnemyScore++;
         idleBulletEmitter.Kill();
         counterBulletEmitter.Kill();

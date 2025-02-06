@@ -363,11 +363,17 @@ public class GameManager : MonoBehaviour
 
     public void ScoreScene()
     {
+        StartCoroutine(ScoreSceneCoroutine());
+    }
+
+    private IEnumerator ScoreSceneCoroutine()
+    {
         Cursor.visible = true;
+        FadeInAndOut.instance.FadeFlag(false);
+        yield return new WaitForSeconds(2f);
         TitleManager.targetScene = "ScoreScene";
         SceneManager.LoadScene("LoadingScene");
     }
-
     
 
 }

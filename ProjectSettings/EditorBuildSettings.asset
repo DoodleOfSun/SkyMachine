@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/LoadingScene.unity
     guid: 2a562ebe95418d2499560901b6f1214b
   - enabled: 1
+    path: Assets/Scenes/StartCutscene.unity
+    guid: 6070707ab5aac62478a93cf01543623b
+  - enabled: 1
     path: Assets/Scenes/Stage1.unity
     guid: c43d1863ec537d94d85a545e9a5cf0e0
   - enabled: 1
