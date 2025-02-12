@@ -32,11 +32,23 @@ public class GameManager : MonoBehaviour
     */
 
     public Image ether;
+    public Image parryCoolTimeGauge;
+    
+
     public GameObject playerReadyToSkillAnimation;
 
     public Image health1;
     public Image health2;
     public Image health3;
+
+    public Image leftClickTutorial;
+    public Text leftClickText;
+
+    public Image rightClickTutorial;
+    public Text rightClickText;
+
+    public Image spaceBarTutorial;
+    public Text spaceBarText;
 
     public GameObject PausedUI;
     
@@ -82,6 +94,8 @@ public class GameManager : MonoBehaviour
         }
         SystemKeyDetecting();
         ActingByState();
+        ParryCoolTimeVisual();
+        StartCoroutine(Tutorial());
     }
 
     private void AllInstantiate()
@@ -108,6 +122,8 @@ public class GameManager : MonoBehaviour
         EditorWindow.focusedWindow.SendEvent(EditorGUIUtility.CommandEvent("Duplicate"));
         Cursor.lockState = CursorLockMode.Confined;
         gmState = GameManagerState.GamePlay;
+        parryCoolTimeGauge.enabled = false;
+        parryCoolTimeGauge.fillAmount = 0;
 
         /*
         wave1Activate = false;
@@ -119,6 +135,41 @@ public class GameManager : MonoBehaviour
         {
             InitializePool(vfx.name, vfx.prefab);
         }
+
+        leftClickTutorial.enabled = false;
+        leftClickText.enabled = false;
+
+        rightClickTutorial.enabled = false;
+        rightClickText.enabled = false;
+
+        spaceBarTutorial.enabled = false;
+        spaceBarText.enabled = false;
+
+        /*
+        if (currentSceneName != "Stage1")
+        {
+            leftClickTutorial.enabled = false;
+            leftClickText.enabled = false;
+
+            rightClickTutorial.enabled = false;
+            rightClickText.enabled = false;
+
+            spaceBarTutorial.enabled = false;
+            spaceBarText.enabled = false;
+        }
+
+        else if (currentSceneName == "Stage1")
+        {
+            leftClickTutorial.enabled = true;
+            leftClickText.enabled = true;
+
+            rightClickTutorial.enabled = true;
+            rightClickText.enabled = true;
+
+            spaceBarTutorial.enabled = true;
+            spaceBarText.enabled = true;
+        }
+        */
     }
     private void InitializePool(string vfxName, GameObject prefab)
     {
@@ -374,6 +425,91 @@ public class GameManager : MonoBehaviour
         TitleManager.targetScene = "ScoreScene";
         SceneManager.LoadScene("LoadingScene");
     }
+
+    public void ParryCoolTimeVisual()
+    {
+        // TODO : ParryCoroutine이 null이 아닌 동안에는 패리 쿨타임 상태이므로 패리 게이지를 플레이어의 위치에 보여주어야 한다.
+        if (Player.instance.parryCoroutine != null)
+        {
+            parryCoolTimeGauge.fillAmount += Time.fixedDeltaTime * 0.65f;
+            parryCoolTimeGauge.enabled = true;
+            parryCoolTimeGauge.rectTransform.position = Camera.main.WorldToScreenPoint(new Vector3(Player.instance.transform.position.x, 
+                                                                                                   Player.instance.transform.position.y + 0.6f,
+                                                                                                   0));
+        }
+
+        else
+        {
+            parryCoolTimeGauge.enabled = false;
+            parryCoolTimeGauge.fillAmount = 0f;
+        }
+    }
     
+    private IEnumerator Tutorial()
+    {
+        if (currentSceneName == "Stage1" && !CutsceneManager.instance.isCutscene && WaveManager.instance.waveCount <= 1)
+        {
+            if (WaveManager.instance.waveCount == 0)
+            {
+
+                leftClickTutorial.rectTransform.position = Camera.main.WorldToScreenPoint(new Vector3(Player.instance.transform.position.x - 0.6f,
+                                                                                                   Player.instance.transform.position.y + 1f,
+                                                                                                   0));
+                rightClickTutorial.rectTransform.position = Camera.main.WorldToScreenPoint(new Vector3(Player.instance.transform.position.x + 0.6f,
+                                                                                                   Player.instance.transform.position.y + 1f,
+                                                                                                   0));
+                leftClickText.text = "ATTACK";
+
+                leftClickTutorial.enabled = true;
+                leftClickText.enabled = true;
+                rightClickTutorial.enabled = true;
+                rightClickText.enabled = true;
+                spaceBarTutorial.enabled = false;
+                spaceBarText.enabled = false;
+
+                if (Player.instance.isParryAiming)
+                {
+
+                    leftClickTutorial.rectTransform.position = Camera.main.WorldToScreenPoint(new Vector3(Player.instance.transform.position.x,
+                                                                                                   Player.instance.transform.position.y + 1f,
+                                                                                                   0));
+                    leftClickText.text = "PARRY";
+
+                    leftClickTutorial.enabled = true;
+                    leftClickText.enabled = true;
+                    rightClickTutorial.enabled = false;
+                    rightClickText.enabled = false;
+                    spaceBarTutorial.enabled = false;
+                    spaceBarText.enabled = false;
+                }
+
+            }
+            else if (WaveManager.instance.waveCount == 1)
+            {
+                spaceBarTutorial.rectTransform.position = Camera.main.WorldToScreenPoint(new Vector3(Player.instance.transform.position.x,
+                                                                                                   Player.instance.transform.position.y + 1f,
+                                                                                                   0));
+                leftClickTutorial.enabled = false;
+                leftClickText.enabled = false;
+                rightClickTutorial.enabled = false;
+                rightClickText.enabled = false;
+                spaceBarTutorial.enabled = true;
+                spaceBarText.enabled = true;
+            }
+        }
+        else
+        {
+            leftClickTutorial.enabled = false;
+            leftClickText.enabled = false;
+
+            rightClickTutorial.enabled = false;
+            rightClickText.enabled = false;
+
+            spaceBarTutorial.enabled = false;
+            spaceBarText.enabled = false;
+        }
+
+        yield return null;
+    }
 
 }

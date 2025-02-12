@@ -136,7 +136,6 @@ public class Player : MovingObject
         Debug.Log("isParrying : " + isParrying);
         Debug.Log("isSkill1Playing : " + isSkill1Playing);*/
 
-        
         PlayerHitCircleRotate(GameManager.instance.worldMousePos);
         CheckingSkill1Count();
         PlayerMovingOrIdleRotate();
@@ -270,6 +269,7 @@ public class Player : MovingObject
 
         currentAnimeState = "";
         dieEffect.SetActive(false);
+
         be.Pause();
     }
     
@@ -410,6 +410,8 @@ public class Player : MovingObject
         parryCoroutine = null;
     }
 
+
+
     // 이 함수는 모든 플레이어의 움직임에 의해 검사한 bool 함수를 기반으로 실질적인 물리 함수를 처리한다.
     private void AllPlayerMoving()
     {
@@ -426,7 +428,7 @@ public class Player : MovingObject
         // canContinueCombo가 True인 동안 이동시키지 않는다. 
         // 넉백 상태일 때에도 이동시키지 않는다.
         // 위치 고정상태일 때에도 이동시키지 않는다.
-        if (isContinueCombo && !isKnockBack && !isPositionBinding)
+        if (isContinueCombo && !isKnockBack && !isPositionBinding && health != 0)
         {
             AttemptMove(horizontal, vertical);
         }
@@ -827,6 +829,7 @@ public class Player : MovingObject
             {
                 StartCoroutine(BarrierVFXCoroutine());
                 StartCoroutine(DamagedInvincibility(invincibleTime + 0.2f));
+                StartCoroutine(DamagedBlinkBlack());
 
                 EtherFluctuation(ether * -1f);
             }
@@ -834,11 +837,20 @@ public class Player : MovingObject
             {
                 StartCoroutine(DamagedBlinkBlack());
                 StartCoroutine(DamagedInvincibility(invincibleTime));
-                health -= 1;
-                GameManager.instance.playerHeartScore--;
+                if (health <= 0.1)
+                {
+                    health = 0;
+                    GameManager.instance.playerHeartScore = 0;
+                }
+                else
+                {
+                    health -= 1;
+                    GameManager.instance.playerHeartScore--;
+                }
             }
             //StartCoroutine(KnockBack(attackDashingDistance, damagedKnockBackTime));
-            CheckingIfGameOver();
+            //CheckingIfGameOver();
+            StartCoroutine(CheckingIfGameOver());
         }
     }
 
@@ -862,20 +874,24 @@ public class Player : MovingObject
     }
 
     // 이 함수는 체력이 줄 때 마다 플레이어의 체력이 다 소진되었는지를 검사하고 애니메이션을 재생한 뒤 오브젝트를 비활성화시킨다.
-    private void CheckingIfGameOver()
-    {
-        if (health == 0)
-        {
-            StartCoroutine(GameOverCoroutine());
-        }
-    }
 
-    private IEnumerator GameOverCoroutine()
+    // HACK : 게임매니저의 playerHeartScore가 0이 아니게 될 때가 있어서 하드코딩으로 임시 해결함.
+    // 어차피 게임에서 패배하면 체력은 0이므로 상관은 없어 보이나 프로그래밍적으로 옳지 못하여 주석을 남김.
+
+    private IEnumerator CheckingIfGameOver()
     {
-        dieEffect.SetActive(true);
-        yield return new WaitForSeconds(2f);
-        GameManager.instance.GameOver();
-        gameObject.SetActive(false);
+        if (health <= 0)
+        {
+            health = 0;
+            GameManager.instance.playerHeartScore = 0;
+            //StartCoroutine(GameOverCoroutine());
+            Debug.Log("죽음 이펙트");
+            GameManager.instance.GameOver();
+            playerSpriteAndAnimation.SetActive(false);
+            dieEffect.SetActive(true);
+            yield return new WaitForSeconds(2f);
+            gameObject.SetActive(false);
+        }
     }
 
     // 원하는 좌표와 넉백 거리, 좌표를 받아, 그 방향으로 받은 힘만큼 객체를 이동시키고, 각도를 잠시 변화시킨다.
@@ -1083,5 +1099,4 @@ public class Player : MovingObject
         yield return new WaitForSeconds(0.6f);
         isParrying = false;
     }
-
 }
