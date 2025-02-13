@@ -693,6 +693,7 @@ public class Player : MovingObject
     // 스킬1 사용 함수
     private void ActivatingSkill1()
     {
+        AudioManager.instance.PlayingSFX("Skill");
         if (ether >= etherSkill1Cost)
         {
             // 원래 애니메이션
@@ -1030,6 +1031,7 @@ public class Player : MovingObject
     // 공격 함수
     private void Attack()
     {
+        AudioManager.instance.PlayingSFX("Sword");
         if (ether >= etherAttackCost)
         {
             if (isContinueCombo == true)

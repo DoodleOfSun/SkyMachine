@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading;
 using System.Xml.Linq;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.Threading.Tasks;
 
 public class GameManager : MonoBehaviour
 {
@@ -108,7 +110,6 @@ public class GameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
 
         else if (instance != this)
@@ -201,6 +202,7 @@ public class GameManager : MonoBehaviour
         {
             CloseUIPaused();
         }
+
     }
 
     private bool isMoveToScoreScene = false;
@@ -317,22 +319,28 @@ public class GameManager : MonoBehaviour
     }
 
     // 메인 화면으로 돌아가기
-    public void ReturnToMainScene()
+    public async void ReturnToMainScene()
     {
+        AudioManager.instance.PlayingSFX("UIClick");
+        await Task.Delay(300);
         TitleManager.targetScene = "MainScene";
         SceneManager.LoadScene("LoadingScene");
     }
 
     // 해당 씬을 재시작하여 게임 재도전
-    public void RestartThisScene()
+    public async void RestartThisScene()
     {
+        AudioManager.instance.PlayingSFX("UIClick");
+        await Task.Delay(300);
         TitleManager.targetScene = SceneManager.GetActiveScene().name;
         SceneManager.LoadScene("LoadingScene");
     }
 
     // 게임 종료, 유니티 에디터인 경우 게임 재생을 중지
-    public void ExitGame()
+    public async void ExitGame()
     {
+        AudioManager.instance.PlayingSFX("UIClick");
+        await Task.Delay(300);
         // 유니티 에디터인 경우
         UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
@@ -447,7 +455,7 @@ public class GameManager : MonoBehaviour
     
     private IEnumerator Tutorial()
     {
-        if (currentSceneName == "Stage1" && !CutsceneManager.instance.isCutscene && WaveManager.instance.waveCount <= 1)
+        if (currentSceneName == "Stage1" && !CutsceneManager.instance.isCutscene && WaveManager.instance.waveCount <= 1 && Time.timeScale != 0)
         {
             if (WaveManager.instance.waveCount == 0)
             {

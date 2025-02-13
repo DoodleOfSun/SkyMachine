@@ -346,6 +346,7 @@ public class Hester : MovingObject
         // 가드 횟수와 스턴치를 쌓고 애니메이션 재생
         else
         {
+            AudioManager.instance.PlayingSFX("Guard");
             // 가드 애니메이션 실행
             animator.SetTrigger("Attack");
             StartCoroutine(GuardVFX());
@@ -416,6 +417,7 @@ public class Hester : MovingObject
     // 가드에서 카운터로 변경되었을 때 한번 실행되는 함수
     private void ChangeStateGuardToCounter()
     {
+        AudioManager.instance.PlayingSFX("Counter");
         StartCoroutine(Counter());
     }
 
@@ -562,6 +564,7 @@ public class Hester : MovingObject
     }
     public void TakeDamage(float damage)
     {
+        AudioManager.instance.PlayingSFX("HitSkin");
         hp -= damage;
         StartCoroutine(DamagedBlinkBlack(3f, 0.1f));
         //StartCoroutine(KnockBack(knockBackSpeed, knockBackTime));

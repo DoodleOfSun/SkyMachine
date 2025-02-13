@@ -185,6 +185,8 @@ public class EtherBot : MovingObject
             return;
         }
 
+
+        AudioManager.instance.PlayingSFX("DamageMetalHeavy");
         hp -= damage;
         if (hp <= 0)
         {

@@ -194,6 +194,7 @@ public class EtherTower : MovingObject
             return;
         }
 
+        AudioManager.instance.PlayingSFX("DamageMetalHeavy");
         hp -= damage;
         if (hp <= 0)
         {

@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class AudioClipEntry
@@ -60,13 +62,31 @@ public class AudioManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        AdjustingBGMVolume();
-        AdjustingSFXVolume();
-        PlayingBGM();
+        if (SceneManager.GetActiveScene().name == "StartCutscene")
+        {
+            PlayingBGMCutscene();
+        }
+        else if (SceneManager.GetActiveScene().name.Contains("Stage"))
+        {
+            PlayingBGMStage();
+            AdjustingBGMVolume();
+            AdjustingSFXVolume();
+        }
     }
 
-    private void PlayingBGM()
+    private void PlayingBGMCutscene()
     {
+        if (bgmSource.clip != bgmDictionary["Moter"])
+        {
+            bgmSource.clip = bgmDictionary["Moter"];
+            bgmSource.Play();
+        }
+    }
+
+    private void PlayingBGMStage()
+    {
+        // 컷신일때 재생 안하는 로직
+        /*
         if (!CutsceneManager.instance.isCutscene)
         {
             // 1스테이지
@@ -87,9 +107,27 @@ public class AudioManager : MonoBehaviour
                 }
             }
         }
+        */
+
+        // 컷신이어도 재생하는 로직
+        // 1스테이지
+        if (GameManager.instance.currentSceneName == "Stage1")
+        {
+            // 1스테이지 bgm
+            if (WaveManager.instance.waveCount <= 8 && bgmSource.clip != bgmDictionary["Stage1"])
+            {
+                bgmSource.clip = bgmDictionary["Stage1"];
+                bgmSource.Play();
+            }
+
+            // 1스테이지 보스 bgm
+            else if (WaveManager.instance.waveCount >= 9 && bgmSource.clip != bgmDictionary["Stage1Boss"])
+            {
+                bgmSource.clip = bgmDictionary["Stage1Boss"];
+                bgmSource.Play();
+            }
+        }
     }
-
-
 
     public void PlayingSFX(string sfxName)
     {
