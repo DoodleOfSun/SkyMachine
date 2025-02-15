@@ -1082,6 +1082,7 @@ public class Player : MovingObject
             // 원래 애니메이션
             //animator.SetTrigger("Parry");
             //EtherFluctuation(etherParryCost * -1);
+            StartCoroutine(ParryTimeStop());
             StartCoroutine(ParryDurationPlayForAnimation());
             isReadyToParry = true;
             parryCoroutine = StartCoroutine(DisableParryTemporarily());
@@ -1093,6 +1094,20 @@ public class Player : MovingObject
 
             // 20241213 추가부분
             isParryAiming = false;
+        }
+    }
+
+    private IEnumerator ParryTimeStop()
+    {
+        if (Time.timeScale == 0f)
+        {
+            yield return null;
+        }
+        else
+        {
+            Time.timeScale = 0f;
+            yield return new WaitForSeconds(0.2f);
+            Time.timeScale = 1f;
         }
     }
 
