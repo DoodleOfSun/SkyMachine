@@ -142,7 +142,7 @@ MonoBehaviour:
   knockBackSpeed: 10
   knockBackTime: 0.07
   ether: 0.1
-  waveType: 
+  waveLevel: 0
   spriteAndAnimation: {fileID: 6297517601005446244}
   animator: {fileID: 3575695226835519327}
 --- !u!50 &9161452283290347834

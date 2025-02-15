@@ -47,6 +47,7 @@ public class CameraShake : MonoBehaviour
     {
         yield return new WaitForSeconds(2.5f);
         isShake = true;
+        AudioManager.instance.PlayingSFX("Siren");
         yield return new WaitForSeconds(1.5f);
         isShake = false;
         shakeCoroutine = null;

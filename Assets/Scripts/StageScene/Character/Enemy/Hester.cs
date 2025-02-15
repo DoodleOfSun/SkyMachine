@@ -564,7 +564,7 @@ public class Hester : MovingObject
     }
     public void TakeDamage(float damage)
     {
-        AudioManager.instance.PlayingSFX("HitSkin");
+        AudioManager.instance.PlayingSFX("SaberCut");
         hp -= damage;
         StartCoroutine(DamagedBlinkBlack(3f, 0.1f));
         //StartCoroutine(KnockBack(knockBackSpeed, knockBackTime));

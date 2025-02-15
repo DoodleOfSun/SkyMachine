@@ -242,6 +242,7 @@ public class EtherBot : MovingObject
 
     private void Die()
     {
+        AudioManager.instance.PlayingSFX("Explosion");
         isShooting = false;
         if (dieCoroutine == null)
         {

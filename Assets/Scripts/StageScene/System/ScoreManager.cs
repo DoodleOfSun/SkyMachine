@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using System.Threading.Tasks;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -157,34 +158,46 @@ public class ScoreManager : MonoBehaviour
         typingOrder++;
     }
 
-    public void ActivateRetryPanel()
+    public async void ActivateRetryPanel()
     {
+        AudioManager.instance.PlayingSFX("UIClick");
+        await Task.Delay(300);
         restartBoard.SetActive(true);
     }
 
-    public void ActivateReturnPanel()
+    public async void ActivateReturnPanel()
     {
+        AudioManager.instance.PlayingSFX("UIClick");
+        await Task.Delay(300);
         returnBoard.SetActive(true);
     }
 
-    public void DeactivateRetryPanel()
+    public async void DeactivateRetryPanel()
     {
+        AudioManager.instance.PlayingSFX("UIClick");
+        await Task.Delay(300);
         restartBoard.SetActive(false);
     }
 
-    public void DeactivateReturnPanel()
+    public async void DeactivateReturnPanel()
     {
+        AudioManager.instance.PlayingSFX("UIClick");
+        await Task.Delay(300);
         returnBoard.SetActive(false);
     }
 
-    public void ReturnToMainScene()
+    public async void ReturnToMainScene()
     {
+        AudioManager.instance.PlayingSFX("UIClick");
+        await Task.Delay(300);
         TitleManager.targetScene = "MainScene";
         SceneManager.LoadScene("LoadingScene");
     }
 
-    public void Continue()
+    public async void Continue()
     {
+        AudioManager.instance.PlayingSFX("UIClick");
+        await Task.Delay(300);
         if (gameState == "GameOver")
         {
             Debug.Log(restartSceneName);

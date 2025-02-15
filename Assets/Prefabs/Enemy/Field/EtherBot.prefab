@@ -50,13 +50,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0
-  hp: 5
+  hp: 0.6
   bulletEmitterTransform: {fileID: 1589785152940294495}
   idleBulletEmitter: {fileID: 3571162902188463661}
   knockBackSpeed: 0
   knockBackTime: 0
   ether: 0.2
-  waveLevel: 0
+  waveLevel: 3
   spriteAndAnimation: {fileID: 6861255115277209159}
   animator: {fileID: 8241865083516772305}
 --- !u!50 &474526960214974799

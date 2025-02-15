@@ -16,11 +16,14 @@ public class ParrySystem : MonoBehaviour
     private PostProcessVolume darknessVolume;   // 객체의 피사체심도 볼륨 컴포넌트
     private Vignette vignette;
 
+    public GameObject parryVFX;     // 패리 효과 오브젝트
+
     void Start()
     {
         darknessVolume = GetComponent<PostProcessVolume>();
         darknessVolume.profile.TryGetSettings(out vignette);
-        
+        parryVFX = Instantiate(parryVFX);
+        parryVFX.SetActive(false);
     }
 
     void FixedUpdate()
@@ -59,10 +62,20 @@ public class ParrySystem : MonoBehaviour
     {
         if (Player.instance.isReadyToParry)
         {
+
+            StartCoroutine(ParryVFX());
             Debug.Log("패링");
             InspectAllBullets(bulletPool);
             Player.instance.isReadyToParry = false;
         }
+    }
+
+    private IEnumerator ParryVFX()
+    {
+        parryVFX.SetActive(true);
+        parryVFX.transform.position = this.transform.position;
+        yield return new WaitForSeconds(0.5f);
+        parryVFX.SetActive(false);
     }
 
 

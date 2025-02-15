@@ -280,7 +280,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7065039120104460631}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -346,6 +346,8 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: e82d1bb3f3e8fac418108d5749072c5c, type: 3}
   - key: Stage1Boss
     clip: {fileID: 8300000, guid: 4e6fa1bdae9775e49a62ecdad5b242a4, type: 3}
+  - key: Moter
+    clip: {fileID: 8300000, guid: a52abed13958e634daeff8f73ed6d81d, type: 3}
   sfxList:
   - key: UIClick
     clip: {fileID: 8300000, guid: 9ff6cc859c42dc04b96d52685590d6a7, type: 3}
@@ -355,11 +357,19 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 9ff6cc859c42dc04b96d52685590d6a7, type: 3}
   - key: Counter
     clip: {fileID: 8300000, guid: 04c7d27055ca1bd4eba03512072de2eb, type: 3}
-  - key: Moter
-    clip: {fileID: 8300000, guid: a52abed13958e634daeff8f73ed6d81d, type: 3}
   - key: HitSkin
     clip: {fileID: 8300000, guid: fef458f631dc97a409ed5bc4e4a1e804, type: 3}
   - key: Guard
     clip: {fileID: 8300000, guid: b7a13855c1dad384595296aa2a86343b, type: 3}
   - key: DamageMetalHeavy
     clip: {fileID: 8300000, guid: 1cc4b1433e80c354e9425a53410c61af, type: 3}
+  - key: Parry
+    clip: {fileID: 8300000, guid: 180e6f001362f66498222b950d3f0846, type: 3}
+  - key: Explosion
+    clip: {fileID: 8300000, guid: 730c56c90888e49449ae68fb86c80b4d, type: 3}
+  - key: SaberCut
+    clip: {fileID: 8300000, guid: 5c3167a11a919eb4d9c79f7aaf5f11a6, type: 3}
+  - key: Swoosh
+    clip: {fileID: 8300000, guid: 48f1f7ae37043104e91c3b66f785e641, type: 3}
+  - key: Siren
+    clip: {fileID: 8300000, guid: 4bbbc78aa438e5c40b03acb4401929ee, type: 3}

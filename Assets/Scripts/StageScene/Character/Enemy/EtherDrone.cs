@@ -134,6 +134,10 @@ public class EtherDrone : MovingObject
     // 적 객체의 스프라이트가 플레이어를 향해 각도를 전환함
     private void EnemyRotate()
     {
+        if (spriteAndAnimation == null)
+        {
+            return;
+        }
         if (Player.instance.transform.position.x >= this.transform.position.x)
         {
             spriteAndAnimation.transform.eulerAngles = new Vector3(0f, 0f, 0f);
@@ -199,6 +203,7 @@ public class EtherDrone : MovingObject
             return;
         }
 
+        AudioManager.instance.PlayingSFX("Swoosh");
         hp -= damage;
         if (hp <= 0)
         {
@@ -240,6 +245,7 @@ public class EtherDrone : MovingObject
 
     private void Die()
     {
+        AudioManager.instance.PlayingSFX("Explosion");
         isShooting = false;
         if (dieCoroutine == null)
         {

@@ -693,7 +693,7 @@ public class Player : MovingObject
     // 스킬1 사용 함수
     private void ActivatingSkill1()
     {
-        AudioManager.instance.PlayingSFX("Skill");
+        AudioManager.instance.PlayingSFX("Laser");
         if (ether >= etherSkill1Cost)
         {
             // 원래 애니메이션
@@ -1075,6 +1075,8 @@ public class Player : MovingObject
     // 패리 함수
     private void Parry()
     {
+        AudioManager.instance.PlayingSFX("Parry");
+        //yield return new WaitForSeconds(1f);
         if (ether >= etherParryCost)
         {
             // 원래 애니메이션
