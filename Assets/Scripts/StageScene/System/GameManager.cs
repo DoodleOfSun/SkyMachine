@@ -520,4 +520,23 @@ public class GameManager : MonoBehaviour
         yield return null;
     }
 
+
+    public void SmallTimeStop()
+    {
+        StartCoroutine(SmallTimeStopCoroutine());
+    }
+
+    private IEnumerator SmallTimeStopCoroutine()
+    {
+        if (Time.timeScale == 1f)
+        {
+            Time.timeScale = 0f;
+            yield return new WaitForSecondsRealtime(0.05f);
+            Time.timeScale = 1f;
+        }
+        else
+        {
+            yield return null;
+        }
+    }
 }

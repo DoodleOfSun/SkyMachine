@@ -1916,7 +1916,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0
-  hp: 0.4
+  hp: 0.3
   bulletEmitterTransform: {fileID: 3729654}
   idleBulletEmitter: {fileID: 1932199032}
   knockBackSpeed: 0
@@ -2458,7 +2458,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4334027789770393752, guid: 316bc9dbc66520f45acf490a97b86644, type: 3}
       propertyPath: hp
-      value: 0.4
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 4334027789770393752, guid: 316bc9dbc66520f45acf490a97b86644, type: 3}
       propertyPath: waveLevel
@@ -2807,7 +2807,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5082805270669119199, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
       propertyPath: hp
-      value: 0.4
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5082805270669119199, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
       propertyPath: waveLevel
@@ -6866,7 +6866,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0
-  hp: 0.4
+  hp: 0.3
   bulletEmitterTransform: {fileID: 1589937007}
   idleBulletEmitter: {fileID: 1423254971}
   knockBackSpeed: 0
@@ -7416,7 +7416,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5082805270669119199, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
       propertyPath: hp
-      value: 0.4
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 8811303745209960259, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7636,7 +7636,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5082805270669119199, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
       propertyPath: hp
-      value: 0.4
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5082805270669119199, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
       propertyPath: waveLevel
@@ -8072,7 +8072,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5082805270669119199, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
       propertyPath: hp
-      value: 0.4
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5082805270669119199, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
       propertyPath: waveLevel
@@ -8177,7 +8177,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5082805270669119199, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
       propertyPath: hp
-      value: 0.4
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5082805270669119199, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
       propertyPath: waveLevel
@@ -11081,7 +11081,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5082805270669119199, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
       propertyPath: hp
-      value: 0.4
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 5082805270669119199, guid: 5c8fa5e442ac24f46ade8100989f8942, type: 3}
       propertyPath: waveLevel
@@ -17906,7 +17906,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0
-  hp: 0.4
+  hp: 0.3
   bulletEmitterTransform: {fileID: 1108437123933388728}
   idleBulletEmitter: {fileID: 7177278667075641583}
   knockBackSpeed: 0
@@ -17928,7 +17928,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0
-  hp: 0.4
+  hp: 0.3
   bulletEmitterTransform: {fileID: 1108437124036018587}
   idleBulletEmitter: {fileID: 7177278666939440844}
   knockBackSpeed: 0
@@ -17950,7 +17950,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0
-  hp: 0.4
+  hp: 0.3
   bulletEmitterTransform: {fileID: 1108437124255971242}
   idleBulletEmitter: {fileID: 7177278666753059069}
   knockBackSpeed: 0
@@ -17972,7 +17972,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0
-  hp: 0.4
+  hp: 0.3
   bulletEmitterTransform: {fileID: 1108437125837833142}
   idleBulletEmitter: {fileID: 7177278667318664417}
   knockBackSpeed: 0
@@ -17994,7 +17994,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 0
-  hp: 0.4
+  hp: 0.3
   bulletEmitterTransform: {fileID: 1108437125253370234}
   idleBulletEmitter: {fileID: 7177278667871669805}
   knockBackSpeed: 0

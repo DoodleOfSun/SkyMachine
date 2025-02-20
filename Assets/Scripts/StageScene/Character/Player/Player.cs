@@ -111,7 +111,7 @@ public class Player : MovingObject
 
     private void Update()
     {
-        if (Time.timeScale == 0f || CutsceneManager.instance.isCutscene)
+        if (CutsceneManager.instance.isCutscene)
         {
             return;
         }
@@ -120,10 +120,9 @@ public class Player : MovingObject
    
     private void FixedUpdate()
     {
-        if (Time.timeScale == 0f || CutsceneManager.instance.isCutscene)
+        if (CutsceneManager.instance.isCutscene)
         {
             this.transform.eulerAngles = new Vector3(0f, 0f, 0f);
-            animator.SetTrigger("Idle");
             return;
         }
         /*
@@ -1076,6 +1075,7 @@ public class Player : MovingObject
     // 패리 함수
     private void Parry()
     {
+        GameManager.instance.SmallTimeStop();
         AudioManager.instance.PlayingSFX("Parry");
         //yield return new WaitForSeconds(1f);
         if (ether >= etherParryCost)

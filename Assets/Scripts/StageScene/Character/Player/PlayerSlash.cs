@@ -67,6 +67,7 @@ public class PlayerSlash : MonoBehaviour
     {
         if (collision.transform != null && collision.transform.tag == "Enemy")
         {
+            GameManager.instance.SmallTimeStop();
             if (collision.transform.name.Contains("EtherDrone") || collision.transform.name.Contains("Test"))
             {
                 Debug.Log(1111);

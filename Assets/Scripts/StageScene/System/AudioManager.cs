@@ -85,6 +85,14 @@ public class AudioManager : MonoBehaviour
 
     private void PlayingBGMStage()
     {
+
+
+
+        if (SceneManager.GetActiveScene().name == "ScoreScene")
+        {
+            bgmSource.Pause();
+            return;
+        }
         // 컷신일때 재생 안하는 로직
         /*
         if (!CutsceneManager.instance.isCutscene)
