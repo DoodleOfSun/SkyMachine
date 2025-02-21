@@ -354,9 +354,7 @@ public class Hester : MovingObject
             currentStunValue++;
             // 플레이어를 밀침
             StartCoroutine(Player.instance.Dashing(guardKnockBackValue, guardKnockBackTime, true));
-
             // 애니메이션 재생
-
         }
     }
 
@@ -417,6 +415,7 @@ public class Hester : MovingObject
     // 가드에서 카운터로 변경되었을 때 한번 실행되는 함수
     private void ChangeStateGuardToCounter()
     {
+        GameManager.instance.SmallTimeStop(0.1f);
         AudioManager.instance.PlayingSFX("Counter");
         StartCoroutine(Counter());
     }

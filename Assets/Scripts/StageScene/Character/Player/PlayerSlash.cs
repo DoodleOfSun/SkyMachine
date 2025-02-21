@@ -67,10 +67,8 @@ public class PlayerSlash : MonoBehaviour
     {
         if (collision.transform != null && collision.transform.tag == "Enemy")
         {
-            GameManager.instance.SmallTimeStop();
             if (collision.transform.name.Contains("EtherDrone") || collision.transform.name.Contains("Test"))
             {
-                Debug.Log(1111);
                 EtherDrone ed = collision.GetComponent<EtherDrone>();
                 ed.TakeDamage(DamageToEnemyHowMuch(this.transform.name));
             }
@@ -94,7 +92,7 @@ public class PlayerSlash : MonoBehaviour
             }
         }
     }
-
+    
     // 공격 시, 히트박스 이름에 따라 그 데미지를 다르게 한다.
     private float DamageToEnemyHowMuch(string vfxName)
     {

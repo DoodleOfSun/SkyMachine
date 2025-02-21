@@ -90,7 +90,7 @@ public class ScoreManager : MonoBehaviour
             }
             else if (typingOrder == 5)
             {
-                betaText.text = "Stay tuned for updates!";
+                betaText.text = "Thanks for Playing!";
                 typingCoroutine = StartCoroutine(TypeText(betaText.text, betaText));
             }
         }

@@ -521,17 +521,17 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void SmallTimeStop()
+    public void SmallTimeStop(float time)
     {
-        StartCoroutine(SmallTimeStopCoroutine());
+        StartCoroutine(SmallTimeStopCoroutine(time));
     }
 
-    private IEnumerator SmallTimeStopCoroutine()
+    private IEnumerator SmallTimeStopCoroutine(float time)
     {
         if (Time.timeScale == 1f)
         {
             Time.timeScale = 0f;
-            yield return new WaitForSecondsRealtime(0.05f);
+            yield return new WaitForSecondsRealtime(time);
             Time.timeScale = 1f;
         }
         else

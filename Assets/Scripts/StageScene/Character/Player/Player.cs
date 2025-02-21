@@ -825,6 +825,8 @@ public class Player : MovingObject
             // 이곳에 피격 애니메이션 로직
             //health -= damage;
             // 에테르가 있을 때 피격당하면 모든 에테르가 사라지고 보호막 애니메이션을 재생한다.
+            GameManager.instance.SmallTimeStop(0.07f);
+
             if (ether > 0)
             {
                 StartCoroutine(BarrierVFXCoroutine());
@@ -833,6 +835,8 @@ public class Player : MovingObject
 
                 EtherFluctuation(ether * -1f);
             }
+
+
             else
             {
                 StartCoroutine(DamagedBlinkBlack());
@@ -1075,7 +1079,7 @@ public class Player : MovingObject
     // 패리 함수
     private void Parry()
     {
-        GameManager.instance.SmallTimeStop();
+        GameManager.instance.SmallTimeStop(0.1f);
         AudioManager.instance.PlayingSFX("Parry");
         //yield return new WaitForSeconds(1f);
         if (ether >= etherParryCost)
