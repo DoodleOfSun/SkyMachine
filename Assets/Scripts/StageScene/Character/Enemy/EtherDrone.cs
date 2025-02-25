@@ -28,7 +28,11 @@ public class EtherDrone : MovingObject
 
     public GameObject spriteAndAnimation;
 
+    public bool isRotatingMove;             // 회전 이동을 시키는지에 대한 여부
+    public Transform rotatingTransform;     // 회전 이동 시킬 경우 회전하는 중심점
+
     private bool isActive;
+
 
     public Animator animator;
 
@@ -109,7 +113,14 @@ public class EtherDrone : MovingObject
                         }
                         else if(!isWallStuck)
                         {
-                            movingCoroutine = StartCoroutine(RandomMoving());
+                            if (isRotatingMove)
+                            {
+                                RotateMove(rotatingTransform, this.transform.rotation);
+                            }
+                            else
+                            {
+                                movingCoroutine = StartCoroutine(RandomMoving());
+                            }
                         }
                     }
                 }

@@ -3071,7 +3071,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waveRoom: {fileID: 612974672}
-  backGroundPrefabs: {fileID: 5214942597900515204, guid: 35f9c015880d5d542a1ebec5b409cb5b, type: 3}
+  backGroundPrefabs: {fileID: 6590695213814937380, guid: 8f45a54afc7500f47b53ade7116e61bf, type: 3}
   waveInfo:
   - exit: Right
     roomPos: {fileID: 1856730038}
@@ -19452,7 +19452,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 0

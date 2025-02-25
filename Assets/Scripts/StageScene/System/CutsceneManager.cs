@@ -128,6 +128,8 @@ public class CutsceneManager : MonoBehaviour
         {
             letterboxCoroutine = StartCoroutine(LetterBoxReturn());
         }
+
+
         dialogue.SetActive(false);
         RectTransform rt = dialogue.GetComponent<RectTransform>();
         rt.anchoredPosition = Vector2.zero;
@@ -193,6 +195,62 @@ public class CutsceneManager : MonoBehaviour
                 typingCoroutine = StartCoroutine(TypeText("..까불고 있네, 터트려주지!"));
             }
         }
+
+        // 2스테이지 시작 시 대사
+        if (dialogueType == "Stage2" && typingCoroutine == null && WaveManager.instance.waveCount == 0)
+        {
+            dialogue.SetActive(true);
+            if (data == 0 && !isTyped)
+            {
+                rt.anchoredPosition = AdjustScreenPos(Player.instance.transform.position);
+                //typingCoroutine = StartCoroutine(TypeText("When did all these drones show up?"));
+                typingCoroutine = StartCoroutine(TypeText("여기구나."));
+            }
+            else if (data == 1 && !isTyped)
+            {
+                rt.anchoredPosition = AdjustScreenPos(Player.instance.transform.position);
+
+                //typingCoroutine = StartCoroutine(TypeText("Access denied. Return home immediately."));
+                typingCoroutine = StartCoroutine(TypeText("톱니바퀴 돌아가는 소리가 시끄럽네."));
+            }
+            else if (data == 2 && !isTyped)
+            {
+                rt.anchoredPosition = AdjustScreenPos(Player.instance.transform.position);
+                //typingCoroutine = StartCoroutine(TypeText("No way. Bring it on! "));
+                typingCoroutine = StartCoroutine(TypeText("빠르게 끝내주지!"));
+            }
+        }
+
+        // 2스테이지 보스전 시작 시 대사
+        /*
+        if (dialogueType == "Stage2" && typingCoroutine == null && WaveManager.instance.waveCount == CutsceneManager.instance.bossWave)
+        {
+            dialogue.SetActive(true);
+
+            if (data == 0 && !isTyped)
+            {
+                rt.anchoredPosition = AdjustScreenPos(Player.instance.transform.position);
+                Debug.Log(rt.anchoredPosition);
+                typingCoroutine = StartCoroutine(TypeText("이건 뭐야? 일조권 침해라고."));
+            }
+            else if (data == 1 && !isTyped)
+            {
+                rt.anchoredPosition = AdjustScreenPos(Hester.instance.transform.position);
+
+                typingCoroutine = StartCoroutine(TypeText("배야. 넌 상상도 못할 정도로 큰!"));
+            }
+            else if (data == 2 && !isTyped)
+            {
+                rt.anchoredPosition = AdjustScreenPos(Player.instance.transform.position);
+                typingCoroutine = StartCoroutine(TypeText("날지 못한다면, 저기에 타 있지 그래?"));
+            }
+            else if (data == 3 && !isTyped)
+            {
+                rt.anchoredPosition = AdjustScreenPos(Hester.instance.transform.position);
+                typingCoroutine = StartCoroutine(TypeText("..까불고 있네, 터트려주지!"));
+            }
+        }
+        */
 
         else
         {

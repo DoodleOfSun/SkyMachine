@@ -76,11 +76,11 @@ public class AudioManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CheckingBGMDelay();
         PlayingBGMStage();
         AdjustingBGMVolume();
         AdjustingSFXVolume();
         SavingAudioValue();
-        CheckingBGMDelay();
     }
 
     private void PlayingBGMStage()
@@ -150,6 +150,7 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+
     private void CheckingBGMDelay()
     {
         // bgm 재생시간이 끝난 경우
@@ -157,7 +158,7 @@ public class AudioManager : MonoBehaviour
         {
             if (bgmDelayCoroutine == null)
             {
-                //Debug.Log("딜레이 코루틴 발동");
+                Debug.Log("bgm 딜레이 코루틴 발동");
                 bgmDelayCoroutine = StartCoroutine(DelayingBGM());
             }
         }

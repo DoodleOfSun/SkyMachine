@@ -35,6 +35,11 @@ public class MovingObject : MonoBehaviour
         StartCoroutine(Move(xDir, yDir));
     }
 
+    protected void RotateMove(Transform centerTransform, Quaternion rotateOrigin)
+    {
+        StartCoroutine(MovingWithRotating(centerTransform, rotateOrigin));
+    }
+
     protected IEnumerator Move(float xDir, float yDir)
     {
         UsingRb2D(xDir, yDir);
@@ -80,6 +85,13 @@ public class MovingObject : MonoBehaviour
             transform.position = newPos;
             yield return null;
         }
+    }
+
+    private IEnumerator MovingWithRotating(Transform spinCenterTransform, Quaternion rotateOrigin)
+    {
+        this.transform.RotateAround(spinCenterTransform.position, Vector3.forward, moveSpeed * Time.fixedDeltaTime);
+        this.transform.rotation = rotateOrigin;
+        yield return null;
     }
 
 }
