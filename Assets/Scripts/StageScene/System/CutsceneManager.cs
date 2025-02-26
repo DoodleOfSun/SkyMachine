@@ -222,7 +222,7 @@ public class CutsceneManager : MonoBehaviour
         }
 
         // 2스테이지 보스전 시작 시 대사
-        /*
+        
         if (dialogueType == "Stage2" && typingCoroutine == null && WaveManager.instance.waveCount == CutsceneManager.instance.bossWave)
         {
             dialogue.SetActive(true);
@@ -231,26 +231,26 @@ public class CutsceneManager : MonoBehaviour
             {
                 rt.anchoredPosition = AdjustScreenPos(Player.instance.transform.position);
                 Debug.Log(rt.anchoredPosition);
-                typingCoroutine = StartCoroutine(TypeText("이건 뭐야? 일조권 침해라고."));
+                typingCoroutine = StartCoroutine(TypeText("찾았다. 이제 부수기만 하면 되겠어."));
             }
             else if (data == 1 && !isTyped)
             {
-                rt.anchoredPosition = AdjustScreenPos(Hester.instance.transform.position);
+                rt.anchoredPosition = AdjustScreenPos(Prey.instance.transform.position);
 
-                typingCoroutine = StartCoroutine(TypeText("배야. 넌 상상도 못할 정도로 큰!"));
+                typingCoroutine = StartCoroutine(TypeText("*콜록* 부..부수게 두지는 - "));
             }
             else if (data == 2 && !isTyped)
             {
                 rt.anchoredPosition = AdjustScreenPos(Player.instance.transform.position);
-                typingCoroutine = StartCoroutine(TypeText("날지 못한다면, 저기에 타 있지 그래?"));
+                typingCoroutine = StartCoroutine(TypeText("아, 숙녀분. 거기 위험하니까 비켜줄래?"));
             }
             else if (data == 3 && !isTyped)
             {
-                rt.anchoredPosition = AdjustScreenPos(Hester.instance.transform.position);
-                typingCoroutine = StartCoroutine(TypeText("..까불고 있네, 터트려주지!"));
+                rt.anchoredPosition = AdjustScreenPos(Prey.instance.transform.position);
+                typingCoroutine = StartCoroutine(TypeText("부수게 두지는 않겠어."));
             }
         }
-        */
+        
 
         else
         {

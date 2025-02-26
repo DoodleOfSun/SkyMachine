@@ -29,7 +29,7 @@ MonoBehaviour:
   foldoutExport: 0
   foldoutEmptyBin: 0
   foldoutCompactMode: 0
-  currentParamsSelected: {fileID: 114455728593515822}
+  currentParamsSelected: {fileID: 114043142638459942}
   numberOfSubAssets: 4
 --- !u!114 &114043142638459942
 MonoBehaviour:
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Name: Shot
   m_EditorClassIdentifier: 
   parameterType: 1
-  uniqueIndex: 15435516
+  uniqueIndex: 7967825
   profile: {fileID: 11400000}
   parent: {fileID: 114184213563873034}
   children:
@@ -4787,7 +4787,7 @@ MonoBehaviour:
   m_Name: Pattern
   m_EditorClassIdentifier: 
   parameterType: 2
-  uniqueIndex: 4276571
+  uniqueIndex: 8607147
   profile: {fileID: 11400000}
   parent: {fileID: 114334976902514986}
   children:
@@ -29170,7 +29170,7 @@ MonoBehaviour:
   m_Name: Root Emitter
   m_EditorClassIdentifier: 
   parameterType: 0
-  uniqueIndex: 16297103
+  uniqueIndex: 8409028
   profile: {fileID: 11400000}
   parent: {fileID: 0}
   children:
@@ -36286,7 +36286,7 @@ MonoBehaviour:
   m_Name: Bullet
   m_EditorClassIdentifier: 
   parameterType: 0
-  uniqueIndex: 1594258
+  uniqueIndex: 15526176
   profile: {fileID: 11400000}
   parent: {fileID: 114043142638459942}
   children: []
