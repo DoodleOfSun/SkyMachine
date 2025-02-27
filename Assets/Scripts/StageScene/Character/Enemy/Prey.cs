@@ -190,6 +190,12 @@ public class Prey : MovingObject
             case EnemyState.Idle:
                 rageVFX.SetActive(false);
                 stunVFX.SetActive(false);
+
+                if (PreyMachine.instance.SharingStateCounter())
+                {
+                    ChangeStateCounter();
+                }
+
                 if (attackCoroutine == null)
                 {
                     attackCoroutine = StartCoroutine(IdleAttack(0.7f));
@@ -213,6 +219,12 @@ public class Prey : MovingObject
             case EnemyState.Guard:
                 break;
             case EnemyState.Counter:
+
+                if (PreyMachine.instance.SharingStateStun())
+                {
+                    Stun();
+                }
+
 
                 if (attackCoroutine == null)
                 {
@@ -339,7 +351,7 @@ public class Prey : MovingObject
         {
             // 이곳에 플레이어 넉백시키기 함수 실행
             StartCoroutine(Player.instance.Dashing(counterKnockBackValue, counterKnockBackTime, true));
-            ChangeStateGuardToCounter();
+            ChangeStateCounter();
             currentGuardCount = 0;
         }
 
@@ -413,8 +425,9 @@ public class Prey : MovingObject
 
     // 가드 -> 카운터
     // 가드에서 카운터로 변경되었을 때 한번 실행되는 함수
-    private void ChangeStateGuardToCounter()
+    private void ChangeStateCounter()
     {
+        
         GameManager.instance.SmallTimeStop(0.1f);
         AudioManager.instance.PlayingSFX("Counter");
         StartCoroutine(Counter());
@@ -616,8 +629,9 @@ public class Prey : MovingObject
 
     private IEnumerator DieCoroutine()
     {
-        yield return new WaitForFixedUpdate();
+        Debug.Log("Prey의 DieCoroutine이 발동함.");
         dieEffect.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
         GameManager.instance.killedEnemyScore++;
         idleBulletEmitter.Kill();
         counterBulletEmitter.Kill();
@@ -625,8 +639,17 @@ public class Prey : MovingObject
         Destroy(stunVFX);
         Destroy(rageVFX);
         Destroy(gameObject);
-        //GameManager.instance.gameOveredSceneName = "Cleared!";
-        GameManager.instance.ScoreScene();
+
+        if (PreyMachine.instance == null)
+        {
+            Debug.Log("클리어됨, 점수 화면으로");
+            GameManager.instance.gameOveredSceneName = "Stage2Clear";
+            GameManager.instance.ScoreScene();
+        }
+        else
+        {
+            Debug.Log("다이코루틴이 발동하였으나 스테이지 넘어가지지 않음. 조건문오류");
+        }
     }
 
     // 카운터 공격 중 스킬로 피격당하면 잠시 경직됨 (소경직)
@@ -703,5 +726,30 @@ public class Prey : MovingObject
         }
         counterBulletEmitter.Play();
         enemyState = EnemyState.Counter;
+    }
+
+    // PreyMachine과 Prey는 누군가 하나가 카운터 상태가 되면 같이 카운터 상태가 된다.
+    // Prey가 현재 Counter 상태면 True를 반환한다. 그렇지 않으면 false를 반환한다.
+    public bool SharingStateCounter()
+    {
+        if (enemyState == EnemyState.Counter)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public bool SharingStateStun()
+    {
+        if (enemyState == EnemyState.Stun)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

@@ -21,6 +21,10 @@ public class Player : MovingObject
 
     [HideInInspector] public static Player instance;
 
+    // 테스트 시 이것을 활성화할 것
+    public bool isTest;
+
+
     // 기초 능력치 관련 변수
     public float attack;
     public float skill1Damage;
@@ -123,6 +127,7 @@ public class Player : MovingObject
         if (CutsceneManager.instance.isCutscene)
         {
             this.transform.eulerAngles = new Vector3(0f, 0f, 0f);
+            animator.SetTrigger("Idle");
             return;
         }
         /*
@@ -223,6 +228,14 @@ public class Player : MovingObject
             Destroy(gameObject);
         }
 
+        if (isTest)
+        {
+            attack = 999;
+        }
+        else
+        {
+            attack = 0.1f;
+        }
 
         horizontal = 0;
         vertical = 0;
@@ -692,7 +705,7 @@ public class Player : MovingObject
     // 스킬1 사용 함수
     private void ActivatingSkill1()
     {
-        AudioManager.instance.PlayingSFX("Laser");
+        AudioManager.instance.PlayingSFXForPlayer("Laser");
         if (ether >= etherSkill1Cost)
         {
             // 원래 애니메이션
@@ -825,6 +838,7 @@ public class Player : MovingObject
             // 이곳에 피격 애니메이션 로직
             //health -= damage;
             // 에테르가 있을 때 피격당하면 모든 에테르가 사라지고 보호막 애니메이션을 재생한다.
+            // 20250227 수정 - 에테르가 이제 모두 사라지지 않고 일정 수치만큼만 사라진다.
             GameManager.instance.SmallTimeStop(0.07f);
 
             if (ether > 0)
@@ -832,10 +846,14 @@ public class Player : MovingObject
                 StartCoroutine(BarrierVFXCoroutine());
                 StartCoroutine(DamagedInvincibility(invincibleTime + 0.2f));
                 StartCoroutine(DamagedBlinkBlack());
-
-                EtherFluctuation(ether * -1f);
+                if (isTest)
+                {
+                }
+                else
+                {
+                    EtherFluctuation(0.2f * -1f);  // 들어가는 수치만큼 에테르가 변화한다. EtherFluctuation은 들어온 float data를 현재 ether의 양에서 뺀다.
+                }
             }
-
 
             else
             {
@@ -852,9 +870,12 @@ public class Player : MovingObject
                     GameManager.instance.playerHeartScore--;
                 }
             }
+
+
             //StartCoroutine(KnockBack(attackDashingDistance, damagedKnockBackTime));
             //CheckingIfGameOver();
             StartCoroutine(CheckingIfGameOver());
+            
         }
     }
 
@@ -1034,7 +1055,7 @@ public class Player : MovingObject
     // 공격 함수
     private void Attack()
     {
-        AudioManager.instance.PlayingSFX("Sword");
+        AudioManager.instance.PlayingSFXForPlayer("Sword");
         if (ether >= etherAttackCost)
         {
             if (isContinueCombo == true)
@@ -1080,7 +1101,7 @@ public class Player : MovingObject
     private void Parry()
     {
         GameManager.instance.SmallTimeStop(0.1f);
-        AudioManager.instance.PlayingSFX("Parry");
+        AudioManager.instance.PlayingSFXForPlayer("Parry");
         //yield return new WaitForSeconds(1f);
         if (ether >= etherParryCost)
         {

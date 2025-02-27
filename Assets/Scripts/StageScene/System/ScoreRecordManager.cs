@@ -26,6 +26,10 @@ public class ScoreRecordManager : MonoBehaviour
         {
             instance = this;
         }
+        else if (instance != this)
+        {
+            Destroy(gameObject);
+        }
 
         if (GameManager.instance != null)
         {

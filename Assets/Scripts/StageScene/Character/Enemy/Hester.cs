@@ -616,8 +616,8 @@ public class Hester : MovingObject
 
     private IEnumerator DieCoroutine()
     {
-        yield return new WaitForFixedUpdate();
         dieEffect.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
         GameManager.instance.killedEnemyScore++;
         idleBulletEmitter.Kill();
         counterBulletEmitter.Kill();
@@ -625,7 +625,7 @@ public class Hester : MovingObject
         Destroy(stunVFX);
         Destroy(rageVFX);
         Destroy(gameObject);
-        //GameManager.instance.gameOveredSceneName = "Cleared!";
+        GameManager.instance.gameOveredSceneName = "Stage1Clear";
         GameManager.instance.ScoreScene();
     }
 

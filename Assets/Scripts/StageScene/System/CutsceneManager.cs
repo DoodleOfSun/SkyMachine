@@ -91,7 +91,21 @@ public class CutsceneManager : MonoBehaviour
             dialogueInt = 4;
             dialogueCoroutine = StartCoroutine(Cutscene(dialogueInt));
         }
-        Hester.instance.CheckingWaveType();
+
+        CheckingWaveType();
+    }
+
+    private void CheckingWaveType()
+    {
+        if (GameManager.instance.currentSceneName == "Stage1")
+        {
+            Hester.instance.CheckingWaveType();
+        }
+        else if (GameManager.instance.currentSceneName == "Stage2")
+        {
+            Prey.instance.CheckingWaveType();
+            PreyMachine.instance.CheckingWaveType();
+        }
     }
 
     private IEnumerator Cutscene(int dialogueData)
@@ -114,7 +128,7 @@ public class CutsceneManager : MonoBehaviour
                 isTyped = false;
                 elapsedCutscene++;
             }
-            else if (Input.GetMouseButtonDown(1) && isTyped)
+            else if (Input.GetMouseButtonDown(1) && isTyped && letterboxCoroutine == null)
             {
                 isTyped = false;
                 break;

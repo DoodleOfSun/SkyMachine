@@ -895,6 +895,7 @@ MonoBehaviour:
   remainHeart: {fileID: 1096079325}
   resultScore: {fileID: 1087781597}
   betaText: {fileID: 570268202}
+  continueText: {fileID: 0}
   restartBoard: {fileID: 109679631}
   returnBoard: {fileID: 1020587066}
 --- !u!1 &813540046
@@ -2029,7 +2030,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Retry?
+  m_Text: Continue?
 --- !u!222 &1382311763
 CanvasRenderer:
   m_ObjectHideFlags: 0

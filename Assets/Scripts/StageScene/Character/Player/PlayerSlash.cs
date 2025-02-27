@@ -90,6 +90,22 @@ public class PlayerSlash : MonoBehaviour
                 EtherTower et = collision.GetComponent<EtherTower>();
                 et.TakeDamage(DamageToEnemyHowMuch(this.transform.name));
             }
+            if (collision.transform.name == "Prey")
+            {
+                Prey pr = collision.GetComponent<Prey>();
+                if (pr.isStun)
+                {
+                    pr.TakeDamage(DamageToEnemyHowMuch(this.transform.name));
+                }
+            }
+            if (collision.transform.name == "PreyMachine")
+            {
+                PreyMachine pm = collision.GetComponent<PreyMachine>();
+                if (pm.isStun)
+                {
+                    pm.TakeDamage(DamageToEnemyHowMuch(this.transform.name));
+                }
+            }
         }
     }
     

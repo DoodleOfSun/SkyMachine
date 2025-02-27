@@ -27,6 +27,7 @@ public class ScoreManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        UnityEngine.Cursor.visible = true;
         typingSpeed = 0.05f;
         typingCoroutine = null;
         typingOrder = 0;
@@ -90,7 +91,19 @@ public class ScoreManager : MonoBehaviour
             }
             else if (typingOrder == 5)
             {
-                betaText.text = "Thanks for Playing!";
+                if (restartSceneName == "Stage1Clear")
+                {
+                    betaText.text = "Press Continue To Play Next Stage";
+                }
+                else if (restartSceneName == "Stage2Clear")
+                {
+                    betaText.text = "Thanks for Playing!";
+                }
+                else
+                {
+                    betaText.text = "Press Continue to try again.";
+                }
+
                 typingCoroutine = StartCoroutine(TypeText(betaText.text, betaText));
             }
         }
@@ -204,10 +217,15 @@ public class ScoreManager : MonoBehaviour
             TitleManager.targetScene = restartSceneName;
             SceneManager.LoadScene("LoadingScene");
         }
-        else
+        else if(restartSceneName == "Stage1Clear")
         {
-            Debug.Log(gameState + " 다음 씬으로 이동");
+            TitleManager.targetScene = "Stage2";
+            SceneManager.LoadScene("LoadingScene");
+        }
+        else if (restartSceneName == "Stage2Clear")
+        {
+            TitleManager.targetScene = "MainScene";
+            SceneManager.LoadScene("LoadingScene");
         }
     }
-    
 }

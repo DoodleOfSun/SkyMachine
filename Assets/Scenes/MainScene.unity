@@ -1136,7 +1136,6 @@ GameObject:
   - component: {fileID: 1739418038}
   - component: {fileID: 1739418042}
   - component: {fileID: 1739418041}
-  - component: {fileID: 1739418043}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1262,19 +1261,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &1739418043
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1739418037}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d734640c40cdca46922a14bd9cf545d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  instance: {fileID: 0}
 --- !u!1 &2059028040
 GameObject:
   m_ObjectHideFlags: 0
@@ -2062,6 +2048,7 @@ MonoBehaviour:
   sfxSlider: {fileID: 2818139370464433478}
   bgmSource: {fileID: 8553394475571465551}
   sfxSource: {fileID: 4534134011444358110}
+  sfxSourceForPlayers: {fileID: 0}
   sfxBulletPro1: {fileID: 0}
   sfxBulletPro2: {fileID: 0}
   sfxBulletPro3: {fileID: 0}

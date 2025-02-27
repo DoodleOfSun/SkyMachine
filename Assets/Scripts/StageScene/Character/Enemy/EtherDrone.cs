@@ -115,6 +115,11 @@ public class EtherDrone : MovingObject
                         {
                             if (isRotatingMove)
                             {
+                                if (rotatingTransform == null)
+                                {
+                                    moveSpeed = 5f;
+                                    isRotatingMove = false;
+                                }
                                 RotateMove(rotatingTransform, this.transform.rotation);
                             }
                             else

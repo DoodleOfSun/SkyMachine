@@ -21,6 +21,7 @@ public class AudioManager : MonoBehaviour
 
     public AudioSource bgmSource;  // 배경음 오디오 소스
     public AudioSource sfxSource;  // 효과음 오디오 소스
+    public AudioSource sfxSourceForPlayers;     // 플레이어가 내는 효과음 오디오 소스
 
     // 에셋에서 지원하는 오디오 소스
     // 효과음에 속한다.
@@ -69,6 +70,11 @@ public class AudioManager : MonoBehaviour
         bgmSource.volume = AudioValueSaver.instance.bgmValue;
         sfxSource.volume = AudioValueSaver.instance.sfxValue;
 
+        if (sfxSourceForPlayers != null)
+        {
+            sfxSourceForPlayers.volume = AudioValueSaver.instance.sfxValue;
+        }
+
 
         bgmDelayCoroutine = null;
     }
@@ -85,8 +91,6 @@ public class AudioManager : MonoBehaviour
 
     private void PlayingBGMStage()
     {
-
-
 
         if (SceneManager.GetActiveScene().name == "ScoreScene")
         {
@@ -147,6 +151,24 @@ public class AudioManager : MonoBehaviour
                     bgmSource.Play();
                 }
             }
+            
+            // 2스테이지
+            if (GameManager.instance.currentSceneName == "Stage2")
+            {
+                // 2스테이지 bgm
+                if (WaveManager.instance.waveCount <= 8 && bgmSource.clip != bgmDictionary["Stage2"])
+                {
+                    bgmSource.clip = bgmDictionary["Stage2"];
+                    bgmSource.Play();
+                }
+
+                // 2스테이지 보스 bgm
+                else if (WaveManager.instance.waveCount >= 9 && bgmSource.clip != bgmDictionary["Stage2Boss"])
+                {
+                    bgmSource.clip = bgmDictionary["Stage2Boss"];
+                    bgmSource.Play();
+                }
+            }
         }
     }
 
@@ -193,6 +215,19 @@ public class AudioManager : MonoBehaviour
         }
     }
 
+    public void PlayingSFXForPlayer(string sfxName)
+    {
+        if (sfxDictionary.ContainsKey(sfxName))
+        {
+            sfxSourceForPlayers.clip = sfxDictionary[sfxName];  // 딕셔너리에서 SFX 찾기
+            sfxSourceForPlayers.Play();  // SFX 재생
+        }
+        else
+        {
+            Debug.LogWarning("효과음이 없습니다: " + sfxName);
+        }
+    }
+
     private void AdjustingBGMVolume()
     {
         if (bgmSlider != null)
@@ -206,11 +241,12 @@ public class AudioManager : MonoBehaviour
         if (sfxSlider != null)
         {
             sfxSource.volume = sfxSlider.value;
-            if (sfxBulletPro1 != null && sfxBulletPro2 != null && sfxBulletPro3 != null)
+            if (sfxBulletPro1 != null && sfxBulletPro2 != null && sfxBulletPro3 != null && sfxSourceForPlayers != null)
             {
                 sfxBulletPro1.volume = sfxSlider.value;
                 sfxBulletPro2.volume = sfxSlider.value;
                 sfxBulletPro3.volume = sfxSlider.value;
+                sfxSourceForPlayers.volume = sfxSlider.value;
             }
         }
     }

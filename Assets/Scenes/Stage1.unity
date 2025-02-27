@@ -2158,6 +2158,8 @@ MonoBehaviour:
   ether: 0.1
   waveLevel: 5
   spriteAndAnimation: {fileID: 720174977}
+  isRotatingMove: 0
+  rotatingTransform: {fileID: 0}
   animator: {fileID: 720174978}
 --- !u!58 &744725470
 CircleCollider2D:
@@ -2501,6 +2503,10 @@ PrefabInstance:
     - target: {fileID: 5146175230995018981, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
       propertyPath: m_Color.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6069884812404099248, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
+      propertyPath: attack
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 6069884812404099248, guid: 9e76c59f9edb1154192f1ebc69c971b8, type: 3}
       propertyPath: parryVFX
@@ -7991,6 +7997,8 @@ MonoBehaviour:
   ether: 0.1
   waveLevel: 3
   spriteAndAnimation: {fileID: 1190573343}
+  isRotatingMove: 0
+  rotatingTransform: {fileID: 0}
   animator: {fileID: 1190573344}
 --- !u!58 &1798071365
 CircleCollider2D:
@@ -22572,6 +22580,8 @@ MonoBehaviour:
   ether: 0.1
   waveLevel: 5
   spriteAndAnimation: {fileID: 6297517599687975362}
+  isRotatingMove: 0
+  rotatingTransform: {fileID: 0}
   animator: {fileID: 3575695228000551673}
 --- !u!114 &7257181293038070662
 MonoBehaviour:
@@ -22594,6 +22604,8 @@ MonoBehaviour:
   ether: 0.1
   waveLevel: 0
   spriteAndAnimation: {fileID: 6297517599974364947}
+  isRotatingMove: 0
+  rotatingTransform: {fileID: 0}
   animator: {fileID: 3575695227750085672}
 --- !u!114 &7257181293082741468
 MonoBehaviour:
@@ -22616,6 +22628,8 @@ MonoBehaviour:
   ether: 0.1
   waveLevel: 3
   spriteAndAnimation: {fileID: 6297517600084883017}
+  isRotatingMove: 0
+  rotatingTransform: {fileID: 0}
   animator: {fileID: 3575695227797640562}
 --- !u!114 &7257181293121500642
 MonoBehaviour:
@@ -22638,6 +22652,8 @@ MonoBehaviour:
   ether: 0.1
   waveLevel: 0
   spriteAndAnimation: {fileID: 6297517600021088631}
+  isRotatingMove: 0
+  rotatingTransform: {fileID: 0}
   animator: {fileID: 3575695227801004620}
 --- !u!114 &7257181293289130230
 MonoBehaviour:
@@ -22660,6 +22676,8 @@ MonoBehaviour:
   ether: 0.1
   waveLevel: 1
   spriteAndAnimation: {fileID: 6297517599181845603}
+  isRotatingMove: 0
+  rotatingTransform: {fileID: 0}
   animator: {fileID: 3575695227432032088}
 --- !u!114 &7257181293353631603
 MonoBehaviour:
@@ -22682,6 +22700,8 @@ MonoBehaviour:
   ether: 0.1
   waveLevel: 5
   spriteAndAnimation: {fileID: 6297517599280923622}
+  isRotatingMove: 0
+  rotatingTransform: {fileID: 0}
   animator: {fileID: 3575695227526930653}
 --- !u!114 &7257181293511878875
 MonoBehaviour:
@@ -22704,6 +22724,8 @@ MonoBehaviour:
   ether: 0.1
   waveLevel: 2
   spriteAndAnimation: {fileID: 6297517599105766478}
+  isRotatingMove: 0
+  rotatingTransform: {fileID: 0}
   animator: {fileID: 3575695227687286645}
 --- !u!114 &7257181293689983491
 MonoBehaviour:
@@ -22726,6 +22748,8 @@ MonoBehaviour:
   ether: 0.1
   waveLevel: 1
   spriteAndAnimation: {fileID: 6297517599317733014}
+  isRotatingMove: 0
+  rotatingTransform: {fileID: 0}
   animator: {fileID: 3575695227299483053}
 --- !u!114 &7257181293714211733
 MonoBehaviour:
@@ -22748,6 +22772,8 @@ MonoBehaviour:
   ether: 0.1
   waveLevel: 0
   spriteAndAnimation: {fileID: 6297517599306088192}
+  isRotatingMove: 0
+  rotatingTransform: {fileID: 0}
   animator: {fileID: 3575695227350719547}
 --- !u!114 &7257181293797443561
 MonoBehaviour:
@@ -22770,6 +22796,8 @@ MonoBehaviour:
   ether: 0.1
   waveLevel: 1
   spriteAndAnimation: {fileID: 6297517599357074300}
+  isRotatingMove: 0
+  rotatingTransform: {fileID: 0}
   animator: {fileID: 3575695227401705543}
 --- !u!114 &7257181293800191226
 MonoBehaviour:
@@ -22792,6 +22820,8 @@ MonoBehaviour:
   ether: 0.1
   waveLevel: 2
   spriteAndAnimation: {fileID: 6297517599358650479}
+  isRotatingMove: 0
+  rotatingTransform: {fileID: 0}
   animator: {fileID: 3575695227407526740}
 --- !u!114 &7257181294021530524
 MonoBehaviour:
@@ -22814,6 +22844,8 @@ MonoBehaviour:
   ether: 0.1
   waveLevel: 1
   spriteAndAnimation: {fileID: 6297517600756313865}
+  isRotatingMove: 0
+  rotatingTransform: {fileID: 0}
   animator: {fileID: 3575695227127450674}
 --- !u!114 &7257181294034272429
 MonoBehaviour:
@@ -22836,6 +22868,8 @@ MonoBehaviour:
   ether: 0.1
   waveLevel: 0
   spriteAndAnimation: {fileID: 6297517600735706168}
+  isRotatingMove: 0
+  rotatingTransform: {fileID: 0}
   animator: {fileID: 3575695227106320131}
 --- !u!114 &7257181294163076199
 MonoBehaviour:
@@ -22858,6 +22892,8 @@ MonoBehaviour:
   ether: 0.1
   waveLevel: 1
   spriteAndAnimation: {fileID: 6297517601130666226}
+  isRotatingMove: 0
+  rotatingTransform: {fileID: 0}
   animator: {fileID: 3575695226692287433}
 --- !u!114 &7257181294425325919
 MonoBehaviour:
@@ -22880,6 +22916,8 @@ MonoBehaviour:
   ether: 0.1
   waveLevel: 0
   spriteAndAnimation: {fileID: 6297517600352910794}
+  isRotatingMove: 0
+  rotatingTransform: {fileID: 0}
   animator: {fileID: 3575695226455088881}
 --- !u!114 &7257181294529810094
 MonoBehaviour:
@@ -22902,6 +22940,8 @@ MonoBehaviour:
   ether: 0.1
   waveLevel: 3
   spriteAndAnimation: {fileID: 6297517600089174587}
+  isRotatingMove: 0
+  rotatingTransform: {fileID: 0}
   animator: {fileID: 3575695226526863616}
 --- !u!114 &7257181294556137551
 MonoBehaviour:
@@ -22924,6 +22964,8 @@ MonoBehaviour:
   ether: 0.1
   waveLevel: 1
   spriteAndAnimation: {fileID: 6297517600217380058}
+  isRotatingMove: 0
+  rotatingTransform: {fileID: 0}
   animator: {fileID: 3575695226584324065}
 --- !u!114 &7257181294567535447
 MonoBehaviour:
@@ -22946,6 +22988,8 @@ MonoBehaviour:
   ether: 0.1
   waveLevel: 1
   spriteAndAnimation: {fileID: 6297517600193925058}
+  isRotatingMove: 0
+  rotatingTransform: {fileID: 0}
   animator: {fileID: 3575695226564521209}
 --- !u!114 &7257181294687413258
 MonoBehaviour:
@@ -22968,6 +23012,8 @@ MonoBehaviour:
   ether: 0.1
   waveLevel: 2
   spriteAndAnimation: {fileID: 6297517600614717599}
+  isRotatingMove: 0
+  rotatingTransform: {fileID: 0}
   animator: {fileID: 3575695226176371620}
 --- !u!114 &7257181294751401636
 MonoBehaviour:
@@ -22990,6 +23036,8 @@ MonoBehaviour:
   ether: 0.1
   waveLevel: 1
   spriteAndAnimation: {fileID: 6297517600412711473}
+  isRotatingMove: 0
+  rotatingTransform: {fileID: 0}
   animator: {fileID: 3575695226246453514}
 --- !u!114 &7257181294852195335
 MonoBehaviour:
@@ -23012,6 +23060,8 @@ MonoBehaviour:
   ether: 0.1
   waveLevel: 1
   spriteAndAnimation: {fileID: 6297517600446134418}
+  isRotatingMove: 0
+  rotatingTransform: {fileID: 0}
   animator: {fileID: 3575695226346986409}
 --- !u!114 &7257181294864815438
 MonoBehaviour:
@@ -23034,6 +23084,8 @@ MonoBehaviour:
   ether: 0.1
   waveLevel: 1
   spriteAndAnimation: {fileID: 6297517600425126363}
+  isRotatingMove: 0
+  rotatingTransform: {fileID: 0}
   animator: {fileID: 3575695226325977824}
 --- !u!224 &7275084945651386459
 RectTransform:

@@ -412,13 +412,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    /*
     public void PlayNextScene()
     {
         TitleManager.targetScene = "Stage2";
         SceneManager.LoadScene("LoadingScene");
     }
-    */
 
     public void ScoreScene()
     {
