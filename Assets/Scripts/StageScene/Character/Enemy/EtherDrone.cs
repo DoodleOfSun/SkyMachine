@@ -120,7 +120,10 @@ public class EtherDrone : MovingObject
                                     moveSpeed = 5f;
                                     isRotatingMove = false;
                                 }
-                                RotateMove(rotatingTransform, this.transform.rotation);
+                                else if (rotatingTransform != null)
+                                {
+                                    RotateMove(rotatingTransform, this.transform.rotation);
+                                }
                             }
                             else
                             {

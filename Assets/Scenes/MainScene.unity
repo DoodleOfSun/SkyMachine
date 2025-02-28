@@ -1121,8 +1121,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 189b00b44e2e80e47929bb8cfb626b16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bgmValue: 0
-  sfxValue: 0
+  bgmValue: 0.4
+  sfxValue: 0.4
 --- !u!1 &1739418037
 GameObject:
   m_ObjectHideFlags: 0

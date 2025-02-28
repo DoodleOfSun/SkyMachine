@@ -24,9 +24,6 @@ public class AudioValueSaver : MonoBehaviour
             Destroy(gameObject);
         }
 
-        bgmValue = 1f;
-        sfxValue = 1f;
-
     }
 
     // Update is called once per frame
