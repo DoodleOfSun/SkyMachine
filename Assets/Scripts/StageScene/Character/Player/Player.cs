@@ -8,7 +8,6 @@ using UnityEngine;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
-using static UnityEditor.PlayerSettings;
 
 public class Player : MovingObject
 {
@@ -117,6 +116,7 @@ public class Player : MovingObject
     {
         if (CutsceneManager.instance.isCutscene)
         {
+            playerSpriteAndAnimation.transform.eulerAngles = new Vector3(0f, 0f, 0f);
             return;
         }
         AllPlayerInput();

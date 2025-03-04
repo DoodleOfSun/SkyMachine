@@ -67,7 +67,7 @@ public class TitleManager : MonoBehaviour
         AudioManager.instance.PlayingSFX("UIClick");
         await Task.Delay(300);
         // 유니티 에디터인 경우
-        UnityEditor.EditorApplication.isPlaying = false;
+        //UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
     }
 }

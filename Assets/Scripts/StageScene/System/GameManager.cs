@@ -119,8 +119,8 @@ public class GameManager : MonoBehaviour
 
         playerReadyToSkillAnimation.SetActive(false);
         PausedUI.SetActive(false);
-        SceneView.lastActiveSceneView.Focus();
-        EditorWindow.focusedWindow.SendEvent(EditorGUIUtility.CommandEvent("Duplicate"));
+        //SceneView.lastActiveSceneView.Focus();
+        //EditorWindow.focusedWindow.SendEvent(EditorGUIUtility.CommandEvent("Duplicate"));
         Cursor.lockState = CursorLockMode.Confined;
         gmState = GameManagerState.GamePlay;
         parryCoolTimeGauge.enabled = false;
@@ -342,7 +342,7 @@ public class GameManager : MonoBehaviour
         AudioManager.instance.PlayingSFX("UIClick");
         await Task.Delay(300);
         // 유니티 에디터인 경우
-        UnityEditor.EditorApplication.isPlaying = false;
+        //UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
     }
 

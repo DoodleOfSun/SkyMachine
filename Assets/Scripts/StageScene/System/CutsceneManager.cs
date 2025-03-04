@@ -163,21 +163,21 @@ public class CutsceneManager : MonoBehaviour
             if (data == 0 && !isTyped)
             {
                 rt.anchoredPosition = AdjustScreenPos(Player.instance.transform.position);
-                //typingCoroutine = StartCoroutine(TypeText("When did all these drones show up?"));
-                typingCoroutine = StartCoroutine(TypeText("하늘에 드론이 이렇게 깔리다니."));
+                typingCoroutine = StartCoroutine(TypeText("When did all these drones show up?"));
+                //typingCoroutine = StartCoroutine(TypeText("하늘에 드론이 이렇게 깔리다니."));
             }
             else if (data == 1 && !isTyped)
             {
                 rt.anchoredPosition = AdjustScreenPos(talkingEnemy.transform.position);
 
-                //typingCoroutine = StartCoroutine(TypeText("Access denied. Return home immediately."));
-                typingCoroutine = StartCoroutine(TypeText("접근 금지. 돌아가십시오."));
+                typingCoroutine = StartCoroutine(TypeText("Access denied. Return home immediately."));
+                //typingCoroutine = StartCoroutine(TypeText("접근 금지. 돌아가십시오."));
             }
             else if (data == 2 && !isTyped)
             {
                 rt.anchoredPosition = AdjustScreenPos(Player.instance.transform.position);
-                //typingCoroutine = StartCoroutine(TypeText("No way. Bring it on! "));
-                typingCoroutine = StartCoroutine(TypeText("그렇겐 안 되지. 덤벼!"));
+                typingCoroutine = StartCoroutine(TypeText("No way. Bring it on! "));
+                //typingCoroutine = StartCoroutine(TypeText("그렇겐 안 되지. 덤벼!"));
             }
         }
 
@@ -217,21 +217,21 @@ public class CutsceneManager : MonoBehaviour
             if (data == 0 && !isTyped)
             {
                 rt.anchoredPosition = AdjustScreenPos(Player.instance.transform.position);
-                //typingCoroutine = StartCoroutine(TypeText("When did all these drones show up?"));
-                typingCoroutine = StartCoroutine(TypeText("여기구나."));
+                typingCoroutine = StartCoroutine(TypeText("Here it is."));
+                //typingCoroutine = StartCoroutine(TypeText("여기구나."));
             }
             else if (data == 1 && !isTyped)
             {
                 rt.anchoredPosition = AdjustScreenPos(Player.instance.transform.position);
 
-                //typingCoroutine = StartCoroutine(TypeText("Access denied. Return home immediately."));
-                typingCoroutine = StartCoroutine(TypeText("톱니바퀴 돌아가는 소리가 시끄럽네."));
+                typingCoroutine = StartCoroutine(TypeText("The sound of gears turning is loud."));
+                //typingCoroutine = StartCoroutine(TypeText("톱니바퀴 돌아가는 소리가 시끄럽네."));
             }
             else if (data == 2 && !isTyped)
             {
                 rt.anchoredPosition = AdjustScreenPos(Player.instance.transform.position);
-                //typingCoroutine = StartCoroutine(TypeText("No way. Bring it on! "));
-                typingCoroutine = StartCoroutine(TypeText("빠르게 끝내주지!"));
+                typingCoroutine = StartCoroutine(TypeText("I'll finish this quickly!"));
+                //typingCoroutine = StartCoroutine(TypeText("빠르게 끝내주지!"));
             }
         }
 
@@ -245,23 +245,23 @@ public class CutsceneManager : MonoBehaviour
             {
                 rt.anchoredPosition = AdjustScreenPos(Player.instance.transform.position);
                 Debug.Log(rt.anchoredPosition);
-                typingCoroutine = StartCoroutine(TypeText("찾았다. 이제 부수기만 하면 되겠어."));
+                typingCoroutine = StartCoroutine(TypeText("Okay, Now i just need to break it."));
             }
             else if (data == 1 && !isTyped)
             {
                 rt.anchoredPosition = AdjustScreenPos(Prey.instance.transform.position);
 
-                typingCoroutine = StartCoroutine(TypeText("*콜록* 부..부수게 두지는 - "));
+                typingCoroutine = StartCoroutine(TypeText("*Cough* I won't - "));
             }
             else if (data == 2 && !isTyped)
             {
                 rt.anchoredPosition = AdjustScreenPos(Player.instance.transform.position);
-                typingCoroutine = StartCoroutine(TypeText("아, 숙녀분. 거기 위험하니까 비켜줄래?"));
+                typingCoroutine = StartCoroutine(TypeText("Ah, miss. It's dangerous there."));
             }
             else if (data == 3 && !isTyped)
             {
                 rt.anchoredPosition = AdjustScreenPos(Prey.instance.transform.position);
-                typingCoroutine = StartCoroutine(TypeText("부수게 두지는 않겠어."));
+                typingCoroutine = StartCoroutine(TypeText("I won't let you break it."));
             }
         }
         
