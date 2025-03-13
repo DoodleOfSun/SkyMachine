@@ -34,10 +34,8 @@ public class CursorImageMoving : MonoBehaviour
             cursorImage.enabled = true;
             magicCircleImage.enabled = false;
         }
-        
 
-        Vector2 nextPos = new Vector2(GameManager.instance.screenMousePos.x - 960f, GameManager.instance.screenMousePos.y - 540f);
-        cursorImage.rectTransform.anchoredPosition = Vector3.MoveTowards(Vector3.zero, nextPos, Mathf.Infinity);
-        
+        Vector2 localPosition = cursorImage.rectTransform.parent.GetComponent<RectTransform>().InverseTransformPoint(Input.mousePosition);
+        cursorImage.rectTransform.anchoredPosition = localPosition;
     }
 }

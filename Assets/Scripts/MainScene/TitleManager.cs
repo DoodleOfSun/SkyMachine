@@ -27,15 +27,15 @@ public class TitleManager : MonoBehaviour
         }
     }
 
-    private async void LoadingNextScene()
+    private void LoadingNextScene()
     {
-        AudioManager.instance.PlayingSFX("UIClick");
-        await Task.Delay(300);
         StartCoroutine(LoadingNextSceneCoroutine());
     }
 
     private IEnumerator LoadingNextSceneCoroutine()
     {
+        AudioManager.instance.PlayingSFX("UIClick");
+        yield return new WaitForSeconds(0.3f);
         FadeInAndOut.instance.FadeFlag(false);
         yield return new WaitForSeconds(2f);
         targetScene = "StartCutscene";
@@ -47,27 +47,40 @@ public class TitleManager : MonoBehaviour
         targetScene = "SampleScene";
         SceneManager.LoadScene("LoadingScene");
     }
+    
+    public void OpenOption()
+    {
+        StartCoroutine(OpenOptionCoroutine());
+    }
 
-    public async void OpenOption()
+    private IEnumerator OpenOptionCoroutine()
     {
         AudioManager.instance.PlayingSFX("UIClick");
-        await Task.Delay(300);
+        yield return new WaitForSeconds(0.3f);
         PausedUI.SetActive(true);
     }
 
-    private async void CloseOption()
+    private void CloseOption()
     {
-        AudioManager.instance.PlayingSFX("UIClick");
-        await Task.Delay(300);
-        PausedUI.SetActive(false);
+        StartCoroutine(CloseOptionCoroutine());
     }
 
-    private async void ExitGame()
+    private IEnumerator CloseOptionCoroutine()
     {
         AudioManager.instance.PlayingSFX("UIClick");
-        await Task.Delay(300);
-        // 유니티 에디터인 경우
-        //UnityEditor.EditorApplication.isPlaying = false;
+        yield return new WaitForSeconds(0.3f);
+        PausedUI.SetActive(false);
+    }
+    
+    private void ExitGame()
+    {
+        StartCoroutine(ExitGameCoroutine());
+    }
+
+    private IEnumerator ExitGameCoroutine()
+    {
+        AudioManager.instance.PlayingSFX("UIClick");
+        yield return new WaitForSeconds(0.3f);
         Application.Quit();
     }
 }

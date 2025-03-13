@@ -84,7 +84,7 @@ public class Prey : MovingObject
         CheckingDie();
         CheckingStun();
         CheckingGameOver();
-        EnemyRotate();
+        //EnemyRotate();
         ActivateEnemyByStateUpdate();
     }
 
@@ -191,14 +191,16 @@ public class Prey : MovingObject
                 rageVFX.SetActive(false);
                 stunVFX.SetActive(false);
 
+                /*
                 if (PreyMachine.instance.SharingStateCounter())
                 {
                     ChangeStateCounter();
                 }
+                */
 
                 if (attackCoroutine == null)
                 {
-                    attackCoroutine = StartCoroutine(IdleAttack(0.7f));
+                    attackCoroutine = StartCoroutine(IdleAttack(1.5f));
                 }
 
                 if (movingCoroutine == null)
@@ -220,19 +222,20 @@ public class Prey : MovingObject
                 break;
             case EnemyState.Counter:
 
+                /*
                 if (PreyMachine.instance.SharingStateStun())
                 {
                     Stun();
                 }
-
+                */
 
                 if (attackCoroutine == null)
                 {
-                    attackCoroutine = StartCoroutine(IdleAttack(0.3f));
+                    attackCoroutine = StartCoroutine(IdleAttack(1.5f));
                 }
                 if (rageCoroutine == null)
                 {
-                    rageCoroutine = StartCoroutine(RageAttackByDuration(0.5f));
+                    rageCoroutine = StartCoroutine(RageAttackByDuration(2f));
                 }
                 break;
             case EnemyState.Stun:
@@ -273,17 +276,20 @@ public class Prey : MovingObject
         animator.SetTrigger("Attack");
         // 실제로 탄막을 쏘고 Pause로 돌리는데 0.2f가 걸리게 한다. (이유는 BulletEmitter에서 공격속도를 0.2F로 조정해놓았기 때문에.)
 
+        /*
         while (elapsedTime < 0.1f)
         {
             elapsedTime += Time.fixedDeltaTime;
             yield return null;
         }
+        */
 
         elapsedTime = 0f;
 
         idleBulletEmitter.Play();
 
-        while (elapsedTime < 0.2f)
+        // Play 하고 바로 Stop하면 아예 총알이 안나가므로 넣어준 플래그
+        while (elapsedTime < 0.1f)
         {
             elapsedTime += Time.fixedDeltaTime;
             yield return null;
@@ -291,8 +297,7 @@ public class Prey : MovingObject
 
         idleBulletEmitter.Stop();
 
-        // 초기화하고 다시 공격할떄까지 대기
-
+        // 초기화하고 LimitedTime만큼 대기하기
         elapsedTime = 0f;
 
         while (elapsedTime < limitedTime)
@@ -359,8 +364,7 @@ public class Prey : MovingObject
         else
         {
             AudioManager.instance.PlayingSFX("Guard");
-            // 가드 애니메이션 실행
-            animator.SetTrigger("Attack");
+            // 가드 이펙트 실행
             StartCoroutine(GuardVFX());
             currentGuardCount++;
             currentStunValue++;
@@ -463,7 +467,7 @@ public class Prey : MovingObject
     {
         enemyState = changeState;
     }
-
+    
     private IEnumerator RandomMoving()
     {
         float randomX = Random.Range(-2f, 2f);
@@ -691,6 +695,7 @@ public class Prey : MovingObject
         isStun = true;
 
         // 이곳에 애니메이션 로직 입력
+        animator.SetTrigger("Idle");
 
         float elapsedTime = 0f;
 
@@ -712,6 +717,7 @@ public class Prey : MovingObject
         counterBulletEmitter.Pause();
 
         // 이곳에 애니메이션 로직 입력
+        animator.SetTrigger("Idle");
 
         float elapsedTime = 0f;
 

@@ -123,7 +123,11 @@ public class AudioManager : MonoBehaviour
 
         // 컷신이어도 재생하는 로직
         // 스타트 컷씬
-        if (SceneManager.GetActiveScene().name == "StartCutscene" || SceneManager.GetActiveScene().name == "MainScene")
+        if (SceneManager.GetActiveScene().name == "MainScene"){
+            // empty
+        }
+
+        else if (SceneManager.GetActiveScene().name == "StartCutscene")
         {
             if (bgmSource.clip != bgmDictionary["Moter"])
             {

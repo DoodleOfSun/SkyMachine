@@ -750,7 +750,7 @@ public class Player : MovingObject
     private IEnumerator Skill1DurationPlayForAnimation()
     {
         isSkill1Playing = true;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
         isSkill1Playing = false;
     }
 

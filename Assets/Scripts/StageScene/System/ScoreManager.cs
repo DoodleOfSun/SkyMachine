@@ -171,53 +171,83 @@ public class ScoreManager : MonoBehaviour
         typingOrder++;
     }
 
-    public async void ActivateRetryPanel()
+    public void ActivateRetryPanel()
+    {
+        StartCoroutine(ActivateRetryPanelCoroutine());
+    }
+
+    private IEnumerator ActivateRetryPanelCoroutine()
     {
         AudioManager.instance.PlayingSFX("UIClick");
-        await Task.Delay(300);
+        yield return new WaitForSeconds(0.3f);
         restartBoard.SetActive(true);
     }
 
-    public async void ActivateReturnPanel()
+    public void ActivateReturnPanel()
+    {
+        StartCoroutine(ActivateReturnPanelCoroutine());
+    }
+
+    private IEnumerator ActivateReturnPanelCoroutine()
     {
         AudioManager.instance.PlayingSFX("UIClick");
-        await Task.Delay(300);
+        yield return new WaitForSeconds(0.3f);
         returnBoard.SetActive(true);
     }
 
-    public async void DeactivateRetryPanel()
+    public void DeactivateRetryPanel()
+    {
+        StartCoroutine(DeactivateRetryPanelCoroutine());
+    }
+
+    private IEnumerator DeactivateRetryPanelCoroutine()
     {
         AudioManager.instance.PlayingSFX("UIClick");
-        await Task.Delay(300);
+        yield return new WaitForSeconds(0.3f);
         restartBoard.SetActive(false);
     }
 
-    public async void DeactivateReturnPanel()
+    public void DeactivateReturnPanel()
+    {
+        StartCoroutine(DeactivateReturnPanelCoroutine());
+    }
+
+    private IEnumerator DeactivateReturnPanelCoroutine()
     {
         AudioManager.instance.PlayingSFX("UIClick");
-        await Task.Delay(300);
+        yield return new WaitForSeconds(0.3f);
         returnBoard.SetActive(false);
     }
 
-    public async void ReturnToMainScene()
+    public void ReturnToMainScene()
+    {
+        StartCoroutine(ReturnToMainSceneCoroutine());
+    }
+
+    private IEnumerator ReturnToMainSceneCoroutine()
     {
         AudioManager.instance.PlayingSFX("UIClick");
-        await Task.Delay(300);
+        yield return new WaitForSeconds(0.3f);
         TitleManager.targetScene = "MainScene";
         SceneManager.LoadScene("LoadingScene");
     }
 
-    public async void Continue()
+    public void Continue()
+    {
+        StartCoroutine(ContinueCoroutine());
+    }
+
+    private IEnumerator ContinueCoroutine()
     {
         AudioManager.instance.PlayingSFX("UIClick");
-        await Task.Delay(300);
+        yield return new WaitForSeconds(0.3f);
         if (gameState == "GameOver")
         {
             Debug.Log(restartSceneName);
             TitleManager.targetScene = restartSceneName;
             SceneManager.LoadScene("LoadingScene");
         }
-        else if(restartSceneName == "Stage1Clear")
+        else if (restartSceneName == "Stage1Clear")
         {
             TitleManager.targetScene = "Stage2";
             SceneManager.LoadScene("LoadingScene");
