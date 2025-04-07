@@ -89,6 +89,7 @@ public class ScoreManager : MonoBehaviour
                 resultScore.text = "Score : " + result;
                 typingCoroutine = StartCoroutine(TypeText(resultScore.text, resultScore));
             }
+            // 새 스테이지를 추가할때마다 이곳 if문도 변경해주어야 함.
             else if (typingOrder == 5)
             {
                 if (restartSceneName == "Stage1Clear")
@@ -96,6 +97,10 @@ public class ScoreManager : MonoBehaviour
                     betaText.text = "Press Continue To Play Next Stage";
                 }
                 else if (restartSceneName == "Stage2Clear")
+                {
+                    betaText.text = "Press Continue To Play Next Stage";
+                }
+                else if (restartSceneName == "Stage3Clear")
                 {
                     betaText.text = "Thanks for Playing!";
                 }
@@ -237,6 +242,8 @@ public class ScoreManager : MonoBehaviour
         StartCoroutine(ContinueCoroutine());
     }
 
+    // 스테이지 추가할때마다 이곳도 바꿔줘야한다. 
+    // 여기는 Continue 버튼을 누를때마다 restartName에 따라서 어느 Scene으로 갈 지를 결정한다.
     private IEnumerator ContinueCoroutine()
     {
         AudioManager.instance.PlayingSFX("UIClick");
@@ -253,6 +260,11 @@ public class ScoreManager : MonoBehaviour
             SceneManager.LoadScene("LoadingScene");
         }
         else if (restartSceneName == "Stage2Clear")
+        {
+            TitleManager.targetScene = "Stage3";
+            SceneManager.LoadScene("LoadingScene");
+        }
+        else if (restartSceneName == "Stage3Clear")
         {
             TitleManager.targetScene = "MainScene";
             SceneManager.LoadScene("LoadingScene");

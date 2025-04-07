@@ -1,10 +1,9 @@
 using BulletPro;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
-public class PreyMachine : MovingObject
+public class Knight : MovingObject
 {
     private enum EnemyState
     {
@@ -15,7 +14,7 @@ public class PreyMachine : MovingObject
         Stun
     }
 
-    [HideInInspector] public static PreyMachine instance;
+    [HideInInspector] public static Knight instance;
     public float hp;                // 체력
     public int stunValueLimit;         // 스턴치
     public int guardCountLimit;          // 가드 횟수
@@ -36,9 +35,12 @@ public class PreyMachine : MovingObject
     //public GameObject allBulletEmitterTransform;    // 모든 Bullet Emitter의 부모 게임오브젝트인데, 위치 초기화를 위해서 사용한다.
     public BulletEmitter idleBulletEmitter;  // 대기 상태 시 사용하는 Bullet Emitter
     public BulletEmitter counterBulletEmitter;  // 카운터 상태 시 사용하는 Bullet Emitter
+    
 
+    /*
     public GameObject movePoint1;
     public GameObject movePoint2;
+    */
 
     public GameObject spriteAndAnimation;
 
@@ -62,8 +64,10 @@ public class PreyMachine : MovingObject
     private bool isActive;
 
     // 이동 관련 플래그. 도착하면 true로 전환한다.
+    /*
     private bool isMovedPoint1;
     private bool isMovedPoint2;
+    */
 
     private EnemyState enemyState;
 
@@ -81,7 +85,7 @@ public class PreyMachine : MovingObject
     private Coroutine stopMovingCoroutine;
 
 
-    // PreyMachine은 AttemptMove를 Override하여 독자적인 이동 로직을 갖는다.
+    // Knight은 AttemptMove를 Override하여 독자적인 이동 로직을 갖는다.
     // 그것은 특정한 좌표를 받아 자신을 이동시킨다.
     protected override void AttemptMove(float xDir, float yDir)
     {
@@ -143,13 +147,15 @@ public class PreyMachine : MovingObject
         isActive = false;
 
         // 왕복 이동 플래그
+        /*
         isMovedPoint1 = true;
         isMovedPoint2 = false;
+        */
 
         // 방어막 VFX 오브젝트
         barrierVFX = Instantiate(barrierVFXPrefabs);
         barrierVFX.gameObject.SetActive(false);
-        
+
         // 분노 VFX 오브젝트
         rageVFX = Instantiate(rageVFXPrefabs);
         rageVFX.gameObject.SetActive(false);
@@ -160,7 +166,8 @@ public class PreyMachine : MovingObject
 
         dieEffect.SetActive(false);
 
-        animator.enabled = false;
+        animator.enabled = true;
+        animator.SetTrigger("Idle");
 
         base.Start();
     }
@@ -182,19 +189,8 @@ public class PreyMachine : MovingObject
     }
 
     // 적 객체의 스프라이트가 플레이어를 향해 각도를 전환함
-    // PreyMachine의 경우 굴러가는 방향에 따라서 각도를 전환한다.
     private void EnemyRotate()
     {
-        if (isMovedPoint1 && !isMovedPoint2)
-        {
-            spriteAndAnimation.transform.eulerAngles = new Vector3(0f, 180f, 0f);
-        }
-        else if (!isMovedPoint1 && isMovedPoint2)
-        {
-            spriteAndAnimation.transform.eulerAngles = new Vector3(0f, 0f, 0f);
-        }
-
-        /*
         if (Player.instance.transform.position.x >= this.transform.position.x)
         {
             spriteAndAnimation.transform.eulerAngles = new Vector3(0f, 0f, 0f);
@@ -203,7 +199,6 @@ public class PreyMachine : MovingObject
         {
             spriteAndAnimation.transform.eulerAngles = new Vector3(0f, 180f, 0f);
         }
-        */
     }
 
     // 이 함수는 실시간으로 실행시켜야하는 함수가 존재할 때, 상태에 따라 실행시킨다.
@@ -219,27 +214,23 @@ public class PreyMachine : MovingObject
         {
             case EnemyState.Pause:
                 // SampleScene인 경우 바로 Idle로 전환
-                
+
                 if (GameManager.instance.currentSceneName == "SampleScene")
                 {
                     enemyState = EnemyState.Idle;
                 }
-                
+
                 break;
             case EnemyState.Idle:
 
                 rageVFX.SetActive(false);
                 stunVFX.SetActive(false);
                 /*
-                if (Prey.instance.SharingStateCounter())
-                {
-                    ChangeStateCounter();
-                }*/
-
                 if (attackCoroutine == null)
                 {
                     attackCoroutine = StartCoroutine(IdleAttack(1.5f));
                 }
+                */
 
                 if (movingCoroutine == null)
                 {
@@ -249,24 +240,17 @@ public class PreyMachine : MovingObject
                         movingCoroutine = StartCoroutine(WallStuckingEscape());
                     }
                     */
+                    /*
                     if (!isWallStuck)
                     {
                         movingCoroutine = StartCoroutine(MoveByPoint());
                     }
+                    */
                 }
-
-                //idleBulletEmitter.Play();
-                //counterBulletEmitter.Pause();
                 break;
             case EnemyState.Guard:
                 break;
             case EnemyState.Counter:
-                /*
-                if (Prey.instance.SharingStateStun())
-                {
-                    Stun();
-                }
-                */
 
                 if (attackCoroutine == null)
                 {
@@ -326,7 +310,7 @@ public class PreyMachine : MovingObject
 
         elapsedTime = 0f;
 
-        // 공격 애니메이션에 맞추기 위해 추가 딜레이 발생시켜줌. ( 이전 코드로는 공이 뛸려고 점프할 때 탄막이 나감 )
+        // 공격 애니메이션에 맞추기 위해 추가 딜레이 발생시켜줌.
         yield return new WaitForSeconds(0.5f);
 
         idleBulletEmitter.Play();
@@ -486,7 +470,7 @@ public class PreyMachine : MovingObject
     private IEnumerator Counter()
     {
         rageVFX.SetActive(true);
-        
+
         enemyState = EnemyState.Counter;
         float elapsedTime = 0f;
         while (elapsedTime < counterDurationLimit)
@@ -511,6 +495,9 @@ public class PreyMachine : MovingObject
         enemyState = changeState;
     }
 
+    // TODO : Knight의 Idle 상태에서의 움직임 로직이 필요하다.
+
+    /*
     private IEnumerator MoveByPoint()
     {
         if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
@@ -551,7 +538,7 @@ public class PreyMachine : MovingObject
         yield return new WaitForSeconds(1f);
         movingCoroutine = null;
     }
-
+    */
     private IEnumerator RandomMoving()
     {
         float randomX = Random.Range(-2f, 2f);
@@ -675,7 +662,7 @@ public class PreyMachine : MovingObject
             Kill();
         }
     }
-    
+
     private IEnumerator DamagedBlinkBlack(float blinkCount, float blinkDuration)
     {
         for (int i = 0; i < blinkCount; i++)
@@ -729,12 +716,8 @@ public class PreyMachine : MovingObject
         Destroy(stunVFX);
         Destroy(rageVFX);
         Destroy(gameObject);
-
-        if (Prey.instance == null)
-        {
-            GameManager.instance.gameOveredSceneName = "Stage2Clear";
-            GameManager.instance.ScoreScene();
-        }
+        GameManager.instance.gameOveredSceneName = "Stage3Clear";
+        GameManager.instance.ScoreScene();
     }
 
     // 카운터 공격 중 스킬로 피격당하면 잠시 경직됨 (소경직)

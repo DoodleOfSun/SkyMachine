@@ -17,12 +17,6 @@ public class LoadingManager : MonoBehaviour
 
         ao.allowSceneActivation = false;
 
-        // 일시정지 중이면 해제
-        if (Time.timeScale == 0f)
-        {
-            Time.timeScale = 1f;
-        }
-
         while (!ao.isDone)
         {
             if (ao.progress >= 0.9f)

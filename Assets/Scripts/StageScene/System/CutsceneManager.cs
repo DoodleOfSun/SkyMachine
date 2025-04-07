@@ -269,7 +269,38 @@ public class CutsceneManager : MonoBehaviour
                 typingCoroutine = StartCoroutine(TypeText("I won't let you break it."));
             }
         }
-        
+
+        // 3스테이지 진입 시 대사
+        // 이 스테이지는 보스전만 존재한다.
+        if(dialogueType == "Stage3" && typingCoroutine == null && WaveManager.instance.waveCount == CutsceneManager.instance.bossWave)
+        {
+            dialogue.SetActive(true);
+
+            
+            if (data == 0 && !isTyped)
+            {
+                rt.anchoredPosition = AdjustScreenPos(rt, Player.instance.transform.position);
+                Debug.Log(rt.anchoredPosition);
+                typingCoroutine = StartCoroutine(TypeText("What are you? Just a Robot Again?"));
+            }
+            else if (data == 1 && !isTyped)
+            {
+                rt.anchoredPosition = AdjustScreenPos(rt, Knight.instance.transform.position);
+
+                typingCoroutine = StartCoroutine(TypeText("You rude jerk."));
+            }
+            else if (data == 2 && !isTyped)
+            {
+                rt.anchoredPosition = AdjustScreenPos(rt, Player.instance.transform.position);
+                typingCoroutine = StartCoroutine(TypeText("Get out of there, Robot."));
+            }
+            else if (data == 3 && !isTyped)
+            {
+                rt.anchoredPosition = AdjustScreenPos(rt, Knight.instance.transform.position);
+                typingCoroutine = StartCoroutine(TypeText("Take my sword!"));
+            }
+            
+        }
 
         else
         {
